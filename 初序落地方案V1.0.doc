@@ -1,0 +1,192 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<meta name="ProgId" content="Word.Document">
+<title>初序 · 完整落地方案</title>
+<style>
+    body { font-family: '微软雅黑', sans-serif; font-size: 11pt; color: #1a1a1a; line-height: 1.85; margin: 50px 55px; }
+    h1 { font-size: 20pt; text-align: center; margin-bottom: 4px; }
+    h2 { font-size: 14pt; border-bottom: 2px solid #2D8B55; padding-bottom: 5px; margin-top: 30px; }
+    h3 { font-size: 12pt; color: #333; margin-top: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th { background: #1a1a1a; color: #f5f5f0; padding: 8px 12px; text-align: left; font-size: 10.5pt; }
+    td { border: 1px solid #ddd; padding: 8px 12px; font-size: 10.5pt; vertical-align: top; }
+    tr:nth-child(even) { background: #f7faf7; }
+    blockquote { background: #f0f7f2; border-left: 4px solid #2D8B55; padding: 10px 18px; margin: 14px 0; }
+    .key { background: #FFF8E1; border-left: 4px solid #D4A12A; padding: 10px 18px; margin: 14px 0; }
+    .warn { background: #FFF0F0; border-left: 4px solid #D4423E; padding: 10px 18px; margin: 14px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 5px 0; }
+    em { font-style: normal; font-weight: bold; color: #2D8B55; }
+    .sub { text-align: center; color: #888; font-size: 11pt; margin-bottom: 24px; }
+    .footer { text-align: center; margin-top: 40px; font-size: 9.5pt; color: #999; }
+    hr { border: none; border-top: 1px solid #e0ede0; margin: 28px 0; }
+</style>
+</head>
+<body>
+
+<h1>初序 · Zoey的个人IP落地方案</h1>
+<p class="sub">V1.0 ｜ 2026年3月 ｜ 五行身心解读IP · 完整冷启动计划</p>
+
+<blockquote>
+<strong>一句话定位：</strong><br>
+<em>你的身体有一套最初的节律——初序帮你读懂它。</em><br>
+用五行结构解读情绪、睡眠、肠道、饮食、体质之间的隐藏关联。
+</blockquote>
+
+<hr>
+
+<h2>一、品牌基础设定</h2>
+
+<table>
+<tr><th style="width:120px;">项目</th><th>内容</th></tr>
+<tr><td>IP名称</td><td><em>初序</em> (Chū Xù) — 回到身体最初的节律</td></tr>
+<tr><td>IP主理人</td><td><em>Zoey</em>（出镜，个人品牌）</td></tr>
+<tr><td>目标用户</td><td>25-40岁女性，有亚健康症状（失眠/便秘/焦虑/疲劳/月经不调），对中医有好奇但不深入</td></tr>
+<tr><td>品牌调性</td><td>温暖但不软 / 有知识深度但不学术 / 像一个懂中医的闺蜜</td></tr>
+<tr><td>六不原则</td><td>不玄学 / 不卖药 / 不做诊断 / 不鸡汤 / 不恐吓 / 不否定现代医学</td></tr>
+<tr><td>品牌色系</td><td>五行自然色：<span style="color:#2D8B55;">■</span>木翠 <span style="color:#C9544D;">■</span>火朱 <span style="color:#C6983A;">■</span>土琥珀 <span style="color:#8C8C98;">■</span>金月白 <span style="color:#2E6B9E;">■</span>水靛蓝 · 底色：米白/奶咖</td></tr>
+<tr><td>品牌口号</td><td>"读懂身体说的话" / "你的身体自有节律"</td></tr>
+</table>
+
+<hr>
+
+<h2>二、核心产品：初序五行人格测试</h2>
+
+<h3>2.1 产品定位</h3>
+
+<div class="key">
+<strong>核心逻辑：产品即内容，结果即传播。</strong><br>
+用户做测试 → 获得精美的五行人格卡片 → 分享到朋友圈/小红书 → 朋友好奇 → 也去测 → 裂变循环
+</div>
+
+<h3>2.2 测试体验设计</h3>
+
+<table>
+<tr><th>维度</th><th>设计方案</th></tr>
+<tr><td>形式</td><td><em>对话式测评</em>——模拟微信聊天界面，初序AI一问你一答，像和朋友聊天</td></tr>
+<tr><td>题量</td><td>8-12轮对话（含2-3道动态分支题，根据你的回答自动调整后续问题）</td></tr>
+<tr><td>五维度</td><td>情绪倾向 / 睡眠节律 / 肠道信号 / 饮食偏好 / 身体感受</td></tr>
+<tr><td>算法</td><td>五行加权评分 → 主行+副行双维度结果（25种组合变体）</td></tr>
+<tr><td>结果页</td><td>① 五行人格卡片（可保存图片）<br>② 五行雷达图<br>③ 主行解读 + 副行补充<br>④ 3条个性化建议<br>⑤ "你的闺蜜是什么行？邀请她来测" 裂变按钮</td></tr>
+<tr><td>分享</td><td>一键生成卡片图（含五行结果+初序品牌Logo+测试二维码）→ 保存到相册 → 分享朋友圈</td></tr>
+</table>
+
+<h3>2.3 技术方案</h3>
+
+<table>
+<tr><th>项</th><th>方案</th><th>成本</th></tr>
+<tr><td>前端</td><td>HTML/CSS/JS 单页应用，微信内置浏览器优化</td><td>0元（子默开发）</td></tr>
+<tr><td>托管</td><td>GitHub Pages 免费托管</td><td>0元</td></tr>
+<tr><td>域名</td><td>可选：买一个初序.com 或 chuxu.app</td><td>约50-100元/年</td></tr>
+<tr><td>AI对话（Phase 2）</td><td>接入免费/低价LLM API</td><td>冷启动期约0-100元/月</td></tr>
+</table>
+
+<hr>
+
+<h2>三、内容策略：Zoey出镜 × 测试导流</h2>
+
+<h3>3.1 内容模型</h3>
+
+<blockquote>
+每条视频 = <em>症状钩子</em> + <em>五行解释</em> + <em>测试导流</em>
+</blockquote>
+
+<p>公式：</p>
+<pre style="background:#f0f7f2; padding:14px; border-radius:6px; font-size:10.5pt;">
+[对号入座的症状] → [五行结构解释] → "你是哪种五行体质？评论区链接测一下"
+</pre>
+
+<h3>3.2 首月20条内容储备</h3>
+
+<table>
+<tr><th>#</th><th>标题（Zoey口播）</th><th>时长</th><th>对应五行</th></tr>
+<tr><td>1</td><td>一紧张就拉肚子？你的肝在欺负你的脾</td><td>30s</td><td>🟢木克土</td></tr>
+<tr><td>2</td><td>失眠的人不是想太多，是肠道在喊救命</td><td>30s</td><td>🔴心火</td></tr>
+<tr><td>3</td><td>便秘不是缺水，是你太久没好好哭过了</td><td>30s</td><td>⚪金·悲</td></tr>
+<tr><td>4</td><td>越想吃甜食，说明你的脾越虚</td><td>30s</td><td>🟡土行</td></tr>
+<tr><td>5</td><td>半夜1-3点醒？那是肝经在找你说话</td><td>30s</td><td>🟢木·肝</td></tr>
+<tr><td>6</td><td>90%的快乐激素在肠道里，不在大脑里</td><td>45s</td><td>科学佐证</td></tr>
+<tr><td>7</td><td>古人说心与小肠相表里，科学叫它肠脑轴</td><td>45s</td><td>古今桥接</td></tr>
+<tr><td>8</td><td>每次生气胃就疼？怒气从肠起</td><td>30s</td><td>🟢木→🟡土</td></tr>
+<tr><td>9</td><td>你不是懒，是你的肾在省电模式</td><td>30s</td><td>🔵水·肾</td></tr>
+<tr><td>10</td><td>经期前暴躁？不是你脾气差，是肝气在释放</td><td>30s</td><td>🟢木·肝</td></tr>
+<tr><td>11-20</td><td>（第二批10条：五行食养 × 节律 × 季节）</td><td>30-60s</td><td>混合</td></tr>
+</table>
+
+<h3>3.3 平台策略</h3>
+
+<table>
+<tr><th>平台</th><th>优先级</th><th>内容形式</th><th>目标</th></tr>
+<tr><td><em>小红书</em></td><td>⭐⭐⭐ 主阵地</td><td>Zoey出镜短视频 + 五行图文卡片</td><td>精准触达25-40女性</td></tr>
+<tr><td><em>视频号</em></td><td>⭐⭐⭐ 主阵地</td><td>同步短视频 + 测试链接</td><td>微信生态内裂变</td></tr>
+<tr><td>抖音</td><td>⭐⭐ 辅助</td><td>精选内容同步</td><td>流量扩大</td></tr>
+</table>
+
+<hr>
+
+<h2>四、冷启动30天日历</h2>
+
+<table>
+<tr><th style="width:60px;">日期</th><th>内容</th><th>产品</th><th>社群</th></tr>
+<tr><td><strong>D1</strong></td><td>注册初序 小红书+视频号账号</td><td>—</td><td>—</td></tr>
+<tr><td><strong>D2-D3</strong></td><td>拍摄前5条短视频</td><td>子默开发测试V2.0</td><td>—</td></tr>
+<tr><td><strong>D4</strong></td><td>发布第1条视频（#1 肝欺负脾）</td><td>测试开发中</td><td>—</td></tr>
+<tr><td><strong>D5-D7</strong></td><td>每天发1条视频</td><td>测试开发中</td><td>邀请10个朋友内测测试</td></tr>
+<tr><td><strong>D8</strong></td><td><em>测试正式上线</em> + 发视频导流</td><td>✅ 上线</td><td>—</td></tr>
+<tr><td><strong>D9-D14</strong></td><td>每天1条视频。观察哪条数据最好</td><td>收集测试完成率数据</td><td>建初序核心群(30人)</td></tr>
+<tr><td><strong>D15</strong></td><td><em>数据复盘</em>。确认爆款方向</td><td>根据反馈迭代测试</td><td>群内讨论：什么内容让你想分享？</td></tr>
+<tr><td><strong>D16-D25</strong></td><td>集中发力爆款方向。目标：1条破万播放</td><td>加入"邀请闺蜜来测"裂变功能</td><td>群扩至50人</td></tr>
+<tr><td><strong>D26-D30</strong></td><td>总结复盘 + 下月内容规划</td><td>Phase 2 AI对话功能评估</td><td>群稳定运营节奏</td></tr>
+</table>
+
+<hr>
+
+<h2>五、变现路径（M3起逐步启动）</h2>
+
+<table>
+<tr><th>阶段</th><th>变现方式</th><th>定价</th></tr>
+<tr><td>M1-M2</td><td>纯积累期，不变现</td><td>—</td></tr>
+<tr><td>M3</td><td>初序社群（五行打卡+每日节律推送）</td><td>9.9-19.9元/月</td></tr>
+<tr><td>M4-M6</td><td>五行食养食谱包 / 五行节律日历（数字产品）</td><td>29.9-99元</td></tr>
+<tr><td>M6+</td><td>Zoey五行调养1v1咨询（限量）</td><td>199-499元/次</td></tr>
+<tr><td>M6+</td><td>品牌合作（益生菌/养生茶/功能食品）</td><td>按合作谈</td></tr>
+</table>
+
+<hr>
+
+<h2>六、成本估算（M1-M6）</h2>
+
+<table>
+<tr><th>项目</th><th>成本</th></tr>
+<tr><td>测试开发</td><td>0元（子默开发）</td></tr>
+<tr><td>托管</td><td>0元（GitHub Pages）</td></tr>
+<tr><td>域名（可选）</td><td>~50-100元/年</td></tr>
+<tr><td>LLM API（Phase 2）</td><td>~100-300元/月</td></tr>
+<tr><td>拍摄设备</td><td>手机+三脚架（已有）</td></tr>
+<tr><td>剪辑</td><td>剪映免费版</td></tr>
+<tr><td><strong>总计M1-M6</strong></td><td><em><2000元</em></td></tr>
+</table>
+
+<div class="key">
+<strong>💡 初序的核心竞争力不是钱，是Zoey本人 + 五行框架 + 分享裂变的测试产品。</strong>
+</div>
+
+<hr>
+
+<h2>七、决策门</h2>
+
+<table>
+<tr><th>时间</th><th>通过线</th><th>未达标动作</th></tr>
+<tr><td>D15</td><td>测试完成率>60% & 至少1条视频>1000播放</td><td>调整视频风格/选题方向</td></tr>
+<tr><td>D30</td><td>测试总完成>500人 & 粉丝>500</td><td>分析哪条视频数据最好，集中复制</td></tr>
+<tr><td>M3</td><td>粉丝>2000 & 测试>2000人</td><td>启动付费社群测试</td></tr>
+<tr><td>M6</td><td>粉丝>1万 & 月收入>3000</td><td>此模式可持续，进入扩张期</td></tr>
+</table>
+
+<p class="footer">初序 · Zoey个人IP落地方案 V1.0 · 2026年3月<br>子默 为 Zoey 制作</p>
+
+</body>
+</html>

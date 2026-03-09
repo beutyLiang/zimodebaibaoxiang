@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>五行肠养 · 体质测试</title>
+    <meta name="description" content="测测你是哪种五行肠道体质？了解情绪与肠道的深层关联">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 背景装饰层 -->
+    <div class="noise-overlay"></div>
+    <div class="star-field" id="star-field"></div>
+
+    <div id="app">
+        <!-- 首页 -->
+        <section id="page-home" class="page active">
+            <div class="home-bg">
+                <div class="five-elements-ring">
+                    <span class="ring-item wood">木</span>
+                    <span class="ring-item fire">火</span>
+                    <span class="ring-item earth">土</span>
+                    <span class="ring-item metal">金</span>
+                    <span class="ring-item water">水</span>
+                </div>
+            </div>
+            <div class="home-content">
+                <h1 class="brand-title">五行肠养</h1>
+                <p class="brand-subtitle">体质测试</p>
+                <p class="brand-desc">2分钟了解你的情绪与肠道<br>在五行结构里的深层关联</p>
+                <button id="btn-start" class="btn-primary pulse">开始测试</button>
+                <p class="test-count"><span id="total-tests">2,847</span> 人已完成测试</p>
+            </div>
+        </section>
+
+        <!-- 测试页 -->
+        <section id="page-quiz" class="page">
+            <div class="quiz-header">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="progress-text" class="progress-text">1 / 15</span>
+            </div>
+            <div class="quiz-body">
+                <div id="quiz-dimension" class="quiz-dimension"></div>
+                <h2 id="quiz-question" class="quiz-question"></h2>
+                <div id="quiz-options" class="quiz-options"></div>
+            </div>
+        </section>
+
+        <!-- 分析中 -->
+        <section id="page-loading" class="page">
+            <div class="loading-content">
+                <div class="loading-ring">
+                    <div class="loading-element wood-glow">木</div>
+                    <div class="loading-element fire-glow">火</div>
+                    <div class="loading-element earth-glow">土</div>
+                    <div class="loading-element metal-glow">金</div>
+                    <div class="loading-element water-glow">水</div>
+                </div>
+                <p class="loading-text">正在解析你的五行肠道体质<span class="dots">...</span></p>
+            </div>
+        </section>
+
+        <!-- 结果页 -->
+        <section id="page-result" class="page">
+            <div id="result-content" class="result-content"></div>
+        </section>
+    </div>
+
+    <script src="quiz-data.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
