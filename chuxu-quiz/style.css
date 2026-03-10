@@ -1,18 +1,18 @@
 /* ============================================
    初序 · 五行人格测试 V2.0 — 对话式样式表
-   设计语言：温暖奶咖底色 × 聊天气泡 × 五行自然色 × 微动效
+   品牌视觉 A1 渐变脉搏 · 三风格混搭
    ============================================ */
 
-/* ---- 色彩系统 ---- */
+/* ---- 色彩系统 (A1 品牌色) ---- */
 :root {
-    --bg: #FAF7F4;
-    --bg-chat: #F3EFE9;
+    --bg: #FAF7F2;
+    --bg-chat: #F0EDE6;
     --white: #FFFFFF;
-    --text: #2A2520;
-    --text-light: #8A827A;
-    --text-lighter: #B5AFA8;
-    --border: #E8E2DB;
-    --shadow: rgba(42, 37, 32, 0.06);
+    --text: #2A2A2A;
+    --text-light: #7A7570;
+    --text-lighter: #A8A29E;
+    --border: #E8E3DB;
+    --shadow: rgba(26, 46, 37, 0.06);
 
     --wood: #2D8B55;
     --fire: #C9544D;
@@ -21,7 +21,10 @@
     --water: #2E6B9E;
 
     --brand: #2D8B55;
-    --brand-soft: rgba(45, 139, 85, 0.1);
+    --brand-dark: #1A2E25;
+    --brand-soft: rgba(45, 139, 85, 0.08);
+    --brand-glow: rgba(45, 139, 85, 0.25);
+    --accent: #C6983A;
 }
 
 /* ---- 基础 ---- */
@@ -57,7 +60,7 @@ body {
 #page-home {
     justify-content: center;
     align-items: center;
-    background: linear-gradient(165deg, #FAF7F4 0%, #F0EBE3 50%, #E8E0D5 100%);
+    background: linear-gradient(165deg, var(--brand-dark) 0%, #1f3d2e 50%, #243a2d 100%);
     position: relative;
     overflow: hidden;
     padding: 40px 24px;
@@ -82,7 +85,7 @@ body {
     justify-content: center;
     font-size: 14px;
     font-weight: 500;
-    opacity: 0.18;
+    opacity: 0.3;
     animation: floatSlow 8s ease-in-out infinite;
 }
 
@@ -147,7 +150,7 @@ body {
 .home-eyebrow {
     font-size: 13px;
     letter-spacing: 3px;
-    color: var(--brand);
+    color: var(--accent);
     font-weight: 500;
     margin-bottom: 16px;
 }
@@ -156,14 +159,14 @@ body {
     font-size: 36px;
     font-weight: 900;
     line-height: 1.3;
-    color: var(--text);
+    color: #FFFFFF;
     margin-bottom: 18px;
     letter-spacing: 1px;
 }
 
 .home-desc {
     font-size: 14px;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.8;
     margin-bottom: 36px;
 }
@@ -171,7 +174,7 @@ body {
 .btn-start {
     display: inline-block;
     padding: 16px 48px;
-    background: var(--brand);
+    background: linear-gradient(135deg, var(--wood), var(--accent));
     color: #fff;
     border: none;
     border-radius: 50px;
@@ -179,18 +182,18 @@ body {
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
-    box-shadow: 0 6px 24px rgba(45, 139, 85, 0.3);
+    box-shadow: 0 6px 24px var(--brand-glow);
     transition: all 0.3s ease;
 }
 
 .btn-start:active {
     transform: scale(0.96);
-    box-shadow: 0 3px 12px rgba(45, 139, 85, 0.25);
+    box-shadow: 0 3px 12px var(--brand-glow);
 }
 
 .home-count {
     font-size: 12px;
-    color: var(--text-lighter);
+    color: rgba(255, 255, 255, 0.4);
     margin-top: 20px;
 }
 
@@ -257,7 +260,7 @@ body {
     height: 100%;
     width: 0%;
     transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    background: linear-gradient(90deg, var(--wood), var(--fire), var(--earth), var(--metal), var(--water));
+    background: linear-gradient(90deg, var(--wood), var(--accent), var(--water));
     border-radius: 0 2px 2px 0;
 }
 
@@ -265,7 +268,7 @@ body {
 .chat-body {
     flex: 1;
     overflow-y: auto;
-    padding: 16px 14px 100px;
+    padding: 16px 14px 220px;
     scroll-behavior: smooth;
 }
 
@@ -394,6 +397,8 @@ body {
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--border);
     z-index: 10;
+    max-height: 45vh;
+    overflow-y: auto;
 }
 
 .chat-options {
