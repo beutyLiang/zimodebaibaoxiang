@@ -86,10 +86,16 @@
         chatBody.appendChild(row);
     }
 
+    function adjustChatPadding() {
+        var inputH = chatInput.offsetHeight || 120;
+        chatBody.style.paddingBottom = (inputH + 24) + 'px';
+    }
+
     function scrollToBottom() {
+        adjustChatPadding();
         setTimeout(function () {
             chatBody.scrollTop = chatBody.scrollHeight;
-        }, 50);
+        }, 60);
     }
 
     // ---- 显示选项按钮 ----
@@ -120,6 +126,12 @@
         }
 
         chatInput.appendChild(container);
+
+        // 等待渲染完成后调整间距并滚动
+        requestAnimationFrame(function () {
+            adjustChatPadding();
+            scrollToBottom();
+        });
     }
 
     // ---- 处理答案 ----
