@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>归元 (Yuan) · 核心方案总览</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --accent-warm: #f39c12;
+    --bg: #ffffff;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #ecf0f1;
+    --section-bg: #f8f9fa;
+    --green: #27ae60;
+    --blue: #2980b9;
+    --red: #c0392b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 14px;
+    background: var(--bg);
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 50px;
+  }
+
+  /* Cover */
+  .cover {
+    text-align: center;
+    padding: 80px 20px 60px;
+    border-bottom: 3px solid var(--primary);
+    margin-bottom: 40px;
+    page-break-after: always;
+  }
+  .cover h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 18px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 2.2;
+  }
+  .cover .meta strong { color: var(--text); }
+  .cover .logo-text {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 12px;
+    margin-bottom: 4px;
+  }
+  .cover .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 20px auto;
+  }
+
+  /* TOC */
+  .toc {
+    page-break-after: always;
+    padding: 20px 0;
+  }
+  .toc h2 {
+    font-size: 20px;
+    color: var(--primary);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary);
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+  }
+  .toc ol li {
+    counter-increment: toc-counter;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+  }
+  .toc ol li::before {
+    content: counter(toc-counter, cjk-ideographic) "、";
+    color: var(--accent);
+    font-weight: 700;
+    margin-right: 4px;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 36px;
+    page-break-inside: avoid;
+  }
+  .section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 10px 0;
+    margin-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section h2 .num {
+    background: var(--primary);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .section h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary);
+    margin: 20px 0 10px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 13px;
+  }
+  thead th {
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #f9fafb; }
+  tbody tr:last-child td { border-bottom: 2px solid var(--border); }
+  td strong { color: var(--primary); }
+
+  /* Callout boxes */
+  .callout {
+    background: #fef9e7;
+    border-left: 4px solid var(--accent-warm);
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+  }
+  .callout.blue {
+    background: #eaf2f8;
+    border-left-color: var(--blue);
+  }
+  .callout.green {
+    background: #e8f8f5;
+    border-left-color: var(--green);
+  }
+  .callout.red {
+    background: #fdedec;
+    border-left-color: var(--red);
+  }
+  .callout strong { color: var(--primary); }
+
+  /* Code/diagram blocks */
+  .diagram {
+    background: #f4f6f9;
+    border: 1px solid #dfe6e9;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    white-space: pre;
+    overflow-x: auto;
+    color: var(--primary);
+  }
+
+  /* Quote block for speech */
+  .speech {
+    background: var(--section-bg);
+    border-left: 4px solid var(--primary);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    font-size: 13.5px;
+    color: #34495e;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-right: 4px;
+  }
+  .tag.red { background: #fdedec; color: var(--red); }
+  .tag.green { background: #e8f8f5; color: var(--green); }
+  .tag.blue { background: #eaf2f8; color: var(--blue); }
+  .tag.gold { background: #fef9e7; color: #d4ac0d; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--text-light);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* Print styles */
+  @media print {
+    body { font-size: 12px; }
+    .container { padding: 20px 30px; }
+    .cover { padding: 60px 20px 40px; }
+    .section { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    .no-break { page-break-inside: avoid; }
+  }
+
+  /* Page break utility */
+  .page-break { page-break-before: always; }
+
+  p { margin-bottom: 10px; }
+  ul, ol { margin: 8px 0 16px 20px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ======== COVER ======== -->
+  <div class="cover">
+    <div class="logo-text">归 元</div>
+    <div class="divider"></div>
+    <h1>核心方案总览</h1>
+    <p class="subtitle">Eastern Philosophy Cognitive Operating System</p>
+    <div class="meta">
+      <p>📅 <strong>2026 年 3 月 10 日</strong></p>
+      <p>制作：子默</p>
+      <p>审阅：Zoey</p>
+      <p style="margin-top:24px; font-size:12px; color:#b0b0b0">— 机密文件 · 仅供内部使用 —</p>
+    </div>
+  </div>
+
+  <!-- ======== TOC ======== -->
+  <div class="toc">
+    <h2>目 录</h2>
+    <ol>
+      <li>方案演进脉络</li>
+      <li>归元 IP 定位锚点</li>
+      <li>合作模式 — 核心商业结构</li>
+      <li>平台矩阵 — 分层启动策略</li>
+      <li>小红书「元气」子策略</li>
+      <li>拍摄外包方案</li>
+      <li>变现五层阶梯</li>
+      <li>M1-M3 执行总表</li>
+      <li>12 周预算总览</li>
+      <li>M3 决策门（Gate 1）</li>
+      <li>向品牌方的话术</li>
+    </ol>
+  </div>
+
+  <!-- ======== 1. 方案演进 ======== -->
+  <div class="section">
+    <h2><span class="num">1</span>方案演进脉络</h2>
+    <p>我们先后产出了 <strong>3 个版本</strong> 的方案，最终融合为推荐版：</p>
+    <table>
+      <thead><tr><th>版本</th><th>核心思路</th><th>问题</th></tr></thead>
+      <tbody>
+        <tr><td>V3.1 定稿版</td><td>聚焦国内 3 平台（视频号/公号/小红书），M3 目标 1 万粉</td><td>缺少抖音流量引擎，无国际线</td></tr>
+        <tr><td>全平台铺开版</td><td>Day 1 上线 6 平台，M3 目标 5 万粉</td><td>人力不足，每天 8-10 条，执行风险高</td></tr>
+        <tr><td><strong>📌 分层启动版（推荐）</strong></td><td><strong>M1 国内 4 平台 → M2+ 国际扩展，M3 目标 3 万粉</strong></td><td><strong>平衡野心与执行力</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 2. IP定位 ======== -->
+  <div class="section">
+    <h2><span class="num">2</span>归元 IP 定位锚点</h2>
+    <table>
+      <thead><tr><th>维度</th><th>归元的定位</th><th>❌ 归元不做</th></tr></thead>
+      <tbody>
+        <tr><td>核心概念</td><td><strong>东方哲学认知操作系统</strong></td><td>国学讲座、心灵鸡汤、易经占卜</td></tr>
+        <tr><td>竞品对标</td><td><strong>东方版 Daily Stoic</strong></td><td>曾仕强式说教</td></tr>
+        <tr><td>内容原则</td><td><strong>结构重于情绪、不玄学、不鸡汤</strong></td><td>玄学化、神秘化</td></tr>
+        <tr><td>美学调性</td><td><strong>极简、克制、高级感</strong></td><td>花哨、低质、随意</td></tr>
+        <tr><td>全球定位</td><td><strong>"重构而非翻译"</strong></td><td>简单中译英</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout green">
+      <strong>🔵 最大蓝海发现</strong><br>
+      Stoicism 在 YouTube/TikTok 已验证 "哲学→认知工具→变现" 路径（Daily Stoic 200万+ 订阅）。<br>
+      <strong>东方哲学在英文世界的 "认知工具" 赛道几乎空白</strong> —— 这是归元的全球级机会。
+    </div>
+  </div>
+
+  <!-- ======== 3. 合作模式 ======== -->
+  <div class="section page-break">
+    <h2><span class="num">3</span>合作模式 — 核心商业结构</h2>
+
+    <div class="diagram">M1 ──── M2 ──── M3 ──── M4 ──── M5 ──── M6 ──── M7+ ────→
+│←── 代运营期（月费4万） ──→│←──── 分润期（15%收入） ────→│
+│   品牌方付：月费+硬成本    │  品牌方付：硬成本+15%分润   │
+│   Zoey：全案操盘           │  Zoey：持续运营+享增长红利   │</div>
+
+    <table>
+      <thead><tr><th>核心参数</th><th>数值</th></tr></thead>
+      <tbody>
+        <tr><td>代运营月费</td><td><strong>40,000 元/月</strong>（M1-M3，共 12 万）</td></tr>
+        <tr><td>分润比例</td><td><strong>15%</strong>（M4 起，基于品牌全渠道收入）</td></tr>
+        <tr><td>品牌方总预算</td><td><strong>15-20 万</strong>（M1-M3 约 13.6 万，留有缓冲）</td></tr>
+        <tr><td>Zoey M1-M3 净利润</td><td><strong>约 9.6 万</strong>（月入4万 - 团队成本8千）</td></tr>
+      </tbody>
+    </table>
+
+    <h3>为什么是 4 万/月？</h3>
+    <table>
+      <thead><tr><th>服务项</th><th>等效市场价</th></tr></thead>
+      <tbody>
+        <tr><td>品牌战略（IP定位/竞品/架构）</td><td>~10,000/月</td></tr>
+        <tr><td>内容全案（选题/六步法脚本/Prompt库）</td><td>~10,000/月</td></tr>
+        <tr><td>视频制作（拍摄指导+剪辑管理）</td><td>~8,000/月</td></tr>
+        <tr><td>平台运营（发布/数据/投流）</td><td>~5,000/月</td></tr>
+        <tr><td>社群运营（搭建/活动/转化）</td><td>~5,000/月</td></tr>
+        <tr><td>AI产品（AI教练MVP）</td><td>~8,000/月</td></tr>
+        <tr><td><strong>合计市场价</strong></td><td><strong>~46,000/月</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Zoey 长期回报</h3>
+    <table>
+      <thead><tr><th>品牌年收入</th><th>15% 分润</th><th>月均</th></tr></thead>
+      <tbody>
+        <tr><td>100 万（保守起步）</td><td>15 万</td><td>1.25 万</td></tr>
+        <tr><td>500 万（第二年）</td><td>75 万</td><td>6.25 万</td></tr>
+        <tr><td>1,660 万（第三年）</td><td><strong>249 万</strong></td><td><strong>20.75 万</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 4. 平台矩阵 ======== -->
+  <div class="section page-break">
+    <h2><span class="num">4</span>平台矩阵 — 分层启动策略</h2>
+
+    <table>
+      <thead><tr><th>层级</th><th>平台</th><th>启动时间</th><th>角色</th></tr></thead>
+      <tbody>
+        <tr><td>🔥 核心层</td><td><strong>抖音 + 视频号</strong></td><td>M1 Day 1</td><td>流量引擎 + 私域沉淀</td></tr>
+        <tr><td>📚 内容层</td><td><strong>公众号</strong></td><td>M1 Day 1</td><td>深度内容中枢 + SEO</td></tr>
+        <tr><td>📸 辅助层</td><td><strong>小红书</strong></td><td>M1 W2 起</td><td>结构图文 + 搜索 + 元气子策略</td></tr>
+        <tr><td>🌍 国际层</td><td><strong>YouTube + Substack</strong></td><td>M2 起</td><td>全球蓝海抢位</td></tr>
+        <tr><td>⚡ 国际短视频</td><td><strong>TikTok</strong></td><td>M3 起</td><td>从 YouTube 素材剪辑</td></tr>
+      </tbody>
+    </table>
+
+    <h3>为什么分层而非一次铺开？</h3>
+    <ul>
+      <li><strong>人力现实：</strong>M1 只有 Zoey + 1 名兼职，无法同时运营 6 平台</li>
+      <li><strong>策略聚焦：</strong>先在国内跑通内容模型和变现逻辑，再国际化</li>
+      <li><strong>成本控制：</strong>国际线每月增加 2,000-3,000 元，放到 M2 更合理</li>
+      <li><strong>数据验证：</strong>M1 在国内验证爆款方向，M2 用验证过的模型做英文重构</li>
+    </ul>
+
+    <h3>"一鱼多吃" 内容分发</h3>
+    <div class="diagram">品牌方拍 1 条口播视频（3-5 分钟深度版）
+    │
+    ├── 抖音：剪成 3 条 15-60s 反常识金句
+    ├── 视频号：1 条 60-90s 精华版（含社交裂变 CTA）
+    ├── 公众号：1 篇深度长文（六步冲突法）
+    ├── 小红书：2 张结构卡图文
+    │
+    └── [M2 起]
+        ├── YouTube：1 条 3-5min 英文重构版
+        ├── TikTok：2 条 15-30s 英文金句版 [M3 起]
+        └── Substack：整合进周刊 Newsletter</div>
+  </div>
+
+  <!-- ======== 5. 小红书元气 ======== -->
+  <div class="section">
+    <h2><span class="num">5</span>小红书「元气」子策略</h2>
+    <p>小红书不硬推"认知操作系统"，而是用 <strong>「元气」</strong> 作为感性切入点，与抖音/视频号的理性线形成互补：</p>
+
+    <div class="diagram">归元 (Yuan) 认知操作系统
+    │
+    ├── 🧠 Mind · 认知线 ← 抖音/视频号/公号（主推）
+    │
+    ├── 🌿 Body · 元气线 ← 小红书（主推）⭐
+    │     五行 × 情绪 × 身体节律 × 能量管理
+    │
+    └── 🌒 Growth · 成长线 ← 后期</div>
+
+    <table>
+      <thead><tr><th>系列</th><th>内容方向</th><th>形式</th><th>频率</th></tr></thead>
+      <tbody>
+        <tr><td><strong>#今日元气</strong></td><td>五行时辰 + 当日能量提示</td><td>日签图文卡</td><td>每日 1 张</td></tr>
+        <tr><td><strong>#元气解码</strong></td><td>五行结构解读身体信号</td><td>图文 + 短视频</td><td>每周 2 条</td></tr>
+        <tr><td><strong>#元气测评</strong></td><td>五行人格测评 H5</td><td>互动 H5</td><td>持续引流</td></tr>
+        <tr><td><strong>#元气实验室</strong></td><td>真人出镜调养实践</td><td>短视频</td><td>每周 1 条</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 6. 拍摄外包 ======== -->
+  <div class="section">
+    <h2><span class="num">6</span>拍摄外包方案</h2>
+
+    <div class="callout blue">
+      <strong>核心思路：</strong>品牌方每周集中拍 1 次（2 小时），一次拍完一周素材。子默负责全部脚本和策划，外包仅承担「剪辑」环节。
+    </div>
+
+    <div class="diagram">子默（周一）→ 输出 3 条脚本 + 1 篇长文 + 2 张图文
+品牌方（周三）→ 集中拍摄 2h，产出 3-5 条素材
+外包剪辑（周三-周五）→ 剪辑 3 条短视频
+子默（周五）→ 审核 → 安排发布</div>
+
+    <table>
+      <thead><tr><th>推荐模式</th><th>月费</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>M1-M2：品牌方自拍 + 外包剪辑</strong></td><td><strong>~1,000-1,800 元/月</strong></td><td>性价比最优（首选）</td></tr>
+        <tr><td>M3 起可升级：摄影师上门 + 剪辑</td><td>~2,400-3,600 元/月</td><td>画面质感提升</td></tr>
+        <tr><td>品牌宣言片（仅 M1 一次性）</td><td>5,000 元</td><td>专业团队 1 天拍摄</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 7. 变现阶梯 ======== -->
+  <div class="section page-break">
+    <h2><span class="num">7</span>变现五层阶梯</h2>
+
+    <div class="callout">
+      <strong>核心逻辑：</strong>归元不是"卖课"的 IP。归元是 <strong>认知工具品牌</strong> ——<br>
+      免费内容建立信任 → 低价产品验证需求 → 高价服务沉淀价值
+    </div>
+
+    <table>
+      <thead><tr><th>层级</th><th>产品</th><th>定价</th><th>启动时间</th></tr></thead>
+      <tbody>
+        <tr><td>第 5 层</td><td>企业服务（认知工作坊 / 团队教练）</td><td>5万-50万/年</td><td>M12+</td></tr>
+        <tr><td>第 4 层</td><td>1v1 深度咨询（认知诊断+定制方案）</td><td>299-999 元/次</td><td>M4+</td></tr>
+        <tr><td>第 3 层</td><td>付费社群（认知学院 · AI教练 · 周深度分享）</td><td>29.9/99/299 元/年</td><td>M3</td></tr>
+        <tr><td>第 2 层</td><td>数字产品（认知卡牌 · 课程 · 付费专栏）</td><td>9.9-99 元</td><td>M2-M3</td></tr>
+        <tr><td>第 1 层</td><td>免费内容（短视频 + 长文 + AI教练基础版）</td><td>0 元</td><td>M1 Day 1</td></tr>
+      </tbody>
+    </table>
+
+    <h3>M1-M6 收入预测（务实版）</h3>
+    <table>
+      <thead><tr><th>月份</th><th>数字产品</th><th>社群</th><th>咨询</th><th style="background:var(--accent)">月收入</th></tr></thead>
+      <tbody>
+        <tr><td>M1</td><td>—</td><td>—</td><td>—</td><td><strong>0</strong></td></tr>
+        <tr><td>M2</td><td>~500</td><td>—</td><td>—</td><td><strong>~500</strong></td></tr>
+        <tr><td>M3</td><td>~1,500</td><td>~2,600</td><td>—</td><td><strong>~4,000</strong></td></tr>
+        <tr><td>M4</td><td>~2,000</td><td>~5,000</td><td>~4,500</td><td><strong>~11,500</strong></td></tr>
+        <tr><td>M5</td><td>~3,000</td><td>~8,000</td><td>~6,000</td><td><strong>~17,000</strong></td></tr>
+        <tr><td>M6</td><td>~5,000</td><td>~12,000</td><td>~8,500+</td><td><strong>~30,000+</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 8. 执行总表 ======== -->
+  <div class="section page-break">
+    <h2><span class="num">8</span>M1-M3 执行总表</h2>
+
+    <h3>M1：品牌引爆月（W1-W4）</h3>
+    <div class="callout blue">🎯 粉丝 <strong>5,000+</strong> / 种子群 <strong>50 人</strong> / 4 平台上线</div>
+    <table>
+      <thead><tr><th>周</th><th>核心任务</th><th>关键交付</th></tr></thead>
+      <tbody>
+        <tr><td><strong>W1</strong></td><td>基建冲刺</td><td>商标 / Logo / 4 平台账号 / Prompt 库 / 品牌宣言长文</td></tr>
+        <tr><td><strong>W2</strong></td><td>品牌首发</td><td>品牌视频全平台发布 + 日更启动</td></tr>
+        <tr><td><strong>W3</strong></td><td>日更 + 追数据</td><td>短视频 ×8 + 长文 ×1 + 图文 ×4</td></tr>
+        <tr><td><strong>W4</strong></td><td>冲刺 + 复盘</td><td>短视频 ×8 + 长文 ×1 + 图文 ×4 + M1 验收</td></tr>
+      </tbody>
+    </table>
+    <p><strong>M1 硬成本：9,300 元</strong> ｜ 代运营费：40,000 ｜ 品牌方支出：<strong>49,300</strong></p>
+
+    <h3>M2：内容爆发月（W5-W8）</h3>
+    <div class="callout blue">🎯 粉丝 <strong>15,000+</strong> / 国际 <strong>500+</strong> / AI 教练 MVP 上线</div>
+    <table>
+      <thead><tr><th>周</th><th>核心任务</th><th>里程碑</th></tr></thead>
+      <tbody>
+        <tr><td><strong>W5</strong></td><td>切换阴阳主题 + YouTube 建站</td><td>🌍 国际线启动</td></tr>
+        <tr><td><strong>W6</strong></td><td>AI 认知教练 MVP 上线</td><td>🤖 产品上线</td></tr>
+        <tr><td><strong>W7</strong></td><td>爆款追踪 + 复制</td><td>爆款公式锁定</td></tr>
+        <tr><td><strong>W8</strong></td><td>变现测试启动</td><td>💰 双线变现测试</td></tr>
+      </tbody>
+    </table>
+    <p><strong>M2 硬成本：4,700 元</strong> ｜ 代运营费：40,000 ｜ 品牌方支出：<strong>44,700</strong></p>
+
+    <h3>M3：收割验证月（W9-W12）</h3>
+    <div class="callout blue">🎯 粉丝 <strong>30,000+</strong> / 国际 <strong>2,000+</strong> / 付费 <strong>30 人+</strong> / 月收入测试</div>
+    <table>
+      <thead><tr><th>周</th><th>核心任务</th><th>里程碑</th></tr></thead>
+      <tbody>
+        <tr><td><strong>W9</strong></td><td>无为/内耗主题引爆</td><td>TikTok 启动</td></tr>
+        <tr><td><strong>W10</strong></td><td>付费社群上线（9.9-29.9）</td><td>💰 变现正式启动</td></tr>
+        <tr><td><strong>W11</strong></td><td>推广冲刺 + SOP 固化</td><td>SOP 交接完成</td></tr>
+        <tr><td><strong>W12</strong></td><td>M1-M3 总复盘</td><td>🚪 Gate 1 决策门</td></tr>
+      </tbody>
+    </table>
+    <p><strong>M3 硬成本：5,700 元</strong> ｜ 代运营费：40,000 ｜ 品牌方支出：<strong>45,700</strong></p>
+  </div>
+
+  <!-- ======== 9. 预算 ======== -->
+  <div class="section">
+    <h2><span class="num">9</span>12 周预算总览</h2>
+    <table>
+      <thead><tr><th>月份</th><th>硬成本</th><th>代运营费</th><th style="background:var(--accent)">品牌方月度支出</th></tr></thead>
+      <tbody>
+        <tr><td>M1</td><td>9,300</td><td>40,000</td><td><strong>49,300</strong></td></tr>
+        <tr><td>M2</td><td>4,700</td><td>40,000</td><td><strong>44,700</strong></td></tr>
+        <tr><td>M3</td><td>5,700</td><td>40,000</td><td><strong>45,700</strong></td></tr>
+        <tr><td><strong>合计</strong></td><td><strong>19,700</strong></td><td><strong>120,000</strong></td><td><strong>~140,000</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="callout green">
+      总支出约 <strong>14 万</strong>，在 15-20 万预算区间内，保留缓冲空间。
+    </div>
+  </div>
+
+  <!-- ======== 10. 决策门 ======== -->
+  <div class="section">
+    <h2><span class="num">10</span>M3 决策门（Gate 1）</h2>
+    <table>
+      <thead><tr><th>指标</th><th>✅ 通过线</th><th>🚨 止损线</th><th>未达标动作</th></tr></thead>
+      <tbody>
+        <tr><td>国内全平台粉丝</td><td><strong>≥ 3 万</strong></td><td>< 8,000</td><td>砍弱势平台，聚焦 2 个</td></tr>
+        <tr><td>抖音单条最高播放</td><td><strong>≥ 5 万</strong></td><td>< 1 万</td><td>调整内容策略</td></tr>
+        <tr><td>YouTube 订阅</td><td><strong>≥ 1,000</strong></td><td>< 200</td><td>暂缓国际线</td></tr>
+        <tr><td>付费用户</td><td><strong>≥ 30 人</strong></td><td>< 10 人</td><td>延长免费期</td></tr>
+        <tr><td>内容 SOP</td><td><strong>可独立运转</strong></td><td>仍依赖代运营</td><td>补充培训 1 月</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ======== 11. 话术 ======== -->
+  <div class="section">
+    <h2><span class="num">11</span>向品牌方的话术</h2>
+    <div class="speech">
+      "我的合作方式很简单：<strong>前 3 个月我用固定费用帮你从 0 到 1 搭建整个 IP 体系</strong> —— 包括品牌、内容、社群、AI 工具，全部交钥匙。3 个月后你能看到明确的数据成果。<br><br>
+      <strong>从第 4 个月起，我不收任何固定费用</strong>，只从品牌收入中拿 15% 的分成。品牌赚不到钱，我一分不拿。<br><br>
+      这意味着：你的风险锁定在前 3 个月的投入上。如果 3 个月后数据达标，说明模式跑通了，后面我们一起分享增长红利。"
+    </div>
+  </div>
+
+  <!-- ======== FOOTER ======== -->
+  <div class="footer">
+    归元 · 核心方案总览 · 2026 年 3 月 10 日 · 子默 制<br>
+    <span style="font-size:11px; color:#ccc">Confidential — For Internal Use Only</span>
+  </div>
+
+</div>
+</body>
+</html>
