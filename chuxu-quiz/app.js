@@ -387,9 +387,9 @@
         showPage('result');
         window.scrollTo({ top: 0 });
 
-        // 保存用户体质到 localStorage
-        localStorage.setItem('chuxu_element', topEl);
-        localStorage.setItem('chuxu_sub_element', subEl);
+        // 保存用户体质到云端 + localStorage
+        ChuxuDB.saveQuizResult(topEl, subEl, scores);
+        ChuxuDB.trackEvent('test_complete', { main: topEl, sub: subEl });
 
         // 柱状图动画
         setTimeout(function () {
@@ -430,9 +430,7 @@
                 var fb = CHECKIN_FEEDBACK[topEl];
                 var fbText = avg >= 4 ? fb.good : (avg >= 2.5 ? fb.mid : fb.low);
                 fbText = fbText[Math.floor(Math.random() * fbText.length)];
-                var records = JSON.parse(localStorage.getItem('chuxu_checkins') || '[]');
-                records.push({ date: todayStr, mood: mood, sleep: sleep, gut: gut, note: note });
-                localStorage.setItem('chuxu_checkins', JSON.stringify(records));
+                ChuxuDB.saveCheckin(topEl, mood, sleep, gut, note);
                 var section = document.querySelector('.checkin-section');
                 if (section) {
                     section.innerHTML = '<h3>✅ 每日打卡</h3>' +
@@ -449,6 +447,7 @@
 
     // ---- 分享 ----
     function handleShare() {
+        ChuxuDB.trackEvent('share_click');
         var sorted = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
         var r = ELEMENT_RESULTS[sorted[0]];
         var text = '🌿 我在「初序」五行人格测试中测出了 ' + r.fullName + '！\n\n' +
@@ -513,7 +512,9 @@
 
     // ---- 初始化 ----
     function init() {
+        ChuxuDB.trackEvent('page_view');
         document.getElementById('btn-start').addEventListener('click', function () {
+            ChuxuDB.trackEvent('test_start');
             showPage('chat');
             processStep('welcome');
         });
