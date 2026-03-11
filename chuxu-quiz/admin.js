@@ -29,7 +29,7 @@
         db.auth.getSession().then(function (res) {
             if (!res.data.session) {
                 // 未登录：跳转登录页
-                location.href = 'login.html?redirect=admin';
+                location.href = 'admin-login.html';
                 return;
             }
             var email = res.data.session.user.email;

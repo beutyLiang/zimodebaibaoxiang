@@ -210,11 +210,6 @@
     <script>
         var mode = 'login';
         var sb = null;
-        var redirectUrl = 'index.html';
-
-        // 检测 redirect 参数
-        var params = new URLSearchParams(window.location.search);
-        if (params.get('redirect') === 'admin') redirectUrl = 'admin.html';
 
         // 初始化 Supabase
         if (typeof supabase !== 'undefined') {
@@ -224,7 +219,7 @@
             );
             // 已登录直接跳转
             sb.auth.getSession().then(function (res) {
-                if (res.data.session) location.href = redirectUrl;
+                if (res.data.session) location.href = 'index.html';
             });
         }
 
@@ -259,7 +254,7 @@
                         localStorage.removeItem('chuxu_checkins');
                         syncUserProfile(res.data.user);
                         showMsg('登录成功！正在跳转...', 'success');
-                        setTimeout(function () { location.href = redirectUrl; }, 800);
+                        setTimeout(function () { location.href = 'index.html'; }, 800);
                     })
                     .catch(function (err) {
                         showMsg(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message, 'error');

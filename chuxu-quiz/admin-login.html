@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>初序 · 管理后台登录</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            background: #0f1419;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            width: 90%;
+            max-width: 380px;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 36px 28px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .login-logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .login-logo span {
+            font-size: 12px;
+            font-weight: 400;
+            color: #8b949e;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .login-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            background: #2D8B5533;
+            color: #2D8B55;
+            border: 1px solid #2D8B5544;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #8b949e;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            background: #0d1117;
+            border: 1.5px solid #30363d;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #2D8B55;
+        }
+
+        .form-group input::placeholder {
+            color: #484f58;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: #2D8B55;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 4px;
+            transition: all 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #248c4a;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .msg {
+            text-align: center;
+            font-size: 13px;
+            margin-top: 12px;
+            min-height: 18px;
+        }
+
+        .msg.error {
+            color: #E57373;
+        }
+
+        .msg.success {
+            color: #81C784;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            color: #484f58;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-logo">初序<span>管理后台</span></div>
+            <div class="login-badge">ADMIN</div>
+        </div>
+
+        <form id="auth-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>管理员邮箱</label>
+                <input type="email" id="input-email" placeholder="请输入管理员邮箱" required>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="input-password" placeholder="请输入密码" required minlength="6">
+            </div>
+            <button type="submit" class="btn-submit" id="btn-submit">登录管理后台</button>
+        </form>
+
+        <div class="msg" id="msg"></div>
+        <div class="footer-note">仅限授权管理员登录</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        var sb = null;
+        var ADMIN_EMAILS = ['glaydsbernhwenkuph@gmail.com'];
+
+        if (typeof supabase !== 'undefined') {
+            sb = supabase.createClient(
+                'https://byjqjpklizpnulybsrqz.supabase.co',
+                'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e'
+            );
+            sb.auth.getSession().then(function (res) {
+                if (res.data.session && ADMIN_EMAILS.indexOf(res.data.session.user.email) !== -1) {
+                    location.href = 'admin.html';
+                }
+            });
+        }
+
+        function showMsg(text, type) {
+            var el = document.getElementById('msg');
+            el.textContent = text;
+            el.className = 'msg ' + type;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            if (!sb) { showMsg('服务连接中，请稍后', 'error'); return; }
+
+            var email = document.getElementById('input-email').value.trim();
+            var password = document.getElementById('input-password').value;
+            var btn = document.getElementById('btn-submit');
+
+            if (ADMIN_EMAILS.indexOf(email) === -1) {
+                showMsg('该邮箱无管理员权限', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '验证中...';
+
+            sb.auth.signInWithPassword({ email: email, password: password })
+                .then(function (res) {
+                    if (res.error) throw res.error;
+                    showMsg('验证通过，正在进入后台...', 'success');
+                    setTimeout(function () { location.href = 'admin.html'; }, 600);
+                })
+                .catch(function (err) {
+                    showMsg(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message, 'error');
+                    btn.disabled = false;
+                    btn.textContent = '登录管理后台';
+                });
+        }
+    </script>
+</body>
+
+</html>
