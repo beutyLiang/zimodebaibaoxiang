@@ -88,20 +88,14 @@
 
     function adjustChatPadding() {
         var inputH = chatInput.offsetHeight || 120;
-        chatBody.style.paddingBottom = (inputH + 24) + 'px';
+        chatBody.style.paddingBottom = (inputH + 60) + 'px';
     }
 
     function scrollToBottom() {
         adjustChatPadding();
         setTimeout(function () {
-            // 找到最后一个气泡，确保它可见
-            var lastBubble = chatBody.querySelector('.bubble-row:last-child');
-            if (lastBubble) {
-                lastBubble.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            } else {
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
-        }, 60);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }, 80);
     }
 
     // ---- 显示选项按钮 ----
@@ -137,6 +131,11 @@
         requestAnimationFrame(function () {
             adjustChatPadding();
             scrollToBottom();
+            // 二次滚动：确保选项渲染后 padding 计算准确
+            setTimeout(function () {
+                adjustChatPadding();
+                scrollToBottom();
+            }, 200);
         });
     }
 
@@ -335,21 +334,19 @@
         });
         html += '</g></svg>';
 
-        // 太极中心（SVG 版本）
+        // 太极中心（标准太极图 SVG）
         html += '<div class="wheel-center">';
-        html += '<svg class="taiji-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">';
+        html += '<svg class="taiji-svg" viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">';
+        // 背景圆
+        html += '<circle cx="0" cy="0" r="50" fill="#1e2426"/>';
+        // 白色阳鱼（左弧半圆 + S曲线）
+        html += '<path d="M 0,-50 A 50,50 0 0,0 0,50 A 25,25 0 0,0 0,0 A 25,25 0 0,1 0,-50 Z" fill="#f5f0e6"/>';
+        // 阳鱼眼（白半中的黑点）
+        html += '<circle cx="0" cy="-25" r="7" fill="#1e2426"/>';
+        // 阴鱼眼（黑半中的白点）
+        html += '<circle cx="0" cy="25" r="7" fill="#f5f0e6"/>';
         // 外圈
-        html += '<circle cx="50" cy="50" r="49" fill="none" stroke="rgba(30,36,38,0.25)" stroke-width="2"/>';
-        // 暗半（右侧）
-        html += '<path d="M 50 1 A 49 49 0 0 1 50 99 A 24.5 24.5 0 0 0 50 50 A 24.5 24.5 0 0 1 50 1 Z" fill="#1e2426"/>';
-        // 亮半（左侧）
-        html += '<path d="M 50 1 A 49 49 0 0 0 50 99 A 24.5 24.5 0 0 1 50 50 A 24.5 24.5 0 0 0 50 1 Z" fill="#f5f0e6"/>';
-        // 鱼眼：亮半中的暗点
-        html += '<circle cx="50" cy="25.5" r="7" fill="#1e2426"/>';
-        html += '<circle cx="50" cy="25.5" r="3" fill="#f5f0e6"/>';
-        // 鱼眼：暗半中的亮点
-        html += '<circle cx="50" cy="74.5" r="7" fill="#f5f0e6"/>';
-        html += '<circle cx="50" cy="74.5" r="3" fill="#1e2426"/>';
+        html += '<circle cx="0" cy="0" r="49" fill="none" stroke="rgba(30,36,38,0.3)" stroke-width="1.5"/>';
         html += '</svg>';
         html += '</div>';
         html += '</div>'; // .wheel
