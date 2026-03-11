@@ -548,10 +548,6 @@
                 EXPAND_BODY.innerHTML = d.html;
                 EXPAND.style.display = 'block';
                 EXPAND.style.borderColor = activeColor + '44';
-                // 平滑滚动到展开区域
-                setTimeout(function () {
-                    EXPAND.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
             }
 
             function closeInline() {
