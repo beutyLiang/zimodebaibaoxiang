@@ -94,9 +94,12 @@
     function scrollToBottom() {
         adjustChatPadding();
         setTimeout(function () {
-            chatBody.scrollTop = chatBody.scrollHeight;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }, 60);
+            var bubbles = chatBody.querySelectorAll('.bubble-row');
+            var last = bubbles[bubbles.length - 1];
+            if (last) {
+                last.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
     }
 
     // ---- 显示选项按钮 ----
