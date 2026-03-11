@@ -250,7 +250,7 @@
             'interpret': {
                 title: r.emoji + ' 五行体质解读',
                 html: '<h2>你的五行体质解读</h2><p>' + r.description + '</p>' +
-                    (subEl !== topEl ? '<p style="margin-top:12px; padding:10px 14px; background:rgba(255,255,255,0.06); border-radius:10px; font-size:13px;"><strong>副行·' + ELEMENT_RESULTS[subEl].name + '：</strong>' + SUB_ELEMENT_DESC[subEl] + '</p>' : '')
+                    (subEl !== topEl ? '<p style="margin-top:12px; padding:10px 14px; background:rgba(30,36,38,0.05); border-radius:10px; font-size:13px;"><strong>副行·' + ELEMENT_RESULTS[subEl].name + '：</strong>' + SUB_ELEMENT_DESC[subEl] + '</p>' : '')
             },
             'wuxing-map': {
                 title: '🔗 五行关联地图',
@@ -277,7 +277,7 @@
                 title: '🍵 五行食养方',
                 html: '<h2>你的五行食养方</h2><p>根据你的' + r.fullName + '体质，初序为你推荐：</p>' +
                     foods.map(function (f) {
-                        return '<div style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.06);"><p><span class="highlight">' + f.emoji + ' ' + f.name + '</span> — ' + f.effect + '</p><p style="font-size:0.8rem;">材料：' + f.ingredients + '<br>做法：' + f.howTo + '</p></div>';
+                        return '<div style="padding:10px 0; border-bottom:1px solid rgba(30,36,38,0.08);"><p><span class="highlight">' + f.emoji + ' ' + f.name + '</span> — ' + f.effect + '</p><p style="font-size:0.8rem;">材料：' + f.ingredients + '<br>做法：' + f.howTo + '</p></div>';
                     }).join('')
             },
             'faq': {
