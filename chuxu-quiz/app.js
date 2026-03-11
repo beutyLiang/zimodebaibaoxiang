@@ -268,6 +268,98 @@
         });
         html += '</ul></div>';
 
+        // ========== ① 五行节律日签 ==========
+        var ds = getTodaySign(topEl);
+        html += '<div class="feature-card daily-sign" style="background: linear-gradient(135deg, ' + ds.todayColor + '22, ' + ds.todayColor + '08);">';
+        html += '  <div class="ds-header">';
+        html += '    <span class="ds-badge" style="background:' + ds.todayColor + ';">' + ds.todayEmoji + ' 今日' + ds.todayName + '日</span>';
+        html += '    <span class="ds-date">' + ds.dateStr + ' 周' + ds.weekday + '</span>';
+        html += '  </div>';
+        html += '  <p class="ds-tip">' + ds.sign.tip + '</p>';
+        html += '  <div class="ds-meta">';
+        html += '    <span>⏰ ' + ds.sign.time + '</span>';
+        html += '    <span>🍵 推荐：' + ds.sign.food + '</span>';
+        html += '  </div>';
+        html += '  <div class="ds-footer">📅 五行节律日签 · 初序为你定制</div>';
+        html += '</div>';
+
+        // ========== ② 五行食养方 ==========
+        var foods = FOOD_THERAPY[topEl];
+        html += '<div class="info-card"><h3>🍵 你的五行食养方</h3>';
+        html += '  <p style="font-size:13px; color:var(--text-light); margin-bottom:12px;">根据你的' + r.fullName + '体质，初序为你推荐：</p>';
+        html += '  <div class="food-scroll">';
+        foods.forEach(function (f) {
+            html += '<div class="food-card" style="border-left: 3px solid ' + WUXING_COLORS[topEl] + ';">';
+            html += '  <div class="food-name">' + f.emoji + ' ' + f.name + '</div>';
+            html += '  <div class="food-effect">' + f.effect + '</div>';
+            html += '  <div class="food-detail"><strong>材料：</strong>' + f.ingredients + '</div>';
+            html += '  <div class="food-detail"><strong>做法：</strong>' + f.howTo + '</div>';
+            html += '</div>';
+        });
+        html += '  </div>';
+        html += '</div>';
+
+        // ========== ③ 体质专属答疑 ==========
+        var qas = ELEMENT_QA[topEl];
+        html += '<div class="info-card"><h3>❓ ' + r.fullName + '常见疑问</h3>';
+        html += '  <div class="qa-list">';
+        qas.forEach(function (item, i) {
+            html += '<div class="qa-item">';
+            html += '  <div class="qa-question" onclick="this.parentElement.classList.toggle(\'open\')">';
+            html += '    <span>' + item.q + '</span><span class="qa-arrow">▸</span>';
+            html += '  </div>';
+            html += '  <div class="qa-answer">' + item.a + '</div>';
+            html += '</div>';
+        });
+        html += '  </div>';
+        html += '</div>';
+
+        // ========== ④ 每日打卡 ==========
+        var checkinData = JSON.parse(localStorage.getItem('chuxu_checkins') || '[]');
+        var todayStr = new Date().toISOString().split('T')[0];
+        var todayChecked = checkinData.some(function (c) { return c.date === todayStr; });
+        var streak = 0;
+        for (var d = 0; d < 30; d++) {
+            var checkDate = new Date();
+            checkDate.setDate(checkDate.getDate() - d);
+            var dStr = checkDate.toISOString().split('T')[0];
+            if (checkinData.some(function (c) { return c.date === dStr; })) { streak++; } else { break; }
+        }
+
+        html += '<div class="info-card checkin-section">';
+        html += '  <h3>✅ 每日打卡</h3>';
+        if (todayChecked) {
+            html += '  <div class="checkin-done">';
+            html += '    <div class="checkin-streak">🔥 已连续打卡 ' + streak + ' 天</div>';
+            html += '    <p style="color:var(--text-light); font-size:13px;">今天已打卡，明天再来哦～</p>';
+            html += '  </div>';
+        } else {
+            html += '  <p style="font-size:13px; color:var(--text-light); margin-bottom:12px;">记录今天的身体状态，初序为你五行解读</p>';
+            if (streak > 0) html += '  <div class="checkin-streak">🔥 已连续打卡 ' + streak + ' 天</div>';
+            html += '  <div class="checkin-form">';
+            html += '    <div class="checkin-row"><label>情绪状态</label><div class="checkin-stars" data-field="mood">☆☆☆☆☆</div></div>';
+            html += '    <div class="checkin-row"><label>睡眠质量</label><div class="checkin-stars" data-field="sleep">☆☆☆☆☆</div></div>';
+            html += '    <div class="checkin-row"><label>肠道舒适</label><div class="checkin-stars" data-field="gut">☆☆☆☆☆</div></div>';
+            html += '    <div class="checkin-row"><label>一句话记录</label><input type="text" id="checkin-note" class="checkin-input" placeholder="今天身体怎么样？" maxlength="50"></div>';
+            html += '    <button class="btn-checkin" id="btn-checkin">提交打卡 ✅</button>';
+            html += '  </div>';
+        }
+
+        // 打卡日历（最近14天）
+        html += '  <div class="checkin-calendar">';
+        html += '    <div class="cal-title">最近14天</div>';
+        html += '    <div class="cal-grid">';
+        for (var j = 13; j >= 0; j--) {
+            var calDate = new Date();
+            calDate.setDate(calDate.getDate() - j);
+            var calStr = calDate.toISOString().split('T')[0];
+            var checked = checkinData.some(function (c) { return c.date === calStr; });
+            html += '<div class="cal-day ' + (checked ? 'cal-checked' : '') + '" title="' + calStr + '">' + calDate.getDate() + '</div>';
+        }
+        html += '    </div>';
+        html += '  </div>';
+        html += '</div>';
+
         // 按钮
         html += '<button class="btn-share btn-share-primary" id="btn-share">📤 分享我的五行人格</button>';
         html += '<button class="btn-share btn-retest" id="btn-retest">🔄 重新测试</button>';
@@ -295,6 +387,10 @@
         showPage('result');
         window.scrollTo({ top: 0 });
 
+        // 保存用户体质到 localStorage
+        localStorage.setItem('chuxu_element', topEl);
+        localStorage.setItem('chuxu_sub_element', subEl);
+
         // 柱状图动画
         setTimeout(function () {
             document.querySelectorAll('.bar-fill').forEach(function (bar) {
@@ -306,6 +402,49 @@
         document.getElementById('btn-share').addEventListener('click', handleShare);
         document.getElementById('btn-retest').addEventListener('click', handleRetest);
         document.getElementById('btn-invite').addEventListener('click', handleInvite);
+
+        // 绑定打卡星星
+        document.querySelectorAll('.checkin-stars').forEach(function (starEl) {
+            starEl.addEventListener('click', function (e) {
+                var rect = starEl.getBoundingClientRect();
+                var x = e.clientX - rect.left;
+                var rating = Math.min(5, Math.max(1, Math.ceil(x / (rect.width / 5))));
+                starEl.setAttribute('data-rating', rating);
+                var stars = '';
+                for (var s = 1; s <= 5; s++) stars += (s <= rating ? '★' : '☆');
+                starEl.textContent = stars;
+                starEl.style.color = WUXING_COLORS[topEl];
+            });
+        });
+
+        // 绑定打卡提交
+        var checkinBtn = document.getElementById('btn-checkin');
+        if (checkinBtn) {
+            checkinBtn.addEventListener('click', function () {
+                var mood = parseInt(document.querySelector('[data-field="mood"]').getAttribute('data-rating') || '0');
+                var sleep = parseInt(document.querySelector('[data-field="sleep"]').getAttribute('data-rating') || '0');
+                var gut = parseInt(document.querySelector('[data-field="gut"]').getAttribute('data-rating') || '0');
+                if (mood === 0 || sleep === 0 || gut === 0) { showToast('请先给三项评分哦 ⭐'); return; }
+                var note = (document.getElementById('checkin-note') || {}).value || '';
+                var avg = (mood + sleep + gut) / 3;
+                var fb = CHECKIN_FEEDBACK[topEl];
+                var fbText = avg >= 4 ? fb.good : (avg >= 2.5 ? fb.mid : fb.low);
+                fbText = fbText[Math.floor(Math.random() * fbText.length)];
+                var records = JSON.parse(localStorage.getItem('chuxu_checkins') || '[]');
+                records.push({ date: todayStr, mood: mood, sleep: sleep, gut: gut, note: note });
+                localStorage.setItem('chuxu_checkins', JSON.stringify(records));
+                var section = document.querySelector('.checkin-section');
+                if (section) {
+                    section.innerHTML = '<h3>✅ 每日打卡</h3>' +
+                        '<div class="checkin-done">' +
+                        '<div class="checkin-streak">🔥 已连续打卡 ' + (streak + 1) + ' 天</div>' +
+                        '<div class="checkin-feedback" style="background:' + WUXING_COLORS[topEl] + '15; border-left:3px solid ' + WUXING_COLORS[topEl] + '; padding:12px 16px; border-radius:8px; margin:12px 0; font-size:14px;">' + fbText + '</div>' +
+                        '<p style="color:var(--text-light); font-size:13px;">明天再来打卡哦～</p>' +
+                        '</div>';
+                }
+                showToast('打卡成功！' + fbText);
+            });
+        }
     }
 
     // ---- 分享 ----

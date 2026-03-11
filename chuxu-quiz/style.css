@@ -714,6 +714,261 @@ body {
     transition: opacity 0.3s;
 }
 
+/* ========== ① 五行节律日签 ========== */
+.daily-sign {
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 14px;
+}
+
+.ds-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.ds-badge {
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.ds-date {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.ds-tip {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 14px;
+}
+
+.ds-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.ds-footer {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 11px;
+    color: var(--text-lighter);
+    text-align: center;
+}
+
+/* ========== ② 五行食养方 ========== */
+.food-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.food-card {
+    background: var(--bg);
+    padding: 14px 16px;
+    border-radius: 12px;
+}
+
+.food-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text);
+}
+
+.food-effect {
+    font-size: 12px;
+    color: var(--brand);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.food-detail {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+/* ========== ③ 体质专属答疑 ========== */
+.qa-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.qa-item {
+    border-bottom: 1px solid var(--border);
+}
+
+.qa-item:last-child {
+    border-bottom: none;
+}
+
+.qa-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.qa-arrow {
+    transition: transform 0.3s;
+    color: var(--text-lighter);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.qa-item.open .qa-arrow {
+    transform: rotate(90deg);
+}
+
+.qa-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text-light);
+    padding: 0;
+}
+
+.qa-item.open .qa-answer {
+    max-height: 300px;
+    padding: 0 0 14px 0;
+}
+
+/* ========== ④ 每日打卡 ========== */
+.checkin-streak {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand);
+    padding: 8px 0;
+}
+
+.checkin-done {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.checkin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.checkin-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkin-row label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    width: 72px;
+    flex-shrink: 0;
+}
+
+.checkin-stars {
+    font-size: 22px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: var(--text-lighter);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.checkin-input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.checkin-input:focus {
+    border-color: var(--brand);
+}
+
+.btn-checkin {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    background: var(--brand);
+    color: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+    margin-top: 4px;
+}
+
+.btn-checkin:active {
+    transform: scale(0.97);
+}
+
+/* 打卡日历 */
+.checkin-calendar {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+}
+
+.cal-title {
+    font-size: 12px;
+    color: var(--text-lighter);
+    margin-bottom: 8px;
+}
+
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-light);
+    background: var(--bg);
+}
+
+.cal-checked {
+    background: var(--brand);
+    color: #fff;
+    font-weight: 600;
+}
+
 /* 响应式 */
 @media (min-width: 500px) {
     #app {
