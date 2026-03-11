@@ -338,12 +338,11 @@
         html += '<div class="wheel-indicator" id="wheelIndicator"><svg viewBox="0 0 24 16" width="24" height="16"><polygon points="12,16 0,0 24,0" fill="currentColor"/></svg></div>';
         html += '</div>'; // .wheel-section
 
-        // 遮罩 + 面板（注入到 body 末尾）
-        html += '<div class="content-backdrop" id="contentBackdrop"></div>';
-        html += '<div class="content-panel" id="contentPanel">';
-        html += '<div class="panel-header"><span class="panel-title" id="panelTitle"></span>';
-        html += '<button class="close-btn" id="closeBtn" aria-label="关闭"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>';
-        html += '<div class="panel-body"><div class="content-inner" id="contentInner"></div></div>';
+        // 内嵌展开区域（替代弹出层）
+        html += '<div class="wheel-expand" id="wheelExpand" style="display:none;">';
+        html += '  <div class="wheel-expand-header"><span class="wheel-expand-title" id="expandTitle"></span>';
+        html += '    <button class="wheel-expand-close" id="expandClose">✕</button></div>';
+        html += '  <div class="wheel-expand-body" id="expandBody"></div>';
         html += '</div>';
 
         // ========== ④ 每日打卡 ==========
@@ -430,14 +429,13 @@
             });
         }, 300);
 
-        // ========== 八卦圆盘交互 ==========
+        // ========== 八卦圆盘交互（内嵌展开版）==========
         setTimeout(function () {
             var WHEEL_EL = document.getElementById('wheel');
-            var PANEL = document.getElementById('contentPanel');
-            var INNER = document.getElementById('contentInner');
-            var P_TITLE = document.getElementById('panelTitle');
-            var CLOSE = document.getElementById('closeBtn');
-            var BACKDROP_EL = document.getElementById('contentBackdrop');
+            var EXPAND = document.getElementById('wheelExpand');
+            var EXPAND_TITLE = document.getElementById('expandTitle');
+            var EXPAND_BODY = document.getElementById('expandBody');
+            var EXPAND_CLOSE = document.getElementById('expandClose');
             var INDICATOR = document.getElementById('wheelIndicator');
             if (!WHEEL_EL) return;
 
@@ -445,6 +443,7 @@
             var FRICTION = 0.96, MIN_V = 0.15, V_MULT = 0.45;
             var wRot = 0, wVel = 0, wLastAngle = 0, wLastTime = 0;
             var wDragging = false, wMoved = false, wOpening = false, wRaf = null;
+            var currentModule = null;
 
             var textEls = WHEEL_EL.querySelectorAll('.sector-text');
 
@@ -475,7 +474,6 @@
             }
 
             function startDrag(e) {
-                if (PANEL.classList.contains('open')) return;
                 if (e.target.closest && e.target.closest('.wheel-center')) return;
                 wDragging = true; wMoved = false;
                 wLastTime = Date.now();
@@ -541,35 +539,41 @@
                 WHEEL_EL.querySelectorAll('.wheel-sector').forEach(function (s) { s.classList.remove('selected'); });
             }
 
-            function openWPanel(moduleId) {
+            // 内嵌展开（不是弹出层）
+            function openInline(moduleId) {
                 var d = WHEEL_DATA[moduleId];
                 if (!d) return;
-                PANEL.style.background = activeColor + '18';
-                P_TITLE.textContent = d.title;
-                INNER.innerHTML = d.html;
-                PANEL.classList.add('open');
-                BACKDROP_EL.classList.add('show');
+                currentModule = moduleId;
+                EXPAND_TITLE.textContent = d.title;
+                EXPAND_BODY.innerHTML = d.html;
+                EXPAND.style.display = 'block';
+                EXPAND.style.borderColor = activeColor + '44';
+                // 平滑滚动到展开区域
+                setTimeout(function () {
+                    EXPAND.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
             }
 
-            function closeWPanel() {
-                PANEL.classList.remove('open');
-                BACKDROP_EL.classList.remove('show');
+            function closeInline() {
+                EXPAND.style.display = 'none';
+                EXPAND_BODY.innerHTML = '';
+                currentModule = null;
                 clearSel();
             }
 
-            BACKDROP_EL.addEventListener('click', closeWPanel);
-            CLOSE.addEventListener('click', closeWPanel);
+            EXPAND_CLOSE.addEventListener('click', closeInline);
 
             function handleSectorClick(sector) {
                 if (!sector || !sector.dataset.module || wOpening) return;
-                if (PANEL.classList.contains('open')) closeWPanel();
+                var moduleId = sector.dataset.module;
+                // 点击同一个扇形则收起
+                if (currentModule === moduleId) { closeInline(); return; }
                 wOpening = true;
                 clearSel();
                 sector.classList.add('selected');
-                var moduleId = sector.dataset.module;
                 var idx = Number(sector.dataset.index);
                 spinToBottom(idx).then(function () {
-                    openWPanel(moduleId);
+                    openInline(moduleId);
                     wOpening = false;
                 });
             }
@@ -579,9 +583,7 @@
                 if (sector && sector.dataset.module) {
                     e.preventDefault(); e.stopPropagation();
                     handleSectorClick(sector);
-                    return;
                 }
-                if (PANEL.classList.contains('open')) { e.preventDefault(); closeWPanel(); }
             });
 
             WHEEL_EL.addEventListener('touchend', function (e) {
@@ -591,14 +593,11 @@
                 var sector = el && el.closest ? el.closest('.wheel-sector') : null;
                 if (sector && sector.dataset.module) {
                     handleSectorClick(sector);
-                } else if (PANEL.classList.contains('open') && el && el.closest('#wheel')) {
-                    closeWPanel();
                 }
             }, { passive: true });
 
             layoutTexts();
             applyRot();
-            // 设置指示器颜色
             if (INDICATOR) INDICATOR.style.color = activeColor;
         }, 500);
         document.getElementById('btn-share').addEventListener('click', handleShare);
