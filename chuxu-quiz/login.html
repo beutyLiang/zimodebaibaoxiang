@@ -210,6 +210,11 @@
     <script>
         var mode = 'login';
         var sb = null;
+        var redirectUrl = 'index.html';
+
+        // 检测 redirect 参数
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('redirect') === 'admin') redirectUrl = 'admin.html';
 
         // 初始化 Supabase
         if (typeof supabase !== 'undefined') {
@@ -219,7 +224,7 @@
             );
             // 已登录直接跳转
             sb.auth.getSession().then(function (res) {
-                if (res.data.session) location.href = 'index.html';
+                if (res.data.session) location.href = redirectUrl;
             });
         }
 
@@ -251,8 +256,10 @@
                 sb.auth.signInWithPassword({ email: email, password: password })
                     .then(function (res) {
                         if (res.error) throw res.error;
+                        // 清除旧用户的本地打卡数据，避免串号
+                        localStorage.removeItem('chuxu_checkins');
                         showMsg('登录成功！正在跳转...', 'success');
-                        setTimeout(function () { location.href = 'index.html'; }, 800);
+                        setTimeout(function () { location.href = redirectUrl; }, 800);
                     })
                     .catch(function (err) {
                         showMsg(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message, 'error');
@@ -267,7 +274,8 @@
                             showMsg('注册成功！请查收验证邮件后登录', 'success');
                         } else {
                             showMsg('注册成功！正在跳转...', 'success');
-                            setTimeout(function () { location.href = 'index.html'; }, 800);
+                            localStorage.removeItem('chuxu_checkins');
+                            setTimeout(function () { location.href = redirectUrl; }, 800);
                         }
                         btn.disabled = false;
                         btn.textContent = '注册';
