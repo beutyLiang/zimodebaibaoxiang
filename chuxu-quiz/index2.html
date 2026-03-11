@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>初序 · 五行人格测试 V2</title>
+    <meta name="description" content="测测你的五行人格——读懂身体说的话">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- 用户状态栏 -->
+        <div class="user-bar">
+            <a href="login.html" class="user-bar-btn" id="header-login-btn">登录</a>
+            <div class="user-bar-info" id="header-user-info" style="display:none;">
+                <span id="header-user-name"></span>
+                <a href="admin.html" id="header-admin-link" class="user-bar-btn" style="display:none;">后台</a>
+                <button class="user-bar-btn" onclick="ChuxuAuth.signOut()">退出</button>
+            </div>
+        </div>
+
+        <!-- 首页 -->
+        <section id="page-home" class="page active">
+            <div class="home-deco">
+                <div class="element-float e-wood">木</div>
+                <div class="element-float e-fire">火</div>
+                <div class="element-float e-earth">土</div>
+                <div class="element-float e-metal">金</div>
+                <div class="element-float e-water">水</div>
+            </div>
+            <div class="home-content">
+                <p class="home-eyebrow">初序 · 五行人格测试</p>
+                <h1 class="home-title">读懂身体<br>说的话</h1>
+                <p class="home-desc">8个问题，找到属于你的五行节律<br>了解情绪、肠道、睡眠背后的隐藏关联</p>
+                <button id="btn-start" class="btn-start">开始测试 →</button>
+                <p class="home-count"><span id="test-count">3,281</span> 人已完成测试</p>
+            </div>
+        </section>
+
+        <!-- 对话测试页 -->
+        <section id="page-chat" class="page">
+            <div class="chat-header">
+                <div class="chat-avatar">初</div>
+                <div class="chat-header-info">
+                    <span class="chat-name">初序</span>
+                    <span class="chat-status">你的五行解读师</span>
+                </div>
+                <div class="chat-progress">
+                    <div id="chat-progress-fill" class="chat-progress-fill"></div>
+                </div>
+            </div>
+            <div id="chat-body" class="chat-body"></div>
+            <div id="chat-input" class="chat-input-area"></div>
+        </section>
+
+        <!-- 结果页 -->
+        <section id="page-result" class="page">
+            <div id="result-content" class="result-content"></div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth.js"></script>
+    <script src="features-data.js"></script>
+    <script src="quiz-data.js"></script>
+    <script src="app2.js"></script>
+</body>
+
+</html>
