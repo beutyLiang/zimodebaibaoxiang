@@ -421,6 +421,12 @@
         var checkinBtn = document.getElementById('btn-checkin');
         if (checkinBtn) {
             checkinBtn.addEventListener('click', function () {
+                // 渐进式认证：打卡需要登录
+                if (typeof ChuxuAuth !== 'undefined' && !ChuxuAuth.isLoggedIn()) {
+                    showToast('请先登录后再打卡哦 🔐');
+                    setTimeout(function () { location.href = 'login.html'; }, 1200);
+                    return;
+                }
                 var mood = parseInt(document.querySelector('[data-field="mood"]').getAttribute('data-rating') || '0');
                 var sleep = parseInt(document.querySelector('[data-field="sleep"]').getAttribute('data-rating') || '0');
                 var gut = parseInt(document.querySelector('[data-field="gut"]').getAttribute('data-rating') || '0');
