@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初序 · 管理后台</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- 侧边栏 -->
+        <nav class="sidebar">
+            <div class="sidebar-logo">初序<span>管理后台</span></div>
+            <a class="nav-item active" data-tab="overview">📊 数据概览</a>
+            <a class="nav-item" data-tab="funnel">🔍 用户行为</a>
+            <a class="nav-item" data-tab="checkins">✅ 打卡统计</a>
+            <a class="nav-item" data-tab="users">👥 用户列表</a>
+            <div class="sidebar-bottom">
+                <a href="index.html" class="nav-item">← 返回前台</a>
+                <button class="nav-item" id="admin-logout" onclick="handleLogout()">退出登录</button>
+            </div>
+        </nav>
+
+        <!-- 主内容 -->
+        <main class="main-content" id="main-content">
+            <!-- 加载/认证检查 -->
+            <div id="auth-check" class="auth-check">
+                <div class="auth-check-inner">🔒 验证管理员权限中...</div>
+            </div>
+
+            <!-- 数据概览 -->
+            <section class="tab-panel active" id="panel-overview">
+                <h2>📊 数据概览</h2>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-tests">-</div>
+                        <div class="stat-label">总测试人数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-today-tests">-</div>
+                        <div class="stat-label">今日新增</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-checkins">-</div>
+                        <div class="stat-label">总打卡次数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-events">-</div>
+                        <div class="stat-label">总事件数</div>
+                    </div>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-box">
+                        <h3>五行分布</h3>
+                        <canvas id="chart-elements"></canvas>
+                    </div>
+                    <div class="chart-box">
+                        <h3>每日测试趋势（近7天）</h3>
+                        <canvas id="chart-daily"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 用户行为 -->
+            <section class="tab-panel" id="panel-funnel">
+                <h2>🔍 用户行为漏斗</h2>
+                <div class="funnel-chart" id="funnel-container"></div>
+                <h3 style="margin-top:32px;">最近事件</h3>
+                <div class="table-wrap">
+                    <table id="events-table">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>用户</th>
+                                <th>事件</th>
+                                <th>数据</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 打卡统计 -->
+            <section class="tab-panel" id="panel-checkins">
+                <h2>✅ 打卡统计</h2>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-checkin-users">-</div>
+                        <div class="stat-label">打卡用户数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-mood">-</div>
+                        <div class="stat-label">平均情绪</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-sleep">-</div>
+                        <div class="stat-label">平均睡眠</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-gut">-</div>
+                        <div class="stat-label">平均肠道</div>
+                    </div>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-box full">
+                        <h3>打卡趋势（近7天）</h3>
+                        <canvas id="chart-checkin-trend"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 用户列表 -->
+            <section class="tab-panel" id="panel-users">
+                <h2>👥 用户测试记录</h2>
+                <div class="table-wrap">
+                    <table id="users-table">
+                        <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>用户ID</th>
+                                <th>主行</th>
+                                <th>副行</th>
+                                <th>评分</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

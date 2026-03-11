@@ -1,0 +1,277 @@
+/* 初序 · 管理后台样式 · 暗色专业数据看板 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: #0f1419;
+    color: #e0e0e0;
+}
+
+/* ---- 布局 ---- */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---- 侧边栏 ---- */
+.sidebar {
+    width: 220px;
+    background: #161b22;
+    border-right: 1px solid #30363d;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-logo {
+    padding: 0 20px 20px;
+    font-size: 20px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #2D8B55, #C6983A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.sidebar-logo span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    -webkit-text-fill-color: #888;
+    margin-top: 2px;
+}
+
+.nav-item {
+    display: block;
+    padding: 10px 20px;
+    font-size: 13px;
+    color: #8b949e;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    text-align: left;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.nav-item:hover {
+    color: #e0e0e0;
+    background: #21262d;
+}
+
+.nav-item.active {
+    color: #fff;
+    background: #2D8B5533;
+    border-left: 3px solid #2D8B55;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    border-top: 1px solid #30363d;
+    padding-top: 10px;
+}
+
+/* ---- 主内容 ---- */
+.main-content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* 认证检查 */
+.auth-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0f1419;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.auth-check-inner {
+    font-size: 16px;
+    color: #8b949e;
+}
+
+.auth-check-inner a {
+    color: #2D8B55;
+}
+
+/* ---- 标签面板 ---- */
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+.tab-panel h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #fff;
+}
+
+.tab-panel h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #ccc;
+}
+
+/* ---- 统计卡片 ---- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 900;
+    color: #2D8B55;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+/* ---- 图表 ---- */
+.chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.chart-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.chart-box.full {
+    grid-column: 1 / -1;
+}
+
+/* ---- 漏斗 ---- */
+.funnel-step {
+    margin-bottom: 10px;
+}
+
+.funnel-bar {
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 100px;
+    transition: width 0.6s ease;
+}
+
+.funnel-rate {
+    font-size: 11px;
+    color: #8b949e;
+    padding: 2px 0 0 10px;
+}
+
+/* ---- 表格 ---- */
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    background: #161b22;
+    color: #8b949e;
+    font-weight: 500;
+    border-bottom: 1px solid #30363d;
+    position: sticky;
+    top: 0;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #21262d;
+    color: #c9d1d9;
+}
+
+tr:hover td {
+    background: #161b22;
+}
+
+/* ---- 响应式 ---- */
+@media (max-width: 768px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .sidebar-logo {
+        padding: 5px 10px;
+    }
+
+    .nav-item {
+        padding: 8px 12px;
+    }
+
+    .sidebar-bottom {
+        margin-top: 0;
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
+
+    .chart-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -14,6 +14,15 @@
 
 <body>
     <div id="app">
+        <!-- 用户状态栏 -->
+        <div class="user-bar">
+            <a href="login.html" class="user-bar-btn" id="header-login-btn">登录</a>
+            <div class="user-bar-info" id="header-user-info" style="display:none;">
+                <span id="header-user-name"></span>
+                <a href="admin.html" id="header-admin-link" class="user-bar-btn" style="display:none;">后台</a>
+                <button class="user-bar-btn" onclick="ChuxuAuth.signOut()"> 退出</button>
+            </div>
+        </div>
         <!-- 首页 -->
         <section id="page-home" class="page active">
             <div class="home-deco">
@@ -56,6 +65,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase.js"></script>
+    <script src="auth.js"></script>
     <script src="features-data.js"></script>
     <script src="quiz-data.js"></script>
     <script src="app.js"></script>
