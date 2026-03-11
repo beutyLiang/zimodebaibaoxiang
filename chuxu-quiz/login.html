@@ -256,8 +256,8 @@
                 sb.auth.signInWithPassword({ email: email, password: password })
                     .then(function (res) {
                         if (res.error) throw res.error;
-                        // 清除旧用户的本地打卡数据，避免串号
                         localStorage.removeItem('chuxu_checkins');
+                        syncUserProfile(res.data.user);
                         showMsg('登录成功！正在跳转...', 'success');
                         setTimeout(function () { location.href = redirectUrl; }, 800);
                     })
@@ -271,8 +271,10 @@
                     .then(function (res) {
                         if (res.error) throw res.error;
                         if (res.data.user && !res.data.session) {
+                            syncUserProfile(res.data.user);
                             showMsg('注册成功！请查收验证邮件后登录', 'success');
                         } else {
+                            syncUserProfile(res.data.user);
                             showMsg('注册成功！正在跳转...', 'success');
                             localStorage.removeItem('chuxu_checkins');
                             setTimeout(function () { location.href = redirectUrl; }, 800);
@@ -286,6 +288,19 @@
                         btn.textContent = '注册';
                     });
             }
+        }
+
+        // 同步用户信息到 user_profiles 表
+        function syncUserProfile(user) {
+            if (!user || !sb) return;
+            sb.from('user_profiles').select('id').eq('user_id', user.id).then(function (r) {
+                if (r.data && r.data.length > 0) return;
+                sb.from('user_profiles').insert({
+                    user_id: user.id,
+                    email: user.email,
+                    note: ''
+                });
+            });
         }
     </script>
 </body>
