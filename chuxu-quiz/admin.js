@@ -6,7 +6,7 @@
 
     var SUPABASE_URL = 'https://byjqjpklizpnulybsrqz.supabase.co';
     var SUPABASE_KEY = 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e';
-    var ADMIN_EMAILS = ['zoey@chuxu.app'];
+    var ADMIN_EMAILS = ['glaydsbernhwenkuph@gmail.com'];
 
     var db = null;
     var ELEMENT_NAMES = { wood: '🌿木', fire: '🔥火', earth: '🌾土', metal: '🌙金', water: '🌊水' };

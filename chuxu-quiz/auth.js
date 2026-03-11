@@ -8,7 +8,7 @@ var ChuxuAuth = (function () {
 
     var SUPABASE_URL = 'https://byjqjpklizpnulybsrqz.supabase.co';
     var SUPABASE_KEY = 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e';
-    var ADMIN_EMAILS = ['zoey@chuxu.app']; // 管理员邮箱列表，可按需添加
+    var ADMIN_EMAILS = ['glaydsbernhwenkuph@gmail.com'];
 
     var client = null;
     var currentUser = null;
