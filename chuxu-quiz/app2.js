@@ -253,8 +253,8 @@
                     (subEl !== topEl ? '<p style="margin-top:12px; padding:10px 14px; background:rgba(30,36,38,0.05); border-radius:10px; font-size:13px;"><strong>副行·' + ELEMENT_RESULTS[subEl].name + '：</strong>' + SUB_ELEMENT_DESC[subEl] + '</p>' : '')
             },
             'wuxing-map': {
-                title: '🔗 五行关联地图',
-                html: '<h2>五行关联地图</h2>' +
+                title: '🔗 五行地图',
+                html: '<h2>五行地图</h2>' +
                     '<ul><li><span class="highlight">脏腑</span>：' + r.organ + '</li>' +
                     '<li><span class="highlight">情绪</span>：' + r.emotion + '</li>' +
                     '<li><span class="highlight">季节</span>：' + r.season + '</li>' +
@@ -266,15 +266,15 @@
                 html: '<h2>初序为你定制的调养建议</h2><ul>' + r.tips.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>'
             },
             'daily-sign': {
-                title: '📅 今日五行日签',
-                html: '<h2>' + ds.todayEmoji + ' 今日' + ds.todayName + '日</h2>' +
+                title: r.emoji + ' 今日' + r.name + '日',
+                html: '<h2>' + r.emoji + ' 今日' + r.name + '日</h2>' +
                     '<p>' + ds.dateStr + ' 周' + ds.weekday + '</p>' +
                     '<p style="margin:12px 0; font-size:0.95rem;">' + ds.sign.tip + '</p>' +
                     '<p>⏰ ' + ds.sign.time + '</p>' +
                     '<p>🍵 推荐：' + ds.sign.food + '</p>'
             },
             'wuxing-diet': {
-                title: '🍵 五行食养方',
+                title: '🍵 五行食方',
                 html: '<h2>你的五行食养方</h2><p>根据你的' + r.fullName + '体质，初序为你推荐：</p>' +
                     foods.map(function (f) {
                         return '<div style="padding:10px 0; border-bottom:1px solid rgba(30,36,38,0.08);"><p><span class="highlight">' + f.emoji + ' ' + f.name + '</span> — ' + f.effect + '</p><p style="font-size:0.8rem;">材料：' + f.ingredients + '<br>做法：' + f.howTo + '</p></div>';
@@ -289,8 +289,7 @@
             }
         };
 
-        var sectorLabels = ['体质解读', '关联地图', '调养建议', '今日日签', '食养方', '常见问题'];
-        var sectorEmojis = [r.emoji, '🔗', '🌿', '📅', '🍵', '❓'];
+        var sectorLabels = [r.emoji + ' 体质解读', '🔗 五行地图', '🌿 调养建议', r.emoji + ' 今日' + r.name + '日', '🍵 五行食方', '❓ 常见问题'];
         var sectorKeys = ['interpret', 'wuxing-map', 'health-tips', 'daily-sign', 'wuxing-diet', 'faq'];
         var activeColor = r.color;
 
@@ -326,8 +325,7 @@
         });
         html += '<g id="textGroup">';
         sectorLabels.forEach(function (label, i) {
-            html += '<text class="sector-icon" data-index="' + i + '">' + sectorEmojis[i] + '</text>';
-            html += '<text class="sector-label" data-index="' + i + '">' + label + '</text>';
+            html += '<text class="sector-text" data-index="' + i + '">' + label + '</text>';
         });
         html += '</g></svg>';
 
@@ -453,27 +451,15 @@
             var wDragging = false, wMoved = false, wOpening = false, wRaf = null;
             var currentModule = null;
 
-            var iconEls = WHEEL_EL.querySelectorAll('.sector-icon');
-            var labelEls = WHEEL_EL.querySelectorAll('.sector-label');
-            var R_ICON = 56, R_LABEL = 68;
+            var textEls = WHEEL_EL.querySelectorAll('.sector-text');
 
             function layoutTexts() {
-                iconEls.forEach(function (t) {
+                textEls.forEach(function (t) {
                     var i = Number(t.dataset.index);
                     var midDeg = START_ANGLE + i * SLICE + SLICE / 2;
                     var rad = (midDeg * Math.PI) / 180;
-                    var x = CX + R_ICON * Math.cos(rad);
-                    var y = CY + R_ICON * Math.sin(rad);
-                    t.setAttribute('x', x.toFixed(1));
-                    t.setAttribute('y', y.toFixed(1));
-                    t._cx = x; t._cy = y;
-                });
-                labelEls.forEach(function (t) {
-                    var i = Number(t.dataset.index);
-                    var midDeg = START_ANGLE + i * SLICE + SLICE / 2;
-                    var rad = (midDeg * Math.PI) / 180;
-                    var x = CX + R_LABEL * Math.cos(rad);
-                    var y = CY + R_LABEL * Math.sin(rad);
+                    var x = CX + R_TEXT * Math.cos(rad);
+                    var y = CY + R_TEXT * Math.sin(rad);
                     t.setAttribute('x', x.toFixed(1));
                     t.setAttribute('y', y.toFixed(1));
                     t._cx = x; t._cy = y;
@@ -482,10 +468,7 @@
             }
 
             function updateTextRot() {
-                iconEls.forEach(function (t) {
-                    t.setAttribute('transform', 'rotate(' + (-wRot) + ' ' + t._cx + ' ' + t._cy + ')');
-                });
-                labelEls.forEach(function (t) {
+                textEls.forEach(function (t) {
                     t.setAttribute('transform', 'rotate(' + (-wRot) + ' ' + t._cx + ' ' + t._cy + ')');
                 });
             }
