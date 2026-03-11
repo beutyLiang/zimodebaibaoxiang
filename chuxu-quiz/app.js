@@ -319,7 +319,8 @@
         html += '</div>';
 
         // ========== ④ 每日打卡 ==========
-        var checkinData = JSON.parse(localStorage.getItem('chuxu_checkins') || '[]');
+        var isLoggedIn = ChuxuAuth && ChuxuAuth.currentUser && ChuxuAuth.currentUser();
+        var checkinData = isLoggedIn ? JSON.parse(localStorage.getItem('chuxu_checkins') || '[]') : [];
         var todayStr = new Date().toISOString().split('T')[0];
         var todayChecked = checkinData.some(function (c) { return c.date === todayStr; });
         var streak = 0;
