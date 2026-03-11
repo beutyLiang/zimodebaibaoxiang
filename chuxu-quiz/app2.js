@@ -326,12 +326,20 @@
         });
         html += '<g id="textGroup">';
         sectorLabels.forEach(function (label, i) {
-            html += '<text class="sector-text" data-index="' + i + '">' + sectorEmojis[i] + ' ' + label + '</text>';
+            html += '<text class="sector-icon" data-index="' + i + '">' + sectorEmojis[i] + '</text>';
+            html += '<text class="sector-label" data-index="' + i + '">' + label + '</text>';
         });
         html += '</g></svg>';
 
-        // 太极中心
-        html += '<div class="wheel-center"><div class="taiji"><div class="taiji-half taiji-dark"><div class="taiji-dot dot-light"></div></div><div class="taiji-half taiji-light"><div class="taiji-dot dot-dark"></div></div></div></div>';
+        // 太极中心（SVG 版本）
+        html += '<div class="wheel-center">';
+        html += '<svg class="taiji-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">';
+        html += '<circle cx="50" cy="50" r="48" fill="#1e2426" stroke="rgba(30,36,38,0.3)" stroke-width="2"/>';
+        html += '<path d="M 50 2 A 48 48 0 0 1 50 98 A 24 24 0 0 1 50 50 A 24 24 0 0 0 50 2" fill="#f5f0e6"/>';
+        html += '<circle cx="50" cy="26" r="6" fill="#1e2426"/>';
+        html += '<circle cx="50" cy="74" r="6" fill="#f5f0e6"/>';
+        html += '</svg>';
+        html += '</div>';
         html += '</div>'; // .wheel
 
         // 指示器
@@ -445,15 +453,27 @@
             var wDragging = false, wMoved = false, wOpening = false, wRaf = null;
             var currentModule = null;
 
-            var textEls = WHEEL_EL.querySelectorAll('.sector-text');
+            var iconEls = WHEEL_EL.querySelectorAll('.sector-icon');
+            var labelEls = WHEEL_EL.querySelectorAll('.sector-label');
+            var R_ICON = 56, R_LABEL = 68;
 
             function layoutTexts() {
-                textEls.forEach(function (t) {
+                iconEls.forEach(function (t) {
                     var i = Number(t.dataset.index);
                     var midDeg = START_ANGLE + i * SLICE + SLICE / 2;
                     var rad = (midDeg * Math.PI) / 180;
-                    var x = CX + R_TEXT * Math.cos(rad);
-                    var y = CY + R_TEXT * Math.sin(rad);
+                    var x = CX + R_ICON * Math.cos(rad);
+                    var y = CY + R_ICON * Math.sin(rad);
+                    t.setAttribute('x', x.toFixed(1));
+                    t.setAttribute('y', y.toFixed(1));
+                    t._cx = x; t._cy = y;
+                });
+                labelEls.forEach(function (t) {
+                    var i = Number(t.dataset.index);
+                    var midDeg = START_ANGLE + i * SLICE + SLICE / 2;
+                    var rad = (midDeg * Math.PI) / 180;
+                    var x = CX + R_LABEL * Math.cos(rad);
+                    var y = CY + R_LABEL * Math.sin(rad);
                     t.setAttribute('x', x.toFixed(1));
                     t.setAttribute('y', y.toFixed(1));
                     t._cx = x; t._cy = y;
@@ -462,7 +482,10 @@
             }
 
             function updateTextRot() {
-                textEls.forEach(function (t) {
+                iconEls.forEach(function (t) {
+                    t.setAttribute('transform', 'rotate(' + (-wRot) + ' ' + t._cx + ' ' + t._cy + ')');
+                });
+                labelEls.forEach(function (t) {
                     t.setAttribute('transform', 'rotate(' + (-wRot) + ' ' + t._cx + ' ' + t._cy + ')');
                 });
             }
