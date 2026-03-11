@@ -334,19 +334,19 @@
         });
         html += '</g></svg>';
 
-        // 太极中心（标准太极图 SVG）
+        // 太极中心（标准太极图 — 参考用户提供的样图）
         html += '<div class="wheel-center">';
-        html += '<svg class="taiji-svg" viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">';
-        // 背景圆
-        html += '<circle cx="0" cy="0" r="50" fill="#1e2426"/>';
-        // 白色阳鱼（左弧半圆 + S曲线）
-        html += '<path d="M 0,-50 A 50,50 0 0,0 0,50 A 25,25 0 0,0 0,0 A 25,25 0 0,1 0,-50 Z" fill="#f5f0e6"/>';
-        // 阳鱼眼（白半中的黑点）
-        html += '<circle cx="0" cy="-25" r="7" fill="#1e2426"/>';
-        // 阴鱼眼（黑半中的白点）
-        html += '<circle cx="0" cy="25" r="7" fill="#f5f0e6"/>';
-        // 外圈
-        html += '<circle cx="0" cy="0" r="49" fill="none" stroke="rgba(30,36,38,0.3)" stroke-width="1.5"/>';
+        html += '<svg class="taiji-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">';
+        // 外圈黑边
+        html += '<circle cx="100" cy="100" r="99" fill="none" stroke="#222" stroke-width="2"/>';
+        // 黑色底（右半 = 阴鱼）
+        html += '<circle cx="100" cy="100" r="98" fill="#222"/>';
+        // 白色阳鱼：左侧大弧 + S曲线（上凸右、下凸左）
+        html += '<path d="M 100,2 A 98,98 0 0,0 100,198 A 49,49 0 0,1 100,100 A 49,49 0 0,0 100,2 Z" fill="#fff"/>';
+        // 鱼眼：白半（上方）中的黑点
+        html += '<circle cx="100" cy="51" r="12" fill="#222"/>';
+        // 鱼眼：黑半（下方）中的白点
+        html += '<circle cx="100" cy="149" r="12" fill="#fff"/>';
         html += '</svg>';
         html += '</div>';
         html += '</div>'; // .wheel
