@@ -95,6 +95,7 @@
         adjustChatPadding();
         setTimeout(function () {
             chatBody.scrollTop = chatBody.scrollHeight;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 60);
     }
 
