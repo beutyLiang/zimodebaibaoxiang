@@ -23,7 +23,15 @@
     function showPage(name) {
         Object.values(pages).forEach(function (p) { p.classList.remove('active'); });
         pages[name].classList.add('active');
-        if (name === 'chat') { window.scrollTo(0, 0); }
+        // 退出聊天时解除 flex 布局限制
+        pages.chat.classList.remove('chatting');
+        if (name === 'chat') {
+            pages.chat.classList.add('chatting');
+            window.scrollTo(0, 0);
+        }
+        if (name === 'result') {
+            window.scrollTo(0, 0);
+        }
     }
 
     // ---- 聊天气泡 ----

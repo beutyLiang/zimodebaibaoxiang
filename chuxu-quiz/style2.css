@@ -3,27 +3,24 @@
  */
 
 /* ========== 聊天页布局：header 固定 + chatBody 独立滚动 ========== */
-#page-chat {
+#page-chat.chatting {
     display: flex;
     flex-direction: column;
     height: 100vh;
     height: 100dvh;
-    /* 移动端动态视口 */
     overflow: hidden;
 }
 
-#page-chat .chat-header {
+#page-chat.chatting .chat-header {
     position: relative;
-    /* 覆盖 sticky，改为 flex 子项 */
     flex-shrink: 0;
 }
 
-#page-chat .chat-body {
+#page-chat.chatting .chat-body {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     min-height: 0;
-    /* flex 子项允许缩小 */
 }
 
 /* ========== 八卦圆盘区域 ========== */
