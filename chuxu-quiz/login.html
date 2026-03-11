@@ -293,13 +293,13 @@
         // 同步用户信息到 user_profiles 表
         function syncUserProfile(user) {
             if (!user || !sb) return;
-            sb.from('user_profiles').select('id').eq('user_id', user.id).then(function (r) {
-                if (r.data && r.data.length > 0) return;
-                sb.from('user_profiles').insert({
-                    user_id: user.id,
-                    email: user.email,
-                    note: ''
-                });
+            sb.from('user_profiles').insert({
+                user_id: user.id,
+                email: user.email,
+                note: ''
+            }).then(function (r) {
+                if (r.error) console.log('[初序] 用户同步:', r.error.message);
+                else console.log('[初序] 用户已同步到 user_profiles');
             });
         }
     </script>
