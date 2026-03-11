@@ -1,27 +1,7 @@
 /**
- * style2.css — 八卦圆盘样式（浅色系，适配结果页）+ 聊天页布局修正
+ * style2.css — 八卦圆盘样式（浅色系，适配结果页）
  */
 
-/* ========== 聊天页布局：header 固定 + chatBody 独立滚动 ========== */
-#page-chat.chatting {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-}
-
-#page-chat.chatting .chat-header {
-    position: relative;
-    flex-shrink: 0;
-}
-
-#page-chat.chatting .chat-body {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    min-height: 0;
-}
 
 /* ========== 八卦圆盘区域 ========== */
 .wheel-section {

@@ -23,15 +23,7 @@
     function showPage(name) {
         Object.values(pages).forEach(function (p) { p.classList.remove('active'); });
         pages[name].classList.add('active');
-        // 退出聊天时解除 flex 布局限制
-        pages.chat.classList.remove('chatting');
-        if (name === 'chat') {
-            pages.chat.classList.add('chatting');
-            window.scrollTo(0, 0);
-        }
-        if (name === 'result') {
-            window.scrollTo(0, 0);
-        }
+        if (name === 'chat') { window.scrollTo(0, 0); }
     }
 
     // ---- 聊天气泡 ----
@@ -96,21 +88,14 @@
 
     function adjustChatPadding() {
         var inputH = chatInput.offsetHeight || 120;
-        chatBody.style.paddingBottom = (inputH + 60) + 'px';
+        chatBody.style.paddingBottom = (inputH + 24) + 'px';
     }
 
     function scrollToBottom() {
         adjustChatPadding();
         setTimeout(function () {
-            // 把最新气泡滚到 chatBody 内部顶部，header 不动
-            var allBubbles = chatBody.querySelectorAll('.bubble-row');
-            var lastBubble = allBubbles[allBubbles.length - 1];
-            if (lastBubble) {
-                chatBody.scrollTop = lastBubble.offsetTop - 8;
-            } else {
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
-        }, 80);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }, 60);
     }
 
     // ---- 显示选项按钮 ----
@@ -146,11 +131,6 @@
         requestAnimationFrame(function () {
             adjustChatPadding();
             scrollToBottom();
-            // 二次滚动：确保选项渲染后 padding 计算准确
-            setTimeout(function () {
-                adjustChatPadding();
-                scrollToBottom();
-            }, 200);
         });
     }
 
