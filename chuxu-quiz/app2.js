@@ -94,7 +94,13 @@
     function scrollToBottom() {
         adjustChatPadding();
         setTimeout(function () {
-            chatBody.scrollTop = chatBody.scrollHeight;
+            // 找到最后一个气泡，确保它可见
+            var lastBubble = chatBody.querySelector('.bubble-row:last-child');
+            if (lastBubble) {
+                lastBubble.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            } else {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
         }, 60);
     }
 
@@ -332,10 +338,18 @@
         // 太极中心（SVG 版本）
         html += '<div class="wheel-center">';
         html += '<svg class="taiji-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">';
-        html += '<circle cx="50" cy="50" r="48" fill="#1e2426" stroke="rgba(30,36,38,0.3)" stroke-width="2"/>';
-        html += '<path d="M 50 2 A 48 48 0 0 1 50 98 A 24 24 0 0 1 50 50 A 24 24 0 0 0 50 2" fill="#f5f0e6"/>';
-        html += '<circle cx="50" cy="26" r="6" fill="#1e2426"/>';
-        html += '<circle cx="50" cy="74" r="6" fill="#f5f0e6"/>';
+        // 外圈
+        html += '<circle cx="50" cy="50" r="49" fill="none" stroke="rgba(30,36,38,0.25)" stroke-width="2"/>';
+        // 暗半（右侧）
+        html += '<path d="M 50 1 A 49 49 0 0 1 50 99 A 24.5 24.5 0 0 0 50 50 A 24.5 24.5 0 0 1 50 1 Z" fill="#1e2426"/>';
+        // 亮半（左侧）
+        html += '<path d="M 50 1 A 49 49 0 0 0 50 99 A 24.5 24.5 0 0 1 50 50 A 24.5 24.5 0 0 0 50 1 Z" fill="#f5f0e6"/>';
+        // 鱼眼：亮半中的暗点
+        html += '<circle cx="50" cy="25.5" r="7" fill="#1e2426"/>';
+        html += '<circle cx="50" cy="25.5" r="3" fill="#f5f0e6"/>';
+        // 鱼眼：暗半中的亮点
+        html += '<circle cx="50" cy="74.5" r="7" fill="#f5f0e6"/>';
+        html += '<circle cx="50" cy="74.5" r="3" fill="#1e2426"/>';
         html += '</svg>';
         html += '</div>';
         html += '</div>'; // .wheel
