@@ -13,23 +13,20 @@
 
 <body>
     <div class="admin-layout">
-        <!-- 侧边栏 -->
         <nav class="sidebar">
             <div class="sidebar-logo">初序<span>管理后台</span></div>
             <a class="nav-item active" data-tab="overview">📊 数据概览</a>
             <a class="nav-item" data-tab="funnel">🔍 用户行为</a>
             <a class="nav-item" data-tab="checkins">✅ 打卡统计</a>
             <a class="nav-item" data-tab="records">📋 测试记录</a>
-            <a class="nav-item" data-tab="users">� 用户管理</a>
+            <a class="nav-item" data-tab="users">👤 用户管理</a>
             <div class="sidebar-bottom">
                 <a href="index.html" class="nav-item">← 返回前台</a>
-                <button class="nav-item" id="admin-logout" onclick="handleLogout()">退出登录</button>
+                <button class="nav-item" onclick="handleLogout()">退出登录</button>
             </div>
         </nav>
 
-        <!-- 主内容 -->
-        <main class="main-content" id="main-content">
-            <!-- 加载/认证检查 -->
+        <main class="main-content">
             <div id="auth-check" class="auth-check">
                 <div class="auth-check-inner">🔒 验证管理员权限中...</div>
             </div>
@@ -51,18 +48,16 @@
                         <div class="stat-label">总打卡次数</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="stat-total-events">-</div>
-                        <div class="stat-label">总事件数</div>
+                        <div class="stat-value" id="stat-total-users">-</div>
+                        <div class="stat-label">注册用户</div>
                     </div>
                 </div>
                 <div class="chart-row">
                     <div class="chart-box">
-                        <h3>五行分布</h3>
-                        <canvas id="chart-elements"></canvas>
+                        <h3>五行分布</h3><canvas id="chart-elements"></canvas>
                     </div>
                     <div class="chart-box">
-                        <h3>每日测试趋势（近7天）</h3>
-                        <canvas id="chart-daily"></canvas>
+                        <h3>每日测试趋势（近7天）</h3><canvas id="chart-daily"></canvas>
                     </div>
                 </div>
             </section>
@@ -73,7 +68,7 @@
                 <div class="funnel-chart" id="funnel-container"></div>
                 <h3 style="margin-top:32px;">最近事件</h3>
                 <div class="table-wrap">
-                    <table id="events-table">
+                    <table>
                         <thead>
                             <tr>
                                 <th>时间</th>
@@ -110,17 +105,16 @@
                 </div>
                 <div class="chart-row">
                     <div class="chart-box full">
-                        <h3>打卡趋势（近7天）</h3>
-                        <canvas id="chart-checkin-trend"></canvas>
+                        <h3>打卡趋势（近7天）</h3><canvas id="chart-checkin-trend"></canvas>
                     </div>
                 </div>
             </section>
 
             <!-- 测试记录 -->
             <section class="tab-panel" id="panel-records">
-                <h2>� 测试记录</h2>
+                <h2>📋 测试记录</h2>
                 <div class="table-wrap">
-                    <table id="users-table">
+                    <table>
                         <thead>
                             <tr>
                                 <th>时间</th>
@@ -130,7 +124,7 @@
                                 <th>评分</th>
                             </tr>
                         </thead>
-                        <tbody id="users-tbody"></tbody>
+                        <tbody id="records-tbody"></tbody>
                     </table>
                 </div>
             </section>
@@ -139,14 +133,24 @@
             <section class="tab-panel" id="panel-users">
                 <h2>👤 用户管理</h2>
                 <div class="user-mgmt-actions">
-                    <button class="btn-admin" onclick="showAddUserForm()">➕ 新增用户</button>
+                    <button class="btn-admin btn-primary" onclick="showAddUserForm()">➕ 新增用户</button>
                 </div>
+
                 <div id="add-user-form" class="add-user-form" style="display:none;">
                     <h3>新增用户</h3>
                     <div class="form-row"><label>邮箱</label><input type="email" id="new-user-email"
                             placeholder="user@example.com"></div>
                     <div class="form-row"><label>密码</label><input type="password" id="new-user-pass" placeholder="至少6位"
                             minlength="6"></div>
+                    <div class="form-row"><label>昵称</label><input type="text" id="new-user-nickname" placeholder="用户昵称">
+                    </div>
+                    <div class="form-row"><label>角色</label>
+                        <select id="new-user-role"
+                            style="flex:1; padding:8px 12px; background:#0d1117; border:1px solid #30363d; border-radius:8px; color:#e0e0e0; font-size:13px; font-family:inherit;">
+                            <option value="user">普通用户</option>
+                            <option value="admin">管理员</option>
+                        </select>
+                    </div>
                     <div class="form-row"><label>备注</label><input type="text" id="new-user-note" placeholder="可选"></div>
                     <div class="form-row">
                         <button class="btn-admin btn-primary" onclick="doAddUser()">确认添加</button>
@@ -154,13 +158,16 @@
                     </div>
                     <div class="form-msg" id="add-user-msg"></div>
                 </div>
+
                 <div class="table-wrap">
                     <table>
                         <thead>
                             <tr>
                                 <th>注册时间</th>
                                 <th>邮箱</th>
-                                <th>用户ID</th>
+                                <th>昵称</th>
+                                <th>角色</th>
+                                <th>手机</th>
                                 <th>备注</th>
                                 <th>操作</th>
                             </tr>
@@ -168,8 +175,6 @@
                         <tbody id="user-mgmt-tbody"></tbody>
                     </table>
                 </div>
-                <p class="admin-note">💡 用户数据存储在 Supabase Auth 中。详细管理请访问 <a href="https://supabase.com/dashboard"
-                        target="_blank">Supabase 控制台</a></p>
             </section>
         </main>
     </div>

@@ -57,7 +57,6 @@
 
         .tabs {
             display: flex;
-            gap: 0;
             margin-bottom: 24px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
@@ -139,24 +138,6 @@
             cursor: not-allowed;
         }
 
-        .btn-skip {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 16px;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 13px;
-            text-decoration: none;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit;
-        }
-
-        .btn-skip:hover {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
         .msg {
             text-align: center;
             font-size: 13px;
@@ -170,12 +151,6 @@
 
         .msg.success {
             color: #81C784;
-        }
-
-        @media (min-width: 500px) {
-            .login-card {
-                box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
-            }
         }
     </style>
 </head>
@@ -199,11 +174,14 @@
                 <label>密码</label>
                 <input type="password" id="input-password" placeholder="请输入密码（至少6位）" required minlength="6">
             </div>
+            <div class="form-group" id="nickname-group" style="display:none;">
+                <label>昵称（选填）</label>
+                <input type="text" id="input-nickname" placeholder="给自己起个名字">
+            </div>
             <button type="submit" class="btn-submit" id="btn-submit">登录</button>
         </form>
 
         <div class="msg" id="msg"></div>
-        <button class="btn-skip" onclick="location.href='index.html'">跳过登录，直接测试 →</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -211,15 +189,24 @@
         var mode = 'login';
         var sb = null;
 
-        // 初始化 Supabase
         if (typeof supabase !== 'undefined') {
             sb = supabase.createClient(
                 'https://byjqjpklizpnulybsrqz.supabase.co',
                 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e'
             );
-            // 已登录直接跳转
             sb.auth.getSession().then(function (res) {
-                if (res.data.session) location.href = 'index.html';
+                if (res.data.session) {
+                    // 已登录，检查 user_profiles
+                    sb.from('user_profiles').select('id').eq('user_id', res.data.session.user.id).then(function (r) {
+                        if (r.data && r.data.length > 0) {
+                            location.href = 'index.html';
+                        } else {
+                            // Auth 有但 user_profiles 没有，退出登录
+                            sb.auth.signOut();
+                            showMsg('你的账号未被授权使用，请联系管理员', 'error');
+                        }
+                    });
+                }
             });
         }
 
@@ -228,6 +215,7 @@
             document.getElementById('tab-login').className = 'tab' + (tab === 'login' ? ' active' : '');
             document.getElementById('tab-signup').className = 'tab' + (tab === 'signup' ? ' active' : '');
             document.getElementById('btn-submit').textContent = tab === 'login' ? '登录' : '注册';
+            document.getElementById('nickname-group').style.display = tab === 'signup' ? 'block' : 'none';
             document.getElementById('msg').textContent = '';
         }
 
@@ -239,7 +227,7 @@
 
         function handleSubmit(e) {
             e.preventDefault();
-            if (!sb) { showMsg('服务连接中，请稍后重试', 'error'); return; }
+            if (!sb) { showMsg('服务连接中，请稍后', 'error'); return; }
 
             var email = document.getElementById('input-email').value.trim();
             var password = document.getElementById('input-password').value;
@@ -251,10 +239,16 @@
                 sb.auth.signInWithPassword({ email: email, password: password })
                     .then(function (res) {
                         if (res.error) throw res.error;
-                        localStorage.removeItem('chuxu_checkins');
-                        syncUserProfile(res.data.user);
-                        showMsg('登录成功！正在跳转...', 'success');
-                        setTimeout(function () { location.href = 'index.html'; }, 800);
+                        // 双检查：Auth 通过后检查 user_profiles
+                        return sb.from('user_profiles').select('id').eq('user_id', res.data.user.id).then(function (r) {
+                            if (!r.data || r.data.length === 0) {
+                                sb.auth.signOut();
+                                throw { message: '你的账号未被授权，请联系管理员开通' };
+                            }
+                            localStorage.removeItem('chuxu_checkins');
+                            showMsg('登录成功！正在跳转...', 'success');
+                            setTimeout(function () { location.href = 'index.html'; }, 600);
+                        });
                     })
                     .catch(function (err) {
                         showMsg(err.message === 'Invalid login credentials' ? '邮箱或密码错误' : err.message, 'error');
@@ -262,17 +256,28 @@
                         btn.textContent = '登录';
                     });
             } else {
+                var nickname = document.getElementById('input-nickname').value.trim();
                 sb.auth.signUp({ email: email, password: password })
                     .then(function (res) {
                         if (res.error) throw res.error;
-                        if (res.data.user && !res.data.session) {
-                            syncUserProfile(res.data.user);
-                            showMsg('注册成功！请查收验证邮件后登录', 'success');
-                        } else {
-                            syncUserProfile(res.data.user);
-                            showMsg('注册成功！正在跳转...', 'success');
-                            localStorage.removeItem('chuxu_checkins');
-                            setTimeout(function () { location.href = redirectUrl; }, 800);
+                        var user = res.data.user;
+                        if (user) {
+                            // 写入 user_profiles
+                            return sb.from('user_profiles').insert({
+                                user_id: user.id,
+                                email: email,
+                                nickname: nickname || email.split('@')[0],
+                                role: 'user',
+                                note: ''
+                            }).then(function (ir) {
+                                if (ir.error) console.log('profile insert error:', ir.error.message);
+                                if (res.data.session) {
+                                    showMsg('注册成功！正在跳转...', 'success');
+                                    setTimeout(function () { location.href = 'index.html'; }, 600);
+                                } else {
+                                    showMsg('注册成功！请查收验证邮件后登录', 'success');
+                                }
+                            });
                         }
                         btn.disabled = false;
                         btn.textContent = '注册';
@@ -283,19 +288,6 @@
                         btn.textContent = '注册';
                     });
             }
-        }
-
-        // 同步用户信息到 user_profiles 表
-        function syncUserProfile(user) {
-            if (!user || !sb) return;
-            sb.from('user_profiles').insert({
-                user_id: user.id,
-                email: user.email,
-                note: ''
-            }).then(function (r) {
-                if (r.error) console.log('[初序] 用户同步:', r.error.message);
-                else console.log('[初序] 用户已同步到 user_profiles');
-            });
         }
     </script>
 </body>
