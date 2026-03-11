@@ -94,11 +94,11 @@
     function scrollToBottom() {
         adjustChatPadding();
         setTimeout(function () {
-            // 把最新气泡滚到聊天区顶部，确保问题在选项上方可见
+            // 把最新气泡滚到 chatBody 内部顶部，header 不动
             var allBubbles = chatBody.querySelectorAll('.bubble-row');
             var lastBubble = allBubbles[allBubbles.length - 1];
             if (lastBubble) {
-                lastBubble.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                chatBody.scrollTop = lastBubble.offsetTop - 8;
             } else {
                 chatBody.scrollTop = chatBody.scrollHeight;
             }
