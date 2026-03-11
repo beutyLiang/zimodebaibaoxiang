@@ -19,7 +19,8 @@
             <a class="nav-item active" data-tab="overview">📊 数据概览</a>
             <a class="nav-item" data-tab="funnel">🔍 用户行为</a>
             <a class="nav-item" data-tab="checkins">✅ 打卡统计</a>
-            <a class="nav-item" data-tab="users">👥 用户列表</a>
+            <a class="nav-item" data-tab="records">📋 测试记录</a>
+            <a class="nav-item" data-tab="users">� 用户管理</a>
             <div class="sidebar-bottom">
                 <a href="index.html" class="nav-item">← 返回前台</a>
                 <button class="nav-item" id="admin-logout" onclick="handleLogout()">退出登录</button>
@@ -115,9 +116,9 @@
                 </div>
             </section>
 
-            <!-- 用户列表 -->
-            <section class="tab-panel" id="panel-users">
-                <h2>👥 用户测试记录</h2>
+            <!-- 测试记录 -->
+            <section class="tab-panel" id="panel-records">
+                <h2>� 测试记录</h2>
                 <div class="table-wrap">
                     <table id="users-table">
                         <thead>
@@ -132,6 +133,43 @@
                         <tbody id="users-tbody"></tbody>
                     </table>
                 </div>
+            </section>
+
+            <!-- 用户管理 -->
+            <section class="tab-panel" id="panel-users">
+                <h2>👤 用户管理</h2>
+                <div class="user-mgmt-actions">
+                    <button class="btn-admin" onclick="showAddUserForm()">➕ 新增用户</button>
+                </div>
+                <div id="add-user-form" class="add-user-form" style="display:none;">
+                    <h3>新增用户</h3>
+                    <div class="form-row"><label>邮箱</label><input type="email" id="new-user-email"
+                            placeholder="user@example.com"></div>
+                    <div class="form-row"><label>密码</label><input type="password" id="new-user-pass" placeholder="至少6位"
+                            minlength="6"></div>
+                    <div class="form-row"><label>备注</label><input type="text" id="new-user-note" placeholder="可选"></div>
+                    <div class="form-row">
+                        <button class="btn-admin btn-primary" onclick="doAddUser()">确认添加</button>
+                        <button class="btn-admin" onclick="hideAddUserForm()">取消</button>
+                    </div>
+                    <div class="form-msg" id="add-user-msg"></div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>注册时间</th>
+                                <th>邮箱</th>
+                                <th>用户ID</th>
+                                <th>备注</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-mgmt-tbody"></tbody>
+                    </table>
+                </div>
+                <p class="admin-note">💡 用户数据存储在 Supabase Auth 中。详细管理请访问 <a href="https://supabase.com/dashboard"
+                        target="_blank">Supabase 控制台</a></p>
             </section>
         </main>
     </div>
