@@ -6,16 +6,13 @@
 var ChuxuDB = (function () {
     'use strict';
 
-    // ---------- Supabase 配置 ----------
-    var SUPABASE_URL = 'https://byjqjpklizpnulybsrqz.supabase.co';
-    var SUPABASE_KEY = 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e';
-
+    // ---------- Supabase 配置（从 config.js 读取）----------
     var db = null;
 
     // ---------- 初始化 ----------
     function init() {
         if (typeof supabase !== 'undefined' && supabase.createClient) {
-            db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            db = supabase.createClient(CHUXU_CONFIG.SUPABASE_URL, CHUXU_CONFIG.SUPABASE_KEY);
             console.log('[初序] 数据层已连接');
         } else {
             console.warn('[初序] Supabase SDK 未加载，数据将仅保存在本地');
@@ -136,6 +133,7 @@ var ChuxuDB = (function () {
     // ---------- 暴露 API ----------
     return {
         init: init,
+        get supabase() { return db; },
         getUserId: getUserId,
         saveQuizResult: saveQuizResult,
         saveCheckin: saveCheckin,

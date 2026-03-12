@@ -5,9 +5,6 @@
 (function () {
     'use strict';
 
-    var SUPABASE_URL = 'https://byjqjpklizpnulybsrqz.supabase.co';
-    var SUPABASE_KEY = 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e';
-
     var db = null;
     var ELEMENT_NAMES = { wood: '🌿木', fire: '🔥火', earth: '🌾土', metal: '🌙金', water: '🌊水' };
     var ELEMENT_COLORS = { wood: '#2D8B55', fire: '#C9544D', earth: '#C6983A', metal: '#8C8C98', water: '#2E6B9E' };
@@ -15,7 +12,7 @@
 
     function init() {
         if (typeof supabase === 'undefined') { showAuthError('Supabase SDK 加载失败'); return; }
-        db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        db = supabase.createClient(CHUXU_CONFIG.SUPABASE_URL, CHUXU_CONFIG.SUPABASE_KEY);
         checkAdmin();
         setupTabs();
     }

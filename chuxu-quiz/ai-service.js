@@ -9,9 +9,9 @@
 var AI_SERVICE = (function () {
     'use strict';
 
-    var API_URL = 'https://api.deepseek.com/chat/completions';
-    var API_KEY = 'sk-58236ee21abb47458c60f6b76845cb79';
-    var MODEL = 'deepseek-chat';
+    var API_URL = CHUXU_CONFIG.DEEPSEEK_API_URL;
+    var API_KEY = CHUXU_CONFIG.DEEPSEEK_API_KEY;
+    var MODEL = CHUXU_CONFIG.DEEPSEEK_MODEL;
 
     /**
      * 调用 DeepSeek 生成个性化解读

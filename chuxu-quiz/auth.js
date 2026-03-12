@@ -6,27 +6,26 @@
 var ChuxuAuth = (function () {
     'use strict';
 
-    var SUPABASE_URL = 'https://byjqjpklizpnulybsrqz.supabase.co';
-    var SUPABASE_KEY = 'sb_publishable_noGNyOuxTbaMBN0J27diUA_H2yqIX3e';
-    var ADMIN_EMAILS = ['glaydsbernhwenkuph@gmail.com'];
-
     var client = null;
     var currentUser = null;
+    var currentUserRole = null;
 
     function init() {
         if (typeof supabase !== 'undefined' && supabase.createClient) {
-            client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            client = supabase.createClient(CHUXU_CONFIG.SUPABASE_URL, CHUXU_CONFIG.SUPABASE_KEY);
             // 监听登录状态变化
             client.auth.onAuthStateChange(function (event, session) {
                 currentUser = session ? session.user : null;
-                updateUI();
+                if (currentUser) { loadUserRole(); } else { currentUserRole = null; updateUI(); }
             });
             // 初始检查
             client.auth.getSession().then(function (res) {
                 if (res.data.session) {
                     currentUser = res.data.session.user;
+                    loadUserRole();
+                } else {
+                    updateUI();
                 }
-                updateUI();
             });
         }
     }
@@ -72,7 +71,18 @@ var ChuxuAuth = (function () {
     }
 
     function isAdmin() {
-        return currentUser && ADMIN_EMAILS.indexOf(currentUser.email) !== -1;
+        return currentUserRole === 'admin';
+    }
+
+    // 查询用户角色
+    function loadUserRole() {
+        if (!client || !currentUser) return;
+        client.from('user_profiles').select('role').eq('user_id', currentUser.id).then(function (r) {
+            if (r.data && r.data.length > 0) {
+                currentUserRole = r.data[0].role;
+            }
+            updateUI();
+        });
     }
 
     // ---- 更新页面 UI ----
@@ -102,8 +112,7 @@ var ChuxuAuth = (function () {
         signOut: signOut,
         getUser: getUser,
         isLoggedIn: isLoggedIn,
-        isAdmin: isAdmin,
-        ADMIN_EMAILS: ADMIN_EMAILS
+        isAdmin: isAdmin
     };
 })();
 
