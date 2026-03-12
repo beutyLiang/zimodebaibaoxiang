@@ -18,6 +18,7 @@
     var scores = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
     var currentStep = 0;
     var totalSteps = CHAT_FLOW.filter(function (s) { return s.type === 'question'; }).length;
+    var userProfile = JSON.parse(localStorage.getItem('chuxu_user_profile') || '{}');
 
     // ---- 页面切换 ----
     function showPage(name) {
@@ -127,6 +128,49 @@
                 });
                 container.appendChild(btn);
             });
+        } else if (step.type === 'profile') {
+            if (step.multiSelect) {
+                var selected = [];
+                step.options.forEach(function (opt) {
+                    var btn = document.createElement('button');
+                    btn.className = 'chat-option-btn';
+                    btn.textContent = opt.text;
+                    btn.addEventListener('click', function () {
+                        if (opt.value === 'none') {
+                            selected = ['none'];
+                            handleProfileAnswer(selected, step);
+                            return;
+                        }
+                        var idx = selected.indexOf(opt.value);
+                        if (idx > -1) {
+                            selected.splice(idx, 1);
+                            btn.classList.remove('selected');
+                        } else {
+                            selected.push(opt.value);
+                            btn.classList.add('selected');
+                        }
+                    });
+                    container.appendChild(btn);
+                });
+                var confirmBtn = document.createElement('button');
+                confirmBtn.className = 'chat-next-btn';
+                confirmBtn.textContent = '确认 ✓';
+                confirmBtn.addEventListener('click', function () {
+                    if (selected.length === 0) selected = ['none'];
+                    handleProfileAnswer(selected, step);
+                });
+                container.appendChild(confirmBtn);
+            } else {
+                step.options.forEach(function (opt) {
+                    var btn = document.createElement('button');
+                    btn.className = 'chat-option-btn';
+                    btn.textContent = opt.text;
+                    btn.addEventListener('click', function () {
+                        handleProfileAnswer(opt.value, step);
+                    });
+                    container.appendChild(btn);
+                });
+            }
         }
 
         chatInput.appendChild(container);
@@ -172,6 +216,24 @@
         }, 350);
     }
 
+    // ---- 处理画像回答 ----
+    function handleProfileAnswer(value, step) {
+        userProfile[step.field] = value;
+        localStorage.setItem('chuxu_user_profile', JSON.stringify(userProfile));
+
+        var displayText = Array.isArray(value)
+            ? step.options.filter(function (o) { return value.indexOf(o.value) > -1; }).map(function (o) { return o.text; }).join('、')
+            : step.options.find(function (o) { return o.value === value; }).text;
+        addUserBubble(displayText);
+
+        chatInput.querySelectorAll('button').forEach(function (b) { b.style.pointerEvents = 'none'; });
+
+        setTimeout(function () {
+            chatInput.innerHTML = '';
+            processStep(step.next);
+        }, 300);
+    }
+
     // ---- 处理步骤 ----
     function processStep(stepId) {
         var step = CHAT_FLOW.find(function (s) { return s.id === stepId; });
@@ -189,10 +251,13 @@
                 showOptions(step);
             });
         } else if (step.type === 'question') {
-            // 显示维度标签 + 问题
             if (step.dimension) {
                 addDimensionTag(step.dimension);
             }
+            addBotBubble(step.message, true).then(function () {
+                showOptions(step);
+            });
+        } else if (step.type === 'profile') {
             addBotBubble(step.message, true).then(function () {
                 showOptions(step);
             });

@@ -16,6 +16,62 @@ const CHAT_FLOW = [
             '放轻松，没有标准答案，跟着感觉走就好～'
         ],
         nextBtn: '准备好了，开始吧',
+        next: 'profile-gender'
+    },
+    // ---- 画像采集 ----
+    {
+        id: 'profile-gender',
+        type: 'profile',
+        field: 'gender',
+        message: '在开始之前，让我多了解你一点～\n你的性别是？',
+        options: [
+            { text: '👩 女', value: 'female' },
+            { text: '👨 男', value: 'male' },
+            { text: '🤐 不想说', value: 'other' }
+        ],
+        next: 'profile-age'
+    },
+    {
+        id: 'profile-age',
+        type: 'profile',
+        field: 'age',
+        message: '你的年龄段是？',
+        options: [
+            { text: '🌱 18-25岁', value: '18-25' },
+            { text: '🌿 26-35岁', value: '26-35' },
+            { text: '🌳 36-45岁', value: '36-45' },
+            { text: '🏔️ 46岁以上', value: '46+' }
+        ],
+        next: 'profile-concern'
+    },
+    {
+        id: 'profile-concern',
+        type: 'profile',
+        field: 'concerns',
+        multiSelect: true,
+        message: '最近最困扰你的是？（可多选，选完点确认）',
+        options: [
+            { text: '😴 睡眠不好', value: 'sleep' },
+            { text: '😟 焦虑紧张', value: 'anxiety' },
+            { text: '🤢 肠胃不适', value: 'gut' },
+            { text: '😪 容易疲倦', value: 'fatigue' },
+            { text: '🌡️ 皮肤问题', value: 'skin' },
+            { text: '🩸 经期不规律', value: 'period' },
+            { text: '😊 暂时没有', value: 'none' }
+        ],
+        next: 'profile-diet'
+    },
+    {
+        id: 'profile-diet',
+        type: 'profile',
+        field: 'diet',
+        message: '你的日常饮食习惯？',
+        options: [
+            { text: '🥬 偏素食', value: 'vegetarian' },
+            { text: '🍖 偏肉食', value: 'meat' },
+            { text: '🍱 比较均衡', value: 'balanced' },
+            { text: '🍔 不太规律', value: 'irregular' }
+        ],
         next: 'q1'
     },
     {
