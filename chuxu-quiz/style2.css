@@ -402,3 +402,183 @@
 .ai-pulse-dot:nth-child(3) {
     animation-delay: 0.4s;
 }
+
+/* ========== 付费墙 ========== */
+.ai-paywall-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 12px;
+}
+
+.ai-paywall-blur {
+    filter: blur(6px);
+    -webkit-filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.6;
+}
+
+.ai-paywall-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(250, 247, 242, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 5;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.ai-paywall-overlay .paywall-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.ai-paywall-overlay .paywall-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    font-family: 'Noto Serif SC', serif;
+}
+
+.ai-paywall-overlay .paywall-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+.ai-paywall-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #2D8B55, #3fa878);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(45, 139, 85, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ai-paywall-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(45, 139, 85, 0.4);
+}
+
+.ai-paywall-btn:active {
+    transform: translateY(0);
+}
+
+.paywall-price-original {
+    font-size: 13px;
+    color: var(--text-lighter);
+    text-decoration: line-through;
+    margin-top: 8px;
+}
+
+.paywall-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.paywall-items span {
+    font-size: 12px;
+    padding: 3px 10px;
+    background: rgba(45, 139, 85, 0.08);
+    border: 1px solid rgba(45, 139, 85, 0.15);
+    border-radius: 12px;
+    color: #2D8B55;
+}
+
+/* 解锁弹窗 */
+.unlock-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.unlock-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+}
+
+.unlock-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+.unlock-card input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.unlock-card input:focus {
+    border-color: #2D8B55;
+}
+
+.unlock-card .unlock-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2D8B55, #3fa878);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.unlock-card .unlock-cancel {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.unlock-msg {
+    font-size: 13px;
+    margin-top: 8px;
+    min-height: 20px;
+}

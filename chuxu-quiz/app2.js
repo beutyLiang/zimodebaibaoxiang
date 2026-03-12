@@ -538,7 +538,7 @@
 
                 if (!report || report._error) {
                     if (report && report._error) {
-                        section.innerHTML = '<div class="info-card" style="text-align:center; padding:16px; color:#c75c5c;">'
+                        section.innerHTML = '<div class="ai-card" style="text-align:center; padding:16px; color:#c75c5c;">'
                             + '<p>⚠️ AI 解读暂时不可用</p>'
                             + '<p style="font-size:12px; color:var(--text-light);">' + report._error + '</p>'
                             + '</div>';
@@ -548,86 +548,126 @@
                     return;
                 }
 
-                var rptHtml = '';
+                var isUnlocked = localStorage.getItem('chuxu_unlocked') === 'true';
 
-                // 体质画像
+                // ---- 免费卡片（前2张）----
+                var freeHtml = '';
+
+                // 1. 体质画像
                 if (report.headline || report.body_metaphor) {
-                    rptHtml += '<div class="ai-card" style="border-left:3px solid ' + r.color + ';">';
-                    rptHtml += '  <h3>🏔️ 专属体质画像</h3>';
-                    if (report.headline) rptHtml += '  <div style="font-size:18px; font-weight:700; color:' + r.color + '; margin-bottom:8px;">' + report.headline + '</div>';
-                    if (report.body_metaphor) rptHtml += '  <p>' + report.body_metaphor + '</p>';
-                    rptHtml += '</div>';
+                    freeHtml += '<div class="ai-card" style="border-left:3px solid ' + r.color + ';">';
+                    freeHtml += '  <h3>🏔️ 专属体质画像</h3>';
+                    if (report.headline) freeHtml += '  <div style="font-size:18px; font-weight:700; color:' + r.color + '; margin-bottom:8px;">' + report.headline + '</div>';
+                    if (report.body_metaphor) freeHtml += '  <p>' + report.body_metaphor + '</p>';
+                    freeHtml += '</div>';
                 }
 
-                // 优势与信号
+                // 2. 优势与信号
                 if (report.strengths || report.warnings) {
-                    rptHtml += '<div class="ai-card">';
-                    rptHtml += '  <h3>⚡ 你的优势与信号</h3>';
+                    freeHtml += '<div class="ai-card">';
+                    freeHtml += '  <h3>⚡ 你的优势与信号</h3>';
                     if (report.strengths) {
-                        rptHtml += '  <div style="margin-bottom:10px;">';
-                        report.strengths.forEach(function (s) { rptHtml += '<p>✅ ' + s + '</p>'; });
-                        rptHtml += '  </div>';
+                        freeHtml += '  <div style="margin-bottom:10px;">';
+                        report.strengths.forEach(function (s) { freeHtml += '<p>✅ ' + s + '</p>'; });
+                        freeHtml += '  </div>';
                     }
                     if (report.warnings) {
-                        report.warnings.forEach(function (w) { rptHtml += '<p>⚠️ ' + w + '</p>'; });
+                        report.warnings.forEach(function (w) { freeHtml += '<p>⚠️ ' + w + '</p>'; });
                     }
-                    rptHtml += '</div>';
+                    freeHtml += '</div>';
                 }
 
-                // 肠脑洞察
+                // ---- 付费卡片（后5张）----
+                var paidHtml = '';
+
+                // 3. 肠脑洞察
                 if (report.gut_insight) {
-                    rptHtml += '<div class="ai-card">';
-                    rptHtml += '  <h3>🧠 肠脑轴洞察</h3>';
-                    rptHtml += '  <p>' + report.gut_insight + '</p>';
-                    rptHtml += '</div>';
+                    paidHtml += '<div class="ai-card">';
+                    paidHtml += '  <h3>🧠 肠脑轴洞察</h3>';
+                    paidHtml += '  <p>' + report.gut_insight + '</p>';
+                    paidHtml += '</div>';
                 }
 
-                // 日常节律
+                // 4. 日常节律
                 if (report.morning_routine || report.evening_routine) {
-                    rptHtml += '<div class="ai-card">';
-                    rptHtml += '  <h3>🌅 你的日常节律</h3>';
-                    if (report.morning_routine) rptHtml += '  <p><strong>🌄 晨起：</strong>' + report.morning_routine + '</p>';
-                    if (report.evening_routine) rptHtml += '  <p><strong>🌙 晚间：</strong>' + report.evening_routine + '</p>';
-                    rptHtml += '</div>';
+                    paidHtml += '<div class="ai-card">';
+                    paidHtml += '  <h3>🌅 你的日常节律</h3>';
+                    if (report.morning_routine) paidHtml += '  <p><strong>🌄 晨起：</strong>' + report.morning_routine + '</p>';
+                    if (report.evening_routine) paidHtml += '  <p><strong>🌙 晚间：</strong>' + report.evening_routine + '</p>';
+                    paidHtml += '</div>';
                 }
 
-                // 食养处方
+                // 5. 食养处方
                 if (report.food_rx) {
-                    rptHtml += '<div class="ai-card">';
-                    rptHtml += '  <h3>🍵 专属食养处方</h3>';
+                    paidHtml += '<div class="ai-card">';
+                    paidHtml += '  <h3>🍵 专属食养处方</h3>';
                     if (report.food_rx.eat_more) {
-                        rptHtml += '  <p><strong>多吃：</strong></p>';
-                        report.food_rx.eat_more.forEach(function (f) { rptHtml += '<p style="padding-left:12px;">🟢 ' + f + '</p>'; });
+                        paidHtml += '  <p><strong>多吃：</strong></p>';
+                        report.food_rx.eat_more.forEach(function (f) { paidHtml += '<p style="padding-left:12px;">🟢 ' + f + '</p>'; });
                     }
                     if (report.food_rx.eat_less) {
-                        rptHtml += '  <p style="margin-top:8px;"><strong>少吃：</strong></p>';
-                        report.food_rx.eat_less.forEach(function (f) { rptHtml += '<p style="padding-left:12px;">🔴 ' + f + '</p>'; });
+                        paidHtml += '  <p style="margin-top:8px;"><strong>少吃：</strong></p>';
+                        report.food_rx.eat_less.forEach(function (f) { paidHtml += '<p style="padding-left:12px;">🔴 ' + f + '</p>'; });
                     }
-                    rptHtml += '</div>';
+                    paidHtml += '</div>';
                 }
 
-                // 情绪锦囊
+                // 6. 情绪锦囊
                 if (report.emotion_tip) {
-                    rptHtml += '<div class="ai-card">';
-                    rptHtml += '  <h3>💭 情绪调养锦囊</h3>';
-                    rptHtml += '  <p>' + report.emotion_tip + '</p>';
-                    rptHtml += '</div>';
+                    paidHtml += '<div class="ai-card">';
+                    paidHtml += '  <h3>💭 情绪调养锦囊</h3>';
+                    paidHtml += '  <p>' + report.emotion_tip + '</p>';
+                    paidHtml += '</div>';
                 }
 
-                // 本周挑战 + 寄语
+                // 7. 本周挑战 + 寄语
                 if (report.weekly_challenge || report.closing) {
-                    rptHtml += '<div class="ai-card" style="background:' + r.colorSoft + ';">';
+                    paidHtml += '<div class="ai-card" style="background:' + r.colorSoft + ';">';
                     if (report.weekly_challenge) {
-                        rptHtml += '  <h3>🎯 本周小挑战</h3>';
-                        rptHtml += '  <p>' + report.weekly_challenge + '</p>';
+                        paidHtml += '  <h3>🎯 本周小挑战</h3>';
+                        paidHtml += '  <p>' + report.weekly_challenge + '</p>';
                     }
                     if (report.closing) {
-                        rptHtml += '  <p style="margin-top:12px; font-style:italic; color:' + r.color + ';">' + report.closing + '</p>';
+                        paidHtml += '  <p style="margin-top:12px; font-style:italic; color:' + r.color + ';">' + report.closing + '</p>';
                     }
-                    rptHtml += '</div>';
+                    paidHtml += '</div>';
                 }
 
-                section.innerHTML = rptHtml;
+                // ---- 组装输出 ----
+                var finalHtml = freeHtml;
+
+                if (paidHtml) {
+                    if (isUnlocked) {
+                        // 已解锁：直接显示
+                        finalHtml += paidHtml;
+                    } else {
+                        // 未解锁：毛玻璃 + 解锁按钮
+                        finalHtml += '<div class="ai-paywall-wrap">';
+                        finalHtml += '  <div class="ai-paywall-blur">' + paidHtml + '</div>';
+                        finalHtml += '  <div class="ai-paywall-overlay">';
+                        finalHtml += '    <div class="paywall-icon">🔒</div>';
+                        finalHtml += '    <div class="paywall-title">解锁完整个性化解读</div>';
+                        finalHtml += '    <div class="paywall-desc">包含肠脑洞察、食养处方、情绪锦囊等 5 项专属内容</div>';
+                        finalHtml += '    <div class="paywall-items">';
+                        finalHtml += '      <span>🧠 肠脑轴</span><span>🌅 日常节律</span><span>🍵 食养方</span><span>💭 情绪</span><span>🎯 挑战</span>';
+                        finalHtml += '    </div>';
+                        finalHtml += '    <button class="ai-paywall-btn" id="btn-unlock-report">¥9.9 解锁完整报告</button>';
+                        finalHtml += '    <div class="paywall-price-original">原价 ¥19.9 · 限时特惠</div>';
+                        finalHtml += '  </div>';
+                        finalHtml += '</div>';
+                    }
+                }
+
+                section.innerHTML = finalHtml;
+
+                // 解锁按钮事件
+                var unlockBtn = document.getElementById('btn-unlock-report');
+                if (unlockBtn) {
+                    unlockBtn.addEventListener('click', function () {
+                        showUnlockModal(section, paidHtml);
+                        ChuxuDB.trackEvent('paywall_click');
+                    });
+                }
 
                 // 渐入动画
                 var cards = section.querySelectorAll('.ai-card');
@@ -926,6 +966,75 @@
             setTimeout(function () { document.body.removeChild(t); }, 300);
         }, 2500);
     }
+
+    // ---- 解锁弹窗 ----
+    function showUnlockModal(section, paidHtml) {
+        var modalHtml = '<div class="unlock-modal" id="unlock-modal">';
+        modalHtml += '<div class="unlock-card">';
+        modalHtml += '  <h3>🔓 解锁完整报告</h3>';
+        modalHtml += '  <p style="font-size:13px; color:var(--text-light); margin-bottom:16px;">微信扫码支付 ¥9.9 后<br>将收到的解锁码填写在下方</p>';
+        modalHtml += '  <input type="text" id="unlock-code-input" placeholder="请输入解锁码" maxlength="20">';
+        modalHtml += '  <button class="unlock-submit" id="btn-submit-unlock">确认解锁</button>';
+        modalHtml += '  <div><button class="unlock-cancel" id="btn-cancel-unlock">暂不解锁</button></div>';
+        modalHtml += '  <div class="unlock-msg" id="unlock-msg"></div>';
+        modalHtml += '</div></div>';
+
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        document.getElementById('btn-cancel-unlock').addEventListener('click', function () {
+            var modal = document.getElementById('unlock-modal');
+            if (modal) modal.remove();
+        });
+
+        document.getElementById('btn-submit-unlock').addEventListener('click', function () {
+            var code = document.getElementById('unlock-code-input').value.trim();
+            var msg = document.getElementById('unlock-msg');
+
+            if (!code || code.length < 4) {
+                msg.textContent = '请输入有效的解锁码';
+                msg.style.color = '#c75c5c';
+                return;
+            }
+
+            // MVP：接受任何 4+ 位码（管理员手动发放）
+            localStorage.setItem('chuxu_unlocked', 'true');
+            localStorage.setItem('chuxu_unlock_code', code);
+            ChuxuDB.trackEvent('paywall_unlock', { code: code });
+
+            msg.textContent = '✅ 解锁成功！';
+            msg.style.color = '#2D8B55';
+
+            setTimeout(function () {
+                var modal = document.getElementById('unlock-modal');
+                if (modal) modal.remove();
+
+                // 移除付费墙，显示完整内容
+                var wrap = section.querySelector('.ai-paywall-wrap');
+                if (wrap) {
+                    wrap.outerHTML = paidHtml;
+                    // 渐入动画
+                    var newCards = section.querySelectorAll('.ai-card');
+                    newCards.forEach(function (card, i) {
+                        if (i >= 2) { // 跳过已显示的前2张
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(16px)';
+                            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                            setTimeout(function () {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, (i - 2) * 200);
+                        }
+                    });
+                }
+            }, 800);
+        });
+    }
+
+    // 管理员手动解锁（浏览器控制台使用）
+    window.unlockAIReport = function () {
+        localStorage.setItem('chuxu_unlocked', 'true');
+        console.log('[初序] AI 报告已解锁，请刷新页面查看');
+    };
 
     // ---- 重测 ----
     function handleRetest() {
