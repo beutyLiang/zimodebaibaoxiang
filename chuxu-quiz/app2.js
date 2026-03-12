@@ -333,9 +333,9 @@
 
         // AI 个性化解读区域（异步填充）
         html += '<div id="ai-report-section">';
-        html += '  <div class="info-card" style="text-align:center; padding:24px;">';
-        html += '    <div style="font-size:18px; margin-bottom:8px;">✨ 正在生成你的专属解读...</div>';
-        html += '    <div style="font-size:13px; color:var(--text-light);">初序 AI 正在根据你的画像和回答为你定制报告</div>';
+        html += '  <div class="ai-card" style="text-align:center; padding:28px 20px;">';
+        html += '    <div style="font-size:16px; margin-bottom:10px;">✨ 初序正在为你生成专属解读</div>';
+        html += '    <div><span class="ai-pulse-dot"></span><span class="ai-pulse-dot"></span><span class="ai-pulse-dot"></span></div>';
         html += '  </div>';
         html += '</div>';
 
@@ -552,7 +552,7 @@
 
                 // 体质画像
                 if (report.headline || report.body_metaphor) {
-                    rptHtml += '<div class="info-card ai-card" style="border-left:3px solid ' + r.color + ';">';
+                    rptHtml += '<div class="ai-card" style="border-left:3px solid ' + r.color + ';">';
                     rptHtml += '  <h3>🏔️ 专属体质画像</h3>';
                     if (report.headline) rptHtml += '  <div style="font-size:18px; font-weight:700; color:' + r.color + '; margin-bottom:8px;">' + report.headline + '</div>';
                     if (report.body_metaphor) rptHtml += '  <p>' + report.body_metaphor + '</p>';
@@ -561,7 +561,7 @@
 
                 // 优势与信号
                 if (report.strengths || report.warnings) {
-                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '<div class="ai-card">';
                     rptHtml += '  <h3>⚡ 你的优势与信号</h3>';
                     if (report.strengths) {
                         rptHtml += '  <div style="margin-bottom:10px;">';
@@ -576,7 +576,7 @@
 
                 // 肠脑洞察
                 if (report.gut_insight) {
-                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '<div class="ai-card">';
                     rptHtml += '  <h3>🧠 肠脑轴洞察</h3>';
                     rptHtml += '  <p>' + report.gut_insight + '</p>';
                     rptHtml += '</div>';
@@ -584,7 +584,7 @@
 
                 // 日常节律
                 if (report.morning_routine || report.evening_routine) {
-                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '<div class="ai-card">';
                     rptHtml += '  <h3>🌅 你的日常节律</h3>';
                     if (report.morning_routine) rptHtml += '  <p><strong>🌄 晨起：</strong>' + report.morning_routine + '</p>';
                     if (report.evening_routine) rptHtml += '  <p><strong>🌙 晚间：</strong>' + report.evening_routine + '</p>';
@@ -593,7 +593,7 @@
 
                 // 食养处方
                 if (report.food_rx) {
-                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '<div class="ai-card">';
                     rptHtml += '  <h3>🍵 专属食养处方</h3>';
                     if (report.food_rx.eat_more) {
                         rptHtml += '  <p><strong>多吃：</strong></p>';
@@ -608,7 +608,7 @@
 
                 // 情绪锦囊
                 if (report.emotion_tip) {
-                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '<div class="ai-card">';
                     rptHtml += '  <h3>💭 情绪调养锦囊</h3>';
                     rptHtml += '  <p>' + report.emotion_tip + '</p>';
                     rptHtml += '</div>';
@@ -616,7 +616,7 @@
 
                 // 本周挑战 + 寄语
                 if (report.weekly_challenge || report.closing) {
-                    rptHtml += '<div class="info-card ai-card" style="background:' + r.colorSoft + ';">';
+                    rptHtml += '<div class="ai-card" style="background:' + r.colorSoft + ';">';
                     if (report.weekly_challenge) {
                         rptHtml += '  <h3>🎯 本周小挑战</h3>';
                         rptHtml += '  <p>' + report.weekly_challenge + '</p>';
