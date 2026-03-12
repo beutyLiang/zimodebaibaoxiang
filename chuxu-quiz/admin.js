@@ -186,6 +186,14 @@
         });
     }
 
+    // ---- HTML 转义（防 XSS）----
+    function escapeHtml(str) {
+        if (!str) return '';
+        var div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+
     // ---- ⑤ 用户管理（完整 CRUD）----
     function loadUserManagement() {
         db.from('user_profiles').select('*').order('created_at', { ascending: false }).then(function (r) {
@@ -198,18 +206,37 @@
             r.data.forEach(function (u) {
                 html += '<tr>';
                 html += '<td>' + new Date(u.created_at).toLocaleString('zh-CN') + '</td>';
-                html += '<td>' + (u.email || '-') + '</td>';
-                html += '<td>' + (u.nickname || '-') + '</td>';
-                html += '<td>' + (ROLE_MAP[u.role] || u.role || 'user') + '</td>';
-                html += '<td>' + (u.phone || '-') + '</td>';
-                html += '<td>' + (u.note || '-') + '</td>';
+                html += '<td>' + escapeHtml(u.email) + '</td>';
+                html += '<td>' + escapeHtml(u.nickname) + '</td>';
+                html += '<td>' + (ROLE_MAP[u.role] || escapeHtml(u.role) || 'user') + '</td>';
+                html += '<td>' + escapeHtml(u.phone || '-') + '</td>';
+                html += '<td>' + escapeHtml(u.note || '-') + '</td>';
                 html += '<td class="action-cell">';
-                html += '<button class="btn-action btn-edit" onclick="editUser(\'' + u.id + '\',\'' + (u.nickname || '') + '\',\'' + (u.phone || '') + '\',\'' + (u.note || '') + '\',\'' + (u.role || 'user') + '\')">编辑</button>';
-                html += '<button class="btn-action btn-reset" onclick="resetPassword(\'' + u.email + '\')">重置密码</button>';
-                html += '<button class="btn-action btn-del" onclick="deleteUser(\'' + u.id + '\',\'' + u.email + '\')">删除</button>';
+                html += '<button class="btn-action btn-edit" data-uid="' + escapeHtml(u.id) + '">编辑</button>';
+                html += '<button class="btn-action btn-reset" data-email="' + escapeHtml(u.email) + '">重置密码</button>';
+                html += '<button class="btn-action btn-del" data-uid="' + escapeHtml(u.id) + '" data-email="' + escapeHtml(u.email) + '">删除</button>';
                 html += '</td></tr>';
             });
             tbody.innerHTML = html;
+
+            // 事件委托：用 data 属性代替 inline onclick
+            // 存储用户数据供编辑使用
+            window._userDataMap = {};
+            r.data.forEach(function (u) { window._userDataMap[u.id] = u; });
+
+            tbody.querySelectorAll('.btn-edit').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var uid = btn.getAttribute('data-uid');
+                    var u = window._userDataMap[uid];
+                    if (u) editUser(uid, u.nickname || '', u.phone || '', u.note || '', u.role || 'user');
+                });
+            });
+            tbody.querySelectorAll('.btn-reset').forEach(function (btn) {
+                btn.addEventListener('click', function () { resetPassword(btn.getAttribute('data-email')); });
+            });
+            tbody.querySelectorAll('.btn-del').forEach(function (btn) {
+                btn.addEventListener('click', function () { deleteUser(btn.getAttribute('data-uid'), btn.getAttribute('data-email')); });
+            });
         });
     }
 
@@ -256,13 +283,15 @@
     window.editUser = function (id, nickname, phone, note, role) {
         var html = '<div class="edit-modal" id="edit-modal">';
         html += '<div class="edit-card"><h3>编辑用户</h3>';
-        html += '<div class="form-row"><label>昵称</label><input id="edit-nickname" value="' + nickname + '"></div>';
-        html += '<div class="form-row"><label>手机</label><input id="edit-phone" value="' + phone + '"></div>';
+        html += '<div class="form-row"><label>昵称</label><input id="edit-nickname" value="' + escapeHtml(nickname) + '"></div>';
+        html += '<div class="form-row"><label>手机</label><input id="edit-phone" value="' + escapeHtml(phone) + '"></div>';
         html += '<div class="form-row"><label>角色</label><select id="edit-role"><option value="user"' + (role === 'user' ? ' selected' : '') + '>普通用户</option><option value="admin"' + (role === 'admin' ? ' selected' : '') + '>管理员</option></select></div>';
-        html += '<div class="form-row"><label>备注</label><input id="edit-note" value="' + note + '"></div>';
-        html += '<div class="form-row"><button class="btn-admin btn-primary" onclick="doEditUser(\'' + id + '\')">保存</button><button class="btn-admin" onclick="closeModal()">取消</button></div>';
+        html += '<div class="form-row"><label>备注</label><input id="edit-note" value="' + escapeHtml(note) + '"></div>';
+        html += '<div class="form-row"><button class="btn-admin btn-primary" id="btn-save-edit">保存</button><button class="btn-admin" id="btn-cancel-edit">取消</button></div>';
         html += '<div class="form-msg" id="edit-msg"></div></div></div>';
         document.body.insertAdjacentHTML('beforeend', html);
+        document.getElementById('btn-save-edit').addEventListener('click', function () { doEditUser(id); });
+        document.getElementById('btn-cancel-edit').addEventListener('click', closeModal);
     };
 
     window.doEditUser = function (id) {
