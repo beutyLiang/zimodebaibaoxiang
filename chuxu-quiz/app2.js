@@ -277,11 +277,21 @@
     }
 
     // ---- 分析中 ----
+    var aiReportPromise = null;
+
     function showAnalyzing() {
         chatInput.innerHTML = '';
+
+        // 立即开始 AI 调用（与动画并行）
+        aiReportPromise = AI_SERVICE.getReport(scores, userProfile, userAnswers)
+            .catch(function (err) {
+                console.warn('AI 报告生成失败:', err);
+                return null; // 失败时返回 null，结果页仍显示基础模板
+            });
+
         addBotBubble('好的，你的回答我都记下了 📝', true)
             .then(function () { return addBotBubble('让我用五行来解读你的体质…', false); })
-            .then(function () { return addBotBubble('分析完成！✨ 你的五行人格结果出来了~', false); })
+            .then(function () { return addBotBubble('初序正在为你生成专属解读报告 ✨', false); })
             .then(function () {
                 var btn = document.createElement('button');
                 btn.className = 'chat-next-btn';
@@ -319,6 +329,14 @@
             html += '  <div class="bar-track"><div class="bar-fill" style="background:' + c + ';" data-target="' + pct + '"></div></div>';
             html += '</div>';
         });
+        html += '</div>';
+
+        // AI 个性化解读区域（异步填充）
+        html += '<div id="ai-report-section">';
+        html += '  <div class="info-card" style="text-align:center; padding:24px;">';
+        html += '    <div style="font-size:18px; margin-bottom:8px;">✨ 正在生成你的专属解读...</div>';
+        html += '    <div style="font-size:13px; color:var(--text-light);">初序 AI 正在根据你的画像和回答为你定制报告</div>';
+        html += '  </div>';
         html += '</div>';
 
         // ========== 八卦圆盘区域 ==========
@@ -511,6 +529,112 @@
         resultBox.innerHTML = html;
         showPage('result');
         window.scrollTo({ top: 0 });
+
+        // ---- 异步填充 AI 个性化报告 ----
+        if (aiReportPromise) {
+            aiReportPromise.then(function (report) {
+                var section = document.getElementById('ai-report-section');
+                if (!section) return;
+
+                if (!report) {
+                    section.innerHTML = '';
+                    return;
+                }
+
+                var rptHtml = '';
+
+                // 体质画像
+                if (report.headline || report.body_metaphor) {
+                    rptHtml += '<div class="info-card ai-card" style="border-left:3px solid ' + r.color + ';">';
+                    rptHtml += '  <h3>🏔️ 专属体质画像</h3>';
+                    if (report.headline) rptHtml += '  <div style="font-size:18px; font-weight:700; color:' + r.color + '; margin-bottom:8px;">' + report.headline + '</div>';
+                    if (report.body_metaphor) rptHtml += '  <p>' + report.body_metaphor + '</p>';
+                    rptHtml += '</div>';
+                }
+
+                // 优势与信号
+                if (report.strengths || report.warnings) {
+                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '  <h3>⚡ 你的优势与信号</h3>';
+                    if (report.strengths) {
+                        rptHtml += '  <div style="margin-bottom:10px;">';
+                        report.strengths.forEach(function (s) { rptHtml += '<p>✅ ' + s + '</p>'; });
+                        rptHtml += '  </div>';
+                    }
+                    if (report.warnings) {
+                        report.warnings.forEach(function (w) { rptHtml += '<p>⚠️ ' + w + '</p>'; });
+                    }
+                    rptHtml += '</div>';
+                }
+
+                // 肠脑洞察
+                if (report.gut_insight) {
+                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '  <h3>🧠 肠脑轴洞察</h3>';
+                    rptHtml += '  <p>' + report.gut_insight + '</p>';
+                    rptHtml += '</div>';
+                }
+
+                // 日常节律
+                if (report.morning_routine || report.evening_routine) {
+                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '  <h3>🌅 你的日常节律</h3>';
+                    if (report.morning_routine) rptHtml += '  <p><strong>🌄 晨起：</strong>' + report.morning_routine + '</p>';
+                    if (report.evening_routine) rptHtml += '  <p><strong>🌙 晚间：</strong>' + report.evening_routine + '</p>';
+                    rptHtml += '</div>';
+                }
+
+                // 食养处方
+                if (report.food_rx) {
+                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '  <h3>🍵 专属食养处方</h3>';
+                    if (report.food_rx.eat_more) {
+                        rptHtml += '  <p><strong>多吃：</strong></p>';
+                        report.food_rx.eat_more.forEach(function (f) { rptHtml += '<p style="padding-left:12px;">🟢 ' + f + '</p>'; });
+                    }
+                    if (report.food_rx.eat_less) {
+                        rptHtml += '  <p style="margin-top:8px;"><strong>少吃：</strong></p>';
+                        report.food_rx.eat_less.forEach(function (f) { rptHtml += '<p style="padding-left:12px;">🔴 ' + f + '</p>'; });
+                    }
+                    rptHtml += '</div>';
+                }
+
+                // 情绪锦囊
+                if (report.emotion_tip) {
+                    rptHtml += '<div class="info-card ai-card">';
+                    rptHtml += '  <h3>💭 情绪调养锦囊</h3>';
+                    rptHtml += '  <p>' + report.emotion_tip + '</p>';
+                    rptHtml += '</div>';
+                }
+
+                // 本周挑战 + 寄语
+                if (report.weekly_challenge || report.closing) {
+                    rptHtml += '<div class="info-card ai-card" style="background:' + r.colorSoft + ';">';
+                    if (report.weekly_challenge) {
+                        rptHtml += '  <h3>🎯 本周小挑战</h3>';
+                        rptHtml += '  <p>' + report.weekly_challenge + '</p>';
+                    }
+                    if (report.closing) {
+                        rptHtml += '  <p style="margin-top:12px; font-style:italic; color:' + r.color + ';">' + report.closing + '</p>';
+                    }
+                    rptHtml += '</div>';
+                }
+
+                section.innerHTML = rptHtml;
+
+                // 渐入动画
+                var cards = section.querySelectorAll('.ai-card');
+                cards.forEach(function (card, i) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(16px)';
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    setTimeout(function () {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, i * 200);
+                });
+            });
+        }
 
         // 保存用户体质到云端 + localStorage
         ChuxuDB.saveQuizResult(topEl, subEl, scores);
