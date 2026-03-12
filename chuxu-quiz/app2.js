@@ -19,6 +19,7 @@
     var currentStep = 0;
     var totalSteps = CHAT_FLOW.filter(function (s) { return s.type === 'question'; }).length;
     var userProfile = JSON.parse(localStorage.getItem('chuxu_user_profile') || '{}');
+    var userAnswers = {};
 
     // ---- 页面切换 ----
     function showPage(name) {
@@ -195,6 +196,9 @@
 
         // 记分
         scores[opt.element] += opt.score;
+
+        // 记录答案（供 AI Prompt 使用）
+        userAnswers[step.id] = opt.text;
 
         // 显示用户气泡
         addUserBubble(opt.text);
