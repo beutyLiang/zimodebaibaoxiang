@@ -58,6 +58,17 @@ var PROFILE_LABELS = {
     diet: { vegetarian: '偏素食', meat: '偏肉食', balanced: '比较均衡', irregular: '不太规律' }
 };
 
+// Prompt 注入清洗（防止用户输入污染 LLM 指令）
+function sanitizeForPrompt(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/#{2,}/g, '')           // 去除 ## 标题标记
+        .replace(/System\s*:/gi, '')     // 去除 System: 指令
+        .replace(/Assistant\s*:/gi, '')  // 去除 Assistant: 指令
+        .replace(/```/g, '')             // 去除代码块
+        .substring(0, 200);              // 限制长度
+}
+
 /**
  * 组装完整的用户数据 Prompt
  * @param {Object} scores - 五行评分 { wood:N, fire:N, earth:N, metal:N, water:N }
@@ -92,7 +103,7 @@ function buildUserPrompt(scores, profile, answers) {
     lines.push('## 测试选项详情');
     if (answers) {
         Object.keys(answers).forEach(function (qId) {
-            lines.push('- ' + qId + ': ' + answers[qId]);
+            lines.push('- ' + qId + ': ' + sanitizeForPrompt(answers[qId]));
         });
     }
 

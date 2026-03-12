@@ -8,7 +8,7 @@
     var db = null;
     var ELEMENT_NAMES = { wood: '🌿木', fire: '🔥火', earth: '🌾土', metal: '🌙金', water: '🌊水' };
     var ELEMENT_COLORS = { wood: '#2D8B55', fire: '#C9544D', earth: '#C6983A', metal: '#8C8C98', water: '#2E6B9E' };
-    var ROLE_MAP = { admin: '🔑 管理员', user: '👤 用户' };
+    var ROLE_MAP = { admin: '🔑 管理员', user: '👤 用户', pending: '⏳ 待审批' };
 
     function init() {
         if (typeof supabase === 'undefined') { showAuthError('Supabase SDK 加载失败'); return; }

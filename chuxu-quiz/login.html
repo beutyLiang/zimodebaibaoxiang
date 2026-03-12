@@ -265,21 +265,16 @@
                         if (res.error) throw res.error;
                         var user = res.data.user;
                         if (user) {
-                            // 写入 user_profiles
+                            // 写入 user_profiles（待审批状态）
                             return sb.from('user_profiles').insert({
                                 user_id: user.id,
                                 email: email,
                                 nickname: nickname || email.split('@')[0],
-                                role: 'user',
-                                note: ''
+                                role: 'pending',
+                                note: '待管理员审批'
                             }).then(function (ir) {
                                 if (ir.error) console.log('profile insert error:', ir.error.message);
-                                if (res.data.session) {
-                                    showMsg('注册成功！正在跳转...', 'success');
-                                    setTimeout(function () { location.href = 'index.html'; }, 600);
-                                } else {
-                                    showMsg('注册成功！请查收验证邮件后登录', 'success');
-                                }
+                                showMsg('注册成功！请等待管理员审批后登录', 'success');
                             });
                         }
                         btn.disabled = false;
