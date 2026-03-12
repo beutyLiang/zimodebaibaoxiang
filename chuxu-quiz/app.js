@@ -583,6 +583,9 @@
     function handleRetest() {
         scores = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
         currentStep = 0;
+        userProfile = {};
+        userAnswers = {};
+        localStorage.removeItem('chuxu_user_profile');
         progressFill.style.width = '0%';
         chatBody.innerHTML = '';
         chatInput.innerHTML = '';
@@ -599,9 +602,15 @@
             processStep('welcome');
         });
 
-        var base = 3281;
-        var extra = Math.floor(Math.random() * 500);
-        document.getElementById('test-count').textContent = (base + extra).toLocaleString();
+        // 真实测试人数（从 Supabase 查询）
+        ChuxuDB.supabase.from('quiz_results').select('id', { count: 'exact', head: true })
+            .then(function (res) {
+                var count = (res.count || 0);
+                document.getElementById('test-count').textContent = count.toLocaleString();
+            })
+            .catch(function () {
+                document.getElementById('test-count').textContent = '-';
+            });
     }
 
     init();

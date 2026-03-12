@@ -57,7 +57,7 @@ var AI_SERVICE = (function () {
      * 相同的评分+画像组合会复用缓存结果
      */
     function getReport(scores, profile, answers) {
-        var cacheKey = 'chuxu_ai_report_' + JSON.stringify(scores);
+        var cacheKey = 'chuxu_ai_report_' + JSON.stringify(scores) + '_' + JSON.stringify(profile);
         var cached = localStorage.getItem(cacheKey);
 
         if (cached) {
