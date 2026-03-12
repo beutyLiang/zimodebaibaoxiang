@@ -286,7 +286,7 @@
         aiReportPromise = AI_SERVICE.getReport(scores, userProfile, userAnswers)
             .catch(function (err) {
                 console.warn('AI 报告生成失败:', err);
-                return null; // 失败时返回 null，结果页仍显示基础模板
+                return { _error: err.message || String(err) };
             });
 
         addBotBubble('好的，你的回答我都记下了 📝', true)
@@ -536,8 +536,15 @@
                 var section = document.getElementById('ai-report-section');
                 if (!section) return;
 
-                if (!report) {
-                    section.innerHTML = '';
+                if (!report || report._error) {
+                    if (report && report._error) {
+                        section.innerHTML = '<div class="info-card" style="text-align:center; padding:16px; color:#c75c5c;">'
+                            + '<p>⚠️ AI 解读暂时不可用</p>'
+                            + '<p style="font-size:12px; color:var(--text-light);">' + report._error + '</p>'
+                            + '</div>';
+                    } else {
+                        section.innerHTML = '';
+                    }
                     return;
                 }
 
