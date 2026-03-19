@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wu Wei Handbook — Yuanmind</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2a2a2a;
+            background: #fff;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* ===== COVER PAGE ===== */
+        .cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 600px;
+            height: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .cover-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .cover h1 span {
+            display: block;
+            font-size: 28px;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 15px;
+        }
+
+        .cover-tagline {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 400px;
+            margin: 30px auto 50px;
+            line-height: 1.7;
+        }
+
+        .cover-brand {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            position: absolute;
+            bottom: 50px;
+        }
+
+        .cover-enso {
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.06);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: serif;
+        }
+
+        /* ===== CONTENT PAGES ===== */
+        .page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            page-break-after: always;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        h2 .num {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #0f3460;
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 35px 0 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            color: #3a3a3a;
+        }
+
+        .lead {
+            font-size: 18px;
+            color: #555;
+            font-weight: 300;
+            line-height: 1.9;
+            border-left: 3px solid #0f3460;
+            padding-left: 20px;
+            margin: 25px 0 30px;
+        }
+
+        .quote-block {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            border-radius: 12px;
+            padding: 30px 35px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 80px;
+            color: rgba(15, 52, 96, 0.1);
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            line-height: 1;
+        }
+
+        .quote-block p {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: #1a1a2e;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .quote-block .source {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-style: normal;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .framework-box {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin: 25px 0;
+        }
+
+        .framework-box h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #0f3460;
+            margin-bottom: 15px;
+        }
+
+        .framework-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .framework-box li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #3a3a3a;
+        }
+
+        .framework-box li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #0f3460;
+            font-weight: 600;
+        }
+
+        .scenario {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 30px 35px;
+            margin: 25px 0;
+            color: #fff;
+        }
+
+        .scenario .label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .scenario .question {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .scenario .answer {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #ccc;
+            font-size: 20px;
+            letter-spacing: 15px;
+        }
+
+        .key-insight {
+            background: #fffbf0;
+            border-left: 4px solid #e6a817;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .key-insight strong {
+            color: #1a1a2e;
+        }
+
+        /* ===== TOC ===== */
+        .toc {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            page-break-after: always;
+        }
+
+        .toc h2 {
+            margin-bottom: 40px;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .toc-item .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #1a1a2e;
+        }
+
+        .toc-item .num {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f3460;
+            letter-spacing: 2px;
+        }
+
+        /* ===== BACK COVER ===== */
+        .back-cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .back-cover h2 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+
+        .back-cover p {
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 450px;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .back-cover .cta {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .back-cover .social {
+            margin-top: 50px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        @media print {
+            body {
+                font-size: 13px;
+            }
+
+            .cover,
+            .back-cover {
+                min-height: auto;
+                height: auto;
+                padding: 200px 40px;
+            }
+
+            .page {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== COVER ===== -->
+    <div class="cover">
+        <div class="cover-enso">○</div>
+        <div class="cover-subtitle">Yuanmind Presents</div>
+        <h1>
+            The Wu Wei Handbook
+            <span>5 Ancient Frameworks to Eliminate Mental Friction</span>
+        </h1>
+        <div class="cover-tagline">
+            A practical guide to the most misunderstood concept in Eastern philosophy — and how it can transform your
+            productivity, decisions, and inner peace.
+        </div>
+        <div class="cover-brand">YUANMIND · 归元</div>
+    </div>
+
+    <!-- ===== TOC ===== -->
+    <div class="toc">
+        <h2>What's Inside</h2>
+        <div class="toc-item"><span class="num">INTRO</span><span class="title">Why You're Exhausted (And It's Not What
+                You Think)</span></div>
+        <div class="toc-item"><span class="num">01</span><span class="title">The Ineffective Effort Trap</span></div>
+        <div class="toc-item"><span class="num">02</span><span class="title">Going With the Current, Not Against
+                It</span></div>
+        <div class="toc-item"><span class="num">03</span><span class="title">The Art of Strategic Subtraction</span>
+        </div>
+        <div class="toc-item"><span class="num">04</span><span class="title">The Three Types of Inner Friction</span>
+        </div>
+        <div class="toc-item"><span class="num">05</span><span class="title">Wu Wei Is the Hardest Kind of
+                Discipline</span></div>
+        <div class="toc-item"><span class="num">BONUS</span><span class="title">10 Golden Rules for Practicing Wu Wei
+                Today</span></div>
+    </div>
+
+    <!-- ===== INTRO ===== -->
+    <div class="page">
+        <h2><span class="num">Introduction</span>Why You're Exhausted<br>(And It's Not What You Think)</h2>
+
+        <p class="lead">You're not tired because you're doing too little. You're tired because you're doing too much of
+            the wrong things.</p>
+
+        <p>We live in a culture that worships effort. Work harder. Sleep less. Hustle more. If you're not grinding,
+            you're falling behind.</p>
+
+        <p>But here's what 2,500 years of Eastern philosophy would tell you: <strong>most of your effort is
+                wasted.</strong></p>
+
+        <p>Not because you're lazy. Not because you lack talent. But because you haven't learned the most powerful skill
+            in the human operating system:</p>
+
+        <p><strong>The ability to stop doing what doesn't work.</strong></p>
+
+        <p>In ancient China, they called this skill <strong>Wu Wei (无为)</strong> — often mistranslated as "doing
+            nothing." This mistranslation has caused centuries of confusion.</p>
+
+        <p>Wu Wei doesn't mean doing nothing. It means <strong>eliminating ineffective action so you can focus entirely
+                on what matters.</strong></p>
+
+        <p>This handbook will teach you five structural frameworks from Wu Wei philosophy. Not as abstract theory. Not
+            as spiritual practice. As <strong>cognitive tools</strong> you can use starting today.</p>
+
+        <div class="key-insight">
+            <strong>Who is this handbook for?</strong> Anyone who feels busy but unproductive. Anyone who overthinks
+            decisions. Anyone who works hard but doesn't see proportional results. Anyone who suspects there might be a
+            smarter way to operate — and is ready to learn it.
+        </div>
+    </div>
+
+    <!-- ===== FRAMEWORK 1 ===== -->
+    <div class="page">
+        <h2><span class="num">Framework 01</span>The Ineffective Effort Trap</h2>
+
+        <p class="lead">60-80% of most people's daily effort produces zero meaningful change in outcomes. The first step
+            of Wu Wei is seeing this clearly.</p>
+
+        <p>Think about your last workday. How many emails did you send that didn't need sending? How many meetings
+            produced no decisions? How many hours were spent organizing tasks instead of doing them?</p>
+
+        <p>This is what Chinese philosophy calls <strong>无效功 (wú xiào gōng)</strong> — ineffective effort. It looks like
+            work. It feels like work. But it changes nothing.</p>
+
+        <div class="quote-block">
+            <p>In pursuit of learning, every day something is added. In pursuit of Dao, every day something is dropped.
+            </p>
+            <span class="source">— Dao De Jing, Chapter 48</span>
+        </div>
+
+        <p>The paradox of modern productivity: the more tools, apps, and systems you add, the busier you get — but not
+            necessarily the more effective.</p>
+
+        <p>Wu Wei flips this completely: <strong>progress isn't measured by how much you add, but by how much
+                unnecessary action you eliminate.</strong></p>
+
+        <div class="framework-box">
+            <h4>Try This Today: The Elimination Audit</h4>
+            <ul>
+                <li>At the end of your day, list everything you did</li>
+                <li>For each item, ask: "If I hadn't done this, would the outcome be any different?"</li>
+                <li>You'll find 40-60% made no difference at all</li>
+                <li>Tomorrow, cut those activities. Do only the remaining 40%</li>
+                <li>Notice: you'll finish faster AND produce better results</li>
+            </ul>
+        </div>
+
+        <div class="scenario">
+            <div class="label">Real-World Scenario</div>
+            <div class="question">"I work 12 hours a day, but my boss says my output isn't enough. What's wrong?"</div>
+            <div class="answer">You've likely fallen into the ineffective effort trap — looking busy without moving the
+                needle. The fix isn't working more hours. It's identifying which 4 hours of your 12 produce 80% of your
+                value. Do those 4 hours with full intensity. The other 8 hours were noise.</div>
+        </div>
+    </div>
+
+    <!-- ===== FRAMEWORK 2 ===== -->
+    <div class="page">
+        <h2><span class="num">Framework 02</span>Going With the Current,<br>Not Against It</h2>
+
+        <p class="lead">Water doesn't flow uphill. If you're pouring enormous energy into something with no progress,
+            you're likely working against the current.</p>
+
+        <p>Wu Wei teaches a concept we call <strong>顺势而为 (shùn shì ér wéi)</strong> — moving with the momentum, not
+            against it.</p>
+
+        <p>This doesn't mean being passive. It means having the intelligence to recognize <em>where the energy is
+                already flowing</em> — and positioning yourself there.</p>
+
+        <p>The entrepreneur who pivots when the market sends clear signals isn't giving up. The employee who leaves a
+            declining industry isn't being disloyal. They're reading the current.</p>
+
+        <div class="quote-block">
+            <p>Letting go isn't failure. It's redirecting energy to where it matters.</p>
+            <span class="source">— Wu Wei Principle</span>
+        </div>
+
+        <div class="framework-box">
+            <h4>Try This Today: The Momentum Check</h4>
+            <ul>
+                <li>Pick something you've been struggling with for 3+ months</li>
+                <li>Ask honestly: "After doing everything I could, are core metrics improving?"</li>
+                <li>If yes → you're swimming with the current. Keep going</li>
+                <li>If no → the current may not be in this direction. Consider pivoting</li>
+                <li>Remember: pivoting isn't failure. It's strategic redirection</li>
+            </ul>
+        </div>
+
+        <div class="scenario">
+            <div class="label">Real-World Scenario</div>
+            <div class="question">"I've been building my startup for a year. Data is terrible. But I can't bear to quit
+                because I've already invested so much."</div>
+            <div class="answer">This is the sunk cost trap disguised as persistence. Wu Wei's judgment: what you've
+                invested is gone regardless of what you decide next. The only question that matters is: "If I were
+                starting fresh today, would I choose this direction?" If the answer is no, then staying is the
+                ineffective effort — not leaving.</div>
+        </div>
+    </div>
+
+    <!-- ===== FRAMEWORK 3 ===== -->
+    <div class="page">
+        <h2><span class="num">Framework 03</span>The Art of<br>Strategic Subtraction</h2>
+
+        <p class="lead">Knowledge is addition. Wisdom is subtraction. The most powerful people aren't those who know the
+            most — they're those who've eliminated the most.</p>
+
+        <p>The Dao De Jing's Chapter 48 contains perhaps the most counterintuitive productivity advice ever written:
+            <strong>"损之又损, 以至于无为"</strong> — reduce, and reduce again, until you reach the state of Wu Wei.</p>
+
+        <p>In modern terms: keep cutting until only the essential remains.</p>
+
+        <p>This applies to everything:</p>
+
+        <div class="framework-box">
+            <h4>Subtraction Applied</h4>
+            <ul>
+                <li><strong>Learning:</strong> Don't read 20 books. Read 3, deeply, and apply them</li>
+                <li><strong>Goals:</strong> Don't set 10 New Year's resolutions. Pick 1 and commit completely</li>
+                <li><strong>Work:</strong> Don't multi-task 5 projects at 20% each. Do 1 project at 100%</li>
+                <li><strong>Communication:</strong> Don't explain everything. Say what matters, stop</li>
+                <li><strong>Schedule:</strong> Don't fill every hour. Leave empty space for thinking</li>
+            </ul>
+        </div>
+
+        <div class="quote-block">
+            <p>The worst action is more valuable than the most perfect plan.</p>
+            <span class="source">— Wu Wei Principle</span>
+        </div>
+
+        <div class="scenario">
+            <div class="label">Real-World Scenario</div>
+            <div class="question">"I want to learn English, coding, investing, and photography — but I don't know where
+                to start."</div>
+            <div class="answer">Wanting to learn everything = learning nothing. Wu Wei's selection filter: don't ask
+                "which is most useful?" (they all are). Ask: "which one will advance my core goal in the next 6 months?"
+                Pick that one. Put the rest on a "later" list. One chopstick picks up food better than a fistful.</div>
+        </div>
+    </div>
+
+    <!-- ===== FRAMEWORK 4 ===== -->
+    <div class="page">
+        <h2><span class="num">Framework 04</span>The Three Types of<br>Inner Friction</h2>
+
+        <p class="lead">Internal friction isn't a "mindset problem." It's structural energy waste — and it has exactly
+            three forms.</p>
+
+        <p>When people talk about "mental exhaustion" or "burnout," they usually treat it as a single, vague problem. Wu
+            Wei breaks it down into <strong>three distinct structures</strong>, each with a different solution:</p>
+
+        <h3>Type 1: Decision Rumination</h3>
+        <p>Endlessly revisiting past choices. "I should have taken that job." "I shouldn't have said that." Your brain
+            is simulating a parallel universe that no longer exists — burning real energy on imaginary scenarios.</p>
+        <p><strong>Wu Wei fix:</strong> When rumination appears, ask: "Will this thought change my action tomorrow?" If
+            no, it's ineffective processing. Let it pass.</p>
+
+        <h3>Type 2: Comparison Drain</h3>
+        <p>Constant comparison with others creates an anxiety loop that never resolves — because you're comparing your
+            full internal reality with everyone else's curated highlights.</p>
+        <p><strong>Wu Wei fix:</strong> The only valid benchmark is your own timeline. Compare yourself with who you
+            were 3 months ago. Everything else is noise.</p>
+
+        <h3>Type 3: Perfectionism Trap</h3>
+        <p>The inability to start because you can't guarantee a perfect result. "I'll start when I'm ready" is the
+            structural disguise for "I'm afraid of not being good enough."</p>
+        <p><strong>Wu Wei fix:</strong> Do the worst possible version. Ship it. The worst shipped product is a thousand
+            times more valuable than the perfect draft in your head — because one gets feedback, the other never exists.
+        </p>
+
+        <div class="key-insight">
+            <strong>Key insight:</strong> These three types often combine. You ruminate about a past decision (Type 1),
+            compare your situation to where others are (Type 2), then feel paralyzed from taking new action because it
+            might not be perfect (Type 3). The cycle repeats. Breaking any one link breaks the chain.
+        </div>
+    </div>
+
+    <!-- ===== FRAMEWORK 5 ===== -->
+    <div class="page">
+        <h2><span class="num">Framework 05</span>Wu Wei Is the Hardest<br>Kind of Discipline</h2>
+
+        <p class="lead">True Wu Wei requires extreme discernment. Knowing what NOT to do is harder — and more valuable —
+            than knowing what to do.</p>
+
+        <p>Here's the final and most important framework: Wu Wei is not easy. It's not passive. It's not an excuse to be
+            lazy.</p>
+
+        <p><strong>Wu Wei is the hardest form of discipline that exists.</strong></p>
+
+        <p>Because it requires you to:</p>
+
+        <div class="framework-box">
+            <h4>The Discipline of Wu Wei</h4>
+            <ul>
+                <li>Say <strong>no</strong> to things that feel productive but aren't</li>
+                <li><strong>Stop working</strong> when the important work is done (even if it's only 2pm)</li>
+                <li><strong>Sit with discomfort</strong> of not being busy instead of filling time with noise</li>
+                <li><strong>Trust your judgment</strong> enough to not-act when waiting is the optimal move</li>
+                <li><strong>Accept 80%</strong> quality and ship, instead of chasing 100% forever</li>
+            </ul>
+        </div>
+
+        <div class="quote-block">
+            <p>Effort is not a virtue. Precise effort is.</p>
+            <span class="source">— Wu Wei Principle</span>
+        </div>
+
+        <p>The people who look like they're "doing nothing" are often producing the most meaningful results. They've
+            eliminated the noise. They've cut the performative busyness. They work fewer hours but <em>every hour
+                counts</em>.</p>
+
+        <p>That's not laziness. That's Wu Wei.</p>
+
+        <p>And it might be the most important skill you develop in your entire life.</p>
+
+        <div class="divider">· · ·</div>
+
+        <p>The question to take with you:</p>
+
+        <div class="quote-block">
+            <p>Of everything you did today — how much actually mattered?</p>
+            <span class="source">— Start here. Cut the rest.</span>
+        </div>
+    </div>
+
+    <!-- ===== BONUS ===== -->
+    <div class="page">
+        <h2><span class="num">Bonus</span>10 Golden Rules for<br>Practicing Wu Wei Today</h2>
+
+        <p class="lead">Pin these somewhere you'll see them daily. They are your cognitive operating system.</p>
+
+        <div style="margin-top: 20px;">
+            <p><strong>1.</strong> In a culture of efficiency, the greatest efficiency is learning what NOT to do.</p>
+            <p><strong>2.</strong> Your inner friction isn't your enemy. It's a signal — you're wasting energy.</p>
+            <p><strong>3.</strong> The best leaders look "idle" because they only act at critical moments.</p>
+            <p><strong>4.</strong> Effort is not a virtue. Precise effort is.</p>
+            <p><strong>5.</strong> It's not that you haven't done enough — it's that you've done too much of the wrong
+                things.</p>
+            <p><strong>6.</strong> Letting go isn't failure. It's redirecting energy to where it matters.</p>
+            <p><strong>7.</strong> Knowledge is addition. Wisdom is subtraction.</p>
+            <p><strong>8.</strong> The worst action is more valuable than the most perfect plan.</p>
+            <p><strong>9.</strong> Compare yourself with who you were three months ago. Everything else is noise.</p>
+            <p><strong>10.</strong> In a chaotic age, those who eliminate wasted effort will have the last laugh.</p>
+        </div>
+
+        <div class="divider">· · ·</div>
+
+        <div class="key-insight">
+            <strong>Remember:</strong> Wu Wei isn't a philosophy to study. It's an operating system to install. Don't
+            just read these frameworks — <em>apply one today</em>. Start with the Elimination Audit from Framework 01.
+            By tomorrow, you'll already feel the difference.
+        </div>
+    </div>
+
+    <!-- ===== BACK COVER ===== -->
+    <div class="back-cover">
+        <h2>This Is Just the Beginning</h2>
+        <p>Wu Wei is one of four cognitive models in the Yuanmind system. The full framework includes:</p>
+        <p><strong>Yin-Yang</strong> · Dynamic Decision-Making<br>
+            <strong>Yi Jing</strong> · Change Management<br>
+            <strong>Zhong Dao</strong> · Emotional Structure
+        </p>
+        <p style="margin-top: 25px;">Subscribe to the Yuanmind newsletter for weekly frameworks, deeper explorations,
+            and practical tools from 2,500 years of Eastern wisdom.</p>
+        <a href="#" class="cta">Subscribe Free →</a>
+        <div class="social">
+            TikTok: @yuanmind1 · YouTube: Yuanmind · X: @yuanmind<br>
+            yuanmind.substack.com
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>五行八卦 · 养生圆（单文件分享版）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+:root {
+  /* 中国风清爽配色：宣纸米白 + 玉色青绿 + 朱砂点缀 + 墨色线条 */
+  --gold: #b38a2b;        /* 暖金点缀（更轻） */
+  --gold-dim: #c8b58a;    /* 淡金 */
+  --gold-bright: #8b6a12; /* 深金（标题/重点） */
+  --bronze: #b08b55;
+
+  --ink: #1e2426;         /* 墨色 */
+  --ink-soft: rgba(30, 36, 38, 0.55);
+  --paper: #f5f0e6;       /* 宣纸 */
+  --paper-2: #efe7d7;
+  --jade: #3f8f78;        /* 玉色 */
+  --jade-soft: rgba(63, 143, 120, 0.18);
+  --cinnabar: #c13b2a;    /* 朱砂 */
+
+  /* 五行扇形高亮（更清爽、略低饱和） */
+  --wood:  #3f8f78;
+  --fire:  #d45a4a;
+  --earth: #c7a24a;
+  --metal: #a7a092;
+  --water: #3a6f93;
+  --extra: #6a6a7a;
+
+  --wood-glow:  #3f8f78;
+  --fire-glow:  #d45a4a;
+  --earth-glow: #c7a24a;
+  --metal-glow: #a7a092;
+  --water-glow: #3a6f93;
+  --extra-glow: #6a6a7a;
+
+  /* 面板主题：宣纸底 + 轻玉色罩染 */
+  --panel-wood:  linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(63,143,120,0.14), transparent 60%);
+  --panel-fire:  linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(193,59,42,0.12), transparent 60%);
+  --panel-earth: linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(199,162,74,0.14), transparent 60%);
+  --panel-metal: linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(167,160,146,0.16), transparent 60%);
+  --panel-water: linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(58,111,147,0.14), transparent 60%);
+  --panel-extra: linear-gradient(180deg, rgba(245,240,230,0.98), rgba(245,240,230,0.94)), radial-gradient(120% 80% at 30% 10%, rgba(106,106,122,0.12), transparent 60%);
+
+  --bg: var(--paper);
+  --bg-card: rgba(245, 240, 230, 0.9);
+  --text: var(--ink);
+  --text-dim: rgba(30, 36, 38, 0.55);
+  --wheel-base: rgba(30, 36, 38, 0.06); /* 未选中时整圆淡墨铺底 */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 413px) { html { font-size: 14px; } }
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-y;
+}
+
+body {
+  font-family: 'Noto Serif SC', 'STSong', serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 0 1rem;
+  position: relative;
+}
+
+/* ========== 背景 ========== */
+.bg-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 85% at 50% 15%, rgba(63,143,120,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 70% at 20% 85%, rgba(193,59,42,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 110% 70% at 85% 60%, rgba(58,111,147,0.06) 0%, transparent 55%);
+}
+
+/* ========== 头部 ========== */
+.header {
+  text-align: center;
+  margin-bottom: 0.85rem;
+  z-index: 1;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--gold-bright) 55%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 0.15rem;
+  letter-spacing: 0.2em;
+}
+
+/* ========== 圆盘区域 ========== */
+.wheel-area {
+  position: relative;
+  z-index: 50;
+  /* 更大气：手机端尽量铺开，但不超出安全尺寸 */
+  width: min(92vw, 360px);
+  height: min(92vw, 360px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 更贴合内容面板：缩短圆盘与下方间距 */
+  margin: 0 auto 0;
+}
+
+/* 八卦符号外环 */
+.trigram-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  animation: trigramSpin 120s linear infinite;
+}
+
+@keyframes trigramSpin {
+  to { transform: rotate(360deg); }
+}
+
+.trigram {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 0.8rem;
+  color: rgba(30, 36, 38, 0.35);
+  opacity: 1;
+  /* 随圆盘变大同步外环半径 */
+  transform: rotate(var(--a)) translateY(calc(-50% - min(46vw, 180px))) rotate(calc(-1 * var(--a)));
+  transform-origin: center center;
+}
+
+/* 装饰环 */
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.ring-outer {
+  width: 92%;
+  height: 92%;
+  border: 1.5px solid rgba(30, 36, 38, 0.22);
+  opacity: 1;
+  box-shadow: 0 0 0 6px rgba(63, 143, 120, 0.06);
+}
+
+.ring-inner {
+  width: 84%;
+  height: 84%;
+  border: 1px solid rgba(30, 36, 38, 0.12);
+}
+
+/* ========== 圆盘主体 ========== */
+.wheel {
+  position: relative;
+  /* 圆盘主体更大（减少外层空圈） */
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 1.5px rgba(30, 36, 38, 0.20),
+    0 16px 40px rgba(30, 36, 38, 0.12),
+    inset 0 0 24px rgba(30, 36, 38, 0.08);
+}
+
+.wheel:active { cursor: grabbing; }
+
+.wheel-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* 扇形 */
+.wheel-sector { cursor: pointer; }
+
+.sector-path {
+  fill: var(--wheel-base);
+  stroke: none;
+  transition: fill 0.4s var(--ease), filter 0.3s;
+}
+
+.sector-divider {
+  stroke: rgba(30, 36, 38, 0.16);
+  stroke-width: 0.6;
+}
+
+/* 选中高亮 */
+.wheel-sector[data-wuxing="wood"].selected  .sector-path { fill: var(--wood);  filter: brightness(1.4); }
+.wheel-sector[data-wuxing="fire"].selected  .sector-path { fill: var(--fire);  filter: brightness(1.4); }
+.wheel-sector[data-wuxing="earth"].selected .sector-path { fill: var(--earth); filter: brightness(1.4); }
+.wheel-sector[data-wuxing="metal"].selected .sector-path { fill: var(--metal); filter: brightness(1.4); }
+.wheel-sector[data-wuxing="water"].selected .sector-path { fill: var(--water); filter: brightness(1.4); }
+.wheel-sector[data-wuxing="extra"].selected .sector-path { fill: var(--extra); filter: brightness(1.4); }
+
+/* 扇形文字：始终水平（JS 实时反旋转） */
+.sector-text {
+  fill: rgba(30, 36, 38, 0.85);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 8.5px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(245, 240, 230, 0.95);
+  stroke-width: 2.4;
+  letter-spacing: 0.05em;
+}
+
+/* ========== 中心太极 ========== */
+.wheel-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22%;
+  height: 22%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(245, 240, 230, 0.88);
+  border: 1.5px solid rgba(30, 36, 38, 0.18);
+  box-shadow:
+    0 10px 22px rgba(30, 36, 38, 0.16),
+    inset 0 0 10px rgba(30, 36, 38, 0.08);
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.taiji {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+}
+
+.taiji-half {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+
+.taiji-dark {
+  background: var(--ink);
+  border-radius: 50% 0 0 50%;
+}
+
+.taiji-dark::after {
+  content: '';
+  position: absolute;
+  right: -25%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.taiji-light {
+  background: rgba(245, 240, 230, 0.96);
+  border-radius: 0 50% 50% 0;
+}
+
+.taiji-light::after {
+  content: '';
+  position: absolute;
+  left: -25%;
+  bottom: 0;
+  width: 50%;
+  height: 50%;
+  background: rgba(245, 240, 230, 0.96);
+  border-radius: 50%;
+}
+
+.taiji-dot {
+  position: absolute;
+  width: 20%;
+  height: 10%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.dot-light {
+  background: rgba(245, 240, 230, 0.96);
+  top: 22%;
+  right: -5%;
+}
+
+.dot-dark {
+  background: var(--ink);
+  bottom: 22%;
+  left: -5%;
+}
+
+/* ========== 底部指示器 ========== */
+.wheel-indicator {
+  position: absolute;
+  /* 更靠近底部，视觉上更“贴”面板 */
+  bottom: 2.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(30, 36, 38, 0.55);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.wheel-indicator.theme-wood  { color: var(--wood-glow); }
+.wheel-indicator.theme-fire  { color: var(--fire-glow); }
+.wheel-indicator.theme-earth { color: var(--earth-glow); }
+.wheel-indicator.theme-metal { color: var(--metal-glow); }
+.wheel-indicator.theme-water { color: var(--water-glow); }
+.wheel-indicator.theme-extra { color: var(--extra-glow); }
+
+/* ========== 遮罩 ========== */
+.content-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  visibility: hidden;
+  background: rgba(30, 36, 38, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.content-backdrop.show {
+  pointer-events: auto;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ========== 内容面板 ========== */
+.content-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* 打开时由 JS 设置为“圆盘底部”实现 0 间距紧贴 */
+  top: var(--panel-top, auto);
+  height: var(--panel-height, auto);
+  max-width: 100vw;
+  z-index: 100;
+  transform: translateY(100%);
+  transition: transform 0.5s var(--ease);
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 -10px 40px rgba(30, 36, 38, 0.18);
+}
+
+.content-panel.open {
+  transform: translateY(0);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem 0.75rem;
+  position: relative;
+}
+
+.panel-header::before {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 3px;
+  background: rgba(30, 36, 38, 0.14);
+  border-radius: 2px;
+}
+
+.panel-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+}
+
+.close-btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: rgba(30, 36, 38, 0.06);
+  color: var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.close-btn:hover { background: rgba(30, 36, 38, 0.10); }
+
+.panel-body {
+  padding: 0 1.25rem 2rem;
+  max-height: calc(100dvh - 5.5rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 面板主题色（背景） */
+.content-panel.theme-wood  { background: var(--panel-wood); }
+.content-panel.theme-fire  { background: var(--panel-fire); }
+.content-panel.theme-earth { background: var(--panel-earth); }
+.content-panel.theme-metal { background: var(--panel-metal); }
+.content-panel.theme-water { background: var(--panel-water); }
+.content-panel.theme-extra { background: var(--panel-extra); }
+
+.content-inner {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s 0.15s, transform 0.35s 0.15s;
+}
+
+.content-panel.open .content-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== 内容排版 ========== */
+.content-inner h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(30, 36, 38, 0.12);
+}
+
+.content-inner p {
+  font-size: 0.85rem;
+  color: rgba(30, 36, 38, 0.78);
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+}
+
+.content-inner ul {
+  list-style: none;
+  margin: 0.6rem 0;
+}
+
+.content-inner li {
+  padding: 0.3rem 0 0.3rem 1rem;
+  position: relative;
+  color: rgba(30, 36, 38, 0.78);
+  font-size: 0.85rem;
+}
+
+.content-inner li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: rgba(30, 36, 38, 0.35);
+  font-size: 0.5rem;
+  top: 0.45rem;
+}
+
+.content-inner .highlight {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.content-inner .tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: rgba(63, 143, 120, 0.10);
+  border: 1px solid rgba(63, 143, 120, 0.18);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: var(--ink);
+  margin: 0.25rem 0.2rem 0.25rem 0;
+}
+
+/* ========== 底部 ========== */
+.footer {
+  text-align: center;
+  font-size: 0.6rem;
+  color: rgba(30, 36, 38, 0.50);
+  letter-spacing: 0.08em;
+  z-index: 1;
+  opacity: 0.6;
+  margin-top: 0.15rem;
+}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="bg-pattern"></div>
+
+    <header class="header">
+      <h1 class="title">五行养生</h1>
+      <p class="subtitle">顺天时 · 调阴阳 · 养正气</p>
+    </header>
+
+    <div class="wheel-area">
+      <div class="trigram-ring" id="trigramRing">
+        <span class="trigram" style="--a:0deg">☰</span>
+        <span class="trigram" style="--a:45deg">☱</span>
+        <span class="trigram" style="--a:90deg">☲</span>
+        <span class="trigram" style="--a:135deg">☳</span>
+        <span class="trigram" style="--a:180deg">☴</span>
+        <span class="trigram" style="--a:225deg">☵</span>
+        <span class="trigram" style="--a:270deg">☶</span>
+        <span class="trigram" style="--a:315deg">☷</span>
+      </div>
+
+      <div class="ring ring-outer"></div>
+      <div class="ring ring-inner"></div>
+
+      <div class="wheel" id="wheel">
+        <svg class="wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="sectorGlow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+          <g class="wheel-sector" data-module="wuxing-map" data-wuxing="wood" data-index="0">
+            <path class="sector-path" d="M 100 100 L 100 5 A 95 95 0 0 1 182.3 52.5 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="100" y2="5"/>
+          </g>
+          <g class="wheel-sector" data-module="health-tips" data-wuxing="fire" data-index="1">
+            <path class="sector-path" d="M 100 100 L 182.3 52.5 A 95 95 0 0 1 182.3 147.5 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="182.3" y2="52.5"/>
+          </g>
+          <g class="wheel-sector" data-module="today-taboo" data-wuxing="earth" data-index="2">
+            <path class="sector-path" d="M 100 100 L 182.3 147.5 A 95 95 0 0 1 100 195 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="182.3" y2="147.5"/>
+          </g>
+          <g class="wheel-sector" data-module="wuxing-diet" data-wuxing="metal" data-index="3">
+            <path class="sector-path" d="M 100 100 L 100 195 A 95 95 0 0 1 17.7 147.5 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="100" y2="195"/>
+          </g>
+          <g class="wheel-sector" data-module="faq" data-wuxing="water" data-index="4">
+            <path class="sector-path" d="M 100 100 L 17.7 147.5 A 95 95 0 0 1 17.7 52.5 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="17.7" y2="147.5"/>
+          </g>
+          <g class="wheel-sector" data-module="other" data-wuxing="extra" data-index="5">
+            <path class="sector-path" d="M 100 100 L 17.7 52.5 A 95 95 0 0 1 100 5 Z"/>
+            <line class="sector-divider" x1="100" y1="100" x2="17.7" y2="52.5"/>
+          </g>
+          <g id="textGroup">
+            <text class="sector-text" data-index="0">🗺 五行地图</text>
+            <text class="sector-text" data-index="1">🌿 调养建议</text>
+            <text class="sector-text" data-index="2">⚠ 今日禁忌</text>
+            <text class="sector-text" data-index="3">🍵 五行食方</text>
+            <text class="sector-text" data-index="4">❓ 常见疑问</text>
+            <text class="sector-text" data-index="5">☯ 其他</text>
+          </g>
+        </svg>
+
+        <div class="wheel-center">
+          <div class="taiji">
+            <div class="taiji-half taiji-dark">
+              <div class="taiji-dot dot-light"></div>
+            </div>
+            <div class="taiji-half taiji-light">
+              <div class="taiji-dot dot-dark"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wheel-indicator" id="wheelIndicator">
+        <svg viewBox="0 0 24 16" width="24" height="16">
+          <polygon points="12,16 0,0 24,0" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="content-backdrop" id="contentBackdrop"></div>
+
+    <div class="content-panel" id="contentPanel">
+      <div class="panel-header" id="panelHeader">
+        <span class="panel-title" id="panelTitle"></span>
+        <button class="close-btn" id="closeBtn" aria-label="关闭">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="panel-body" id="panelBody">
+        <div class="content-inner" id="contentInner"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>轻拨圆盘旋转 · 点击扇区查看详情</p>
+    </footer>
+  </div>
+
+  <script>
+(function () {
+  'use strict';
+
+  const WHEEL = document.getElementById('wheel');
+  const CONTENT_PANEL = document.getElementById('contentPanel');
+  const CONTENT_INNER = document.getElementById('contentInner');
+  const PANEL_TITLE = document.getElementById('panelTitle');
+  const CLOSE_BTN = document.getElementById('closeBtn');
+  const INDICATOR = document.getElementById('wheelIndicator');
+  const BACKDROP = document.getElementById('contentBackdrop');
+  const WHEEL_AREA = document.querySelector('.wheel-area');
+
+  const N = 6;
+  const SLICE = 360 / N;
+  const START = -90;
+  const BOTTOM = 90;
+  const R_TEXT = 62;
+  const CX = 100;
+  const CY = 100;
+
+  const FRICTION = 0.96;
+  const MIN_V = 0.15;
+  const V_MULT = 0.45;
+
+  let rot = 0;
+  let vel = 0;
+  let lastAngle = 0;
+  let lastTime = 0;
+  let dragging = false;
+  let moved = false;
+  let opening = false;
+  let raf = null;
+
+  const DATA = {
+    'wuxing-map': {
+      title: '五行地图',
+      html: `
+        <h2>五行方位与体质</h2>
+        <p>五行学说将人体与自然方位对应，不同体质宜居不同方位调养。</p>
+        <ul>
+          <li><span class="highlight">木型人</span> — 宜东方，多接触绿色植物</li>
+          <li><span class="highlight">火型人</span> — 宜南方，适度日照</li>
+          <li><span class="highlight">土型人</span> — 宜中央，稳定环境</li>
+          <li><span class="highlight">金型人</span> — 宜西方，清净空间</li>
+          <li><span class="highlight">水型人</span> — 宜北方，近水而居</li>
+        </ul>
+        <p>根据生辰与体质，可推演适宜方位，辅助养生。</p>`
+    },
+    'health-tips': {
+      title: '调养建议',
+      html: `
+        <h2>今日调养要点</h2>
+        <p>春三月，此谓发陈。天地俱生，万物以荣。</p>
+        <ul>
+          <li>早起散步，吸纳阳气</li>
+          <li>饮食宜清淡，少食酸多食甘</li>
+          <li>情志宜舒畅，勿怒勿郁</li>
+          <li>可适当伸展，舒筋活络</li>
+        </ul>
+        <span class="tag">春季</span>
+        <span class="tag">养肝</span>
+        <span class="tag">疏泄</span>`
+    },
+    'today-taboo': {
+      title: '今日禁忌',
+      html: `
+        <h2>今日宜忌</h2>
+        <p>根据五行生克与节气，今日需注意：</p>
+        <ul>
+          <li>忌过食辛辣，以免耗伤阴液</li>
+          <li>忌熬夜，子时宜静养</li>
+          <li>忌大喜大悲，情志宜平和</li>
+          <li>忌久坐不动，宜适度活动</li>
+        </ul>
+        <p>顺应天时，避其锋芒，方能长久安康。</p>`
+    },
+    'wuxing-diet': {
+      title: '五行食方',
+      html: `
+        <h2>五行对应食材</h2>
+        <p>五色入五脏，五味养五气。</p>
+        <ul>
+          <li><span class="highlight">木</span> — 绿色蔬菜、酸味，养肝</li>
+          <li><span class="highlight">火</span> — 红色食物、苦味，养心</li>
+          <li><span class="highlight">土</span> — 黄色谷物、甘味，养脾</li>
+          <li><span class="highlight">金</span> — 白色食材、辛味，养肺</li>
+          <li><span class="highlight">水</span> — 黑色食物、咸味，养肾</li>
+        </ul>
+        <p>今日推荐：小米粥、菠菜、山药，健脾养胃。</p>`
+    },
+    'faq': {
+      title: '常见疑问',
+      html: `
+        <h2>养生常见问题</h2>
+        <p><strong>Q：五行体质如何判断？</strong></p>
+        <p>A：可通过中医体质辨识问卷，或由专业医师望闻问切综合判断。</p>
+        <p><strong>Q：不同体质能互相转换吗？</strong></p>
+        <p>A：体质有先天基础，但通过饮食、作息、情志调养可适度改善偏颇。</p>
+        <p><strong>Q：五行养生需要每天严格遵循吗？</strong></p>
+        <p>A：贵在坚持与自然，不必过于刻板，顺应身心即可。</p>`
+    },
+    'other': {
+      title: '其他',
+      html: `
+        <h2>更多功能</h2>
+        <p>此处可扩展：节气提醒、经络穴位、药食同源、古籍摘录等模块。</p>
+        <p>五行八卦，包罗万象；养生之道，贵在持之以恒。</p>
+        <span class="tag">敬请期待</span>`
+    }
+  };
+
+  const textEls = document.querySelectorAll('.sector-text');
+
+  function layoutTexts() {
+    textEls.forEach((t) => {
+      const i = Number(t.dataset.index);
+      const midDeg = START + i * SLICE + SLICE / 2;
+      const rad = (midDeg * Math.PI) / 180;
+      const x = CX + R_TEXT * Math.cos(rad);
+      const y = CY + R_TEXT * Math.sin(rad);
+      t.setAttribute('x', x.toFixed(1));
+      t.setAttribute('y', y.toFixed(1));
+      t._cx = x;
+      t._cy = y;
+    });
+    updateTextRotation();
+  }
+
+  function updateTextRotation() {
+    textEls.forEach((t) => {
+      t.setAttribute('transform', `rotate(${-rot} ${t._cx} ${t._cy})`);
+    });
+  }
+
+  function getAngle(e) {
+    const p = e.touches ? e.touches[0] : e;
+    const r = WHEEL.getBoundingClientRect();
+    return Math.atan2(p.clientY - r.top - r.height / 2, p.clientX - r.left - r.width / 2);
+  }
+
+  function startDrag(e) {
+    if (CONTENT_PANEL.classList.contains('open')) return;
+    if (e.target.closest && e.target.closest('.wheel-center')) return;
+    dragging = true;
+    moved = false;
+    lastTime = Date.now();
+    lastAngle = getAngle(e);
+  }
+
+  function onDrag(e) {
+    if (!dragging) return;
+    moved = true;
+    e.preventDefault();
+    const now = Date.now();
+    const a = getAngle(e);
+    const da = (a - lastAngle) * (180 / Math.PI);
+    const dt = (now - lastTime) / 1000 || 0.001;
+    vel = (da / dt) * V_MULT;
+    lastAngle = a;
+    lastTime = now;
+    rot += da;
+    applyRotation();
+  }
+
+  function endDrag() {
+    dragging = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(inertia);
+  }
+
+  function inertia() {
+    vel *= FRICTION;
+    if (Math.abs(vel) < MIN_V) { vel = 0; raf = null; return; }
+    rot += vel;
+    applyRotation();
+    raf = requestAnimationFrame(inertia);
+  }
+
+  function applyRotation() {
+    WHEEL.style.transform = `rotate(${rot}deg)`;
+    updateTextRotation();
+  }
+
+  WHEEL.addEventListener('touchstart', startDrag, { passive: true });
+  WHEEL.addEventListener('touchmove', onDrag, { passive: false });
+  WHEEL.addEventListener('touchend', endDrag);
+  WHEEL.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', (e) => { if (dragging && e.buttons === 1) onDrag(e); });
+  document.addEventListener('mouseup', endDrag);
+
+  function norm(d) { d %= 360; if (d < -180) d += 360; if (d > 180) d -= 360; return d; }
+
+  function getSectorIdx(el) {
+    return Array.from(WHEEL.querySelectorAll('.wheel-sector')).indexOf(el);
+  }
+
+  function spinToBottom(idx) {
+    const cur = ((rot % 360) + 360) % 360;
+    const mid = START + idx * SLICE + SLICE / 2;
+    const delta = norm(BOTTOM - (mid + cur));
+    const target = rot + delta;
+
+    return new Promise((resolve) => {
+      WHEEL.style.transition = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+      rot = target;
+      vel = 0;
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      applyRotation();
+      setTimeout(() => {
+        WHEEL.style.transition = '';
+        resolve();
+      }, 700);
+    });
+  }
+
+  function setTheme(wuxing) {
+    const themes = ['theme-wood', 'theme-fire', 'theme-earth', 'theme-metal', 'theme-water', 'theme-extra'];
+    themes.forEach((c) => { CONTENT_PANEL.classList.remove(c); INDICATOR.classList.remove(c); });
+    if (wuxing) {
+      CONTENT_PANEL.classList.add('theme-' + wuxing);
+      INDICATOR.classList.add('theme-' + wuxing);
+    }
+  }
+
+  function clearSelection() {
+    WHEEL.querySelectorAll('.wheel-sector').forEach((s) => s.classList.remove('selected'));
+    setTheme(null);
+  }
+
+  function openPanel(moduleId, wuxing) {
+    const d = DATA[moduleId];
+    if (!d) return;
+    if (WHEEL_AREA) {
+      const rect = WHEEL_AREA.getBoundingClientRect();
+      const top = Math.max(0, Math.round(rect.bottom));
+      document.documentElement.style.setProperty('--panel-top', `${top}px`);
+      document.documentElement.style.setProperty('--panel-height', `calc(100dvh - ${top}px)`);
+    }
+    PANEL_TITLE.textContent = d.title;
+    CONTENT_INNER.innerHTML = d.html;
+    setTheme(wuxing);
+    CONTENT_PANEL.classList.add('open');
+    BACKDROP.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePanel() {
+    CONTENT_PANEL.classList.remove('open');
+    BACKDROP.classList.remove('show');
+    document.body.style.overflow = '';
+    clearSelection();
+    document.documentElement.style.removeProperty('--panel-top');
+    document.documentElement.style.removeProperty('--panel-height');
+  }
+
+  BACKDROP.addEventListener('click', closePanel);
+  CLOSE_BTN.addEventListener('click', closePanel);
+
+  function handleSectorClick(sector) {
+    if (!sector || !sector.dataset.module || opening) return;
+    if (CONTENT_PANEL.classList.contains('open')) closePanel();
+
+    opening = true;
+    WHEEL.querySelectorAll('.wheel-sector').forEach((s) => s.classList.remove('selected'));
+    sector.classList.add('selected');
+
+    const moduleId = sector.dataset.module;
+    const wuxing = sector.dataset.wuxing;
+    const idx = getSectorIdx(sector);
+
+    spinToBottom(idx).then(() => {
+      openPanel(moduleId, wuxing);
+      opening = false;
+    });
+  }
+
+  WHEEL.addEventListener('click', (e) => {
+    const sector = e.target.closest ? e.target.closest('.wheel-sector') : null;
+    if (sector && sector.dataset.module) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleSectorClick(sector);
+      return;
+    }
+    if (CONTENT_PANEL.classList.contains('open')) {
+      e.preventDefault();
+      closePanel();
+    }
+  });
+
+  WHEEL.addEventListener('touchend', (e) => {
+    if (moved) return;
+    const t = e.changedTouches[0];
+    const el = document.elementFromPoint(t.clientX, t.clientY);
+    const sector = el?.closest('.wheel-sector');
+    if (sector && sector.dataset.module) {
+      handleSectorClick(sector);
+    } else if (CONTENT_PANEL.classList.contains('open')) {
+      if (el && el.closest('#wheel')) closePanel();
+    }
+  }, { passive: true });
+
+  layoutTexts();
+  applyRotation();
+})();
+  </script>
+</body>
+</html>

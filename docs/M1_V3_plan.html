@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初序 · M1 爆款30天计划 V3</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --card: #1a1d26;
+            --card-hover: #22252f;
+            --border: #2a2d38;
+            --accent: #2d8b55;
+            --accent-soft: rgba(45, 139, 85, .12);
+            --text: #e8e6e0;
+            --text-dim: #9a978e;
+            --text-muted: #5e5c56;
+            --danger: #d45454;
+            --wood: #4a9e6b;
+            --fire: #d45454;
+            --earth: #d4a054;
+            --metal: #a8a0b8;
+            --water: #5496d4;
+            --radius: 12px
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--accent), #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            font-size: 15px;
+            margin-bottom: 15px
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px
+        }
+
+        .hero-tags span {
+            font-size: 13px;
+            padding: 4px 12px;
+            background: var(--accent-soft);
+            border-radius: 20px;
+            color: var(--accent)
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px
+        }
+
+        .stat {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 15px;
+            text-align: center
+        }
+
+        .stat .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent)
+        }
+
+        .stat .lbl {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px
+        }
+
+        .rules {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 30px
+        }
+
+        .rules h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--accent)
+        }
+
+        .rules ul {
+            list-style: none;
+            padding: 0
+        }
+
+        .rules li {
+            padding: 6px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
+        .rules li:last-child {
+            border: none
+        }
+
+        .rules li:before {
+            content: '✅';
+            margin-right: 8px
+        }
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            padding: 10px 0;
+            z-index: 10
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        .day-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: .2s
+        }
+
+        .day-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px)
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            gap: 12px;
+            cursor: pointer
+        }
+
+        .day-num {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff
+        }
+
+        .day-num.controversy {
+            background: linear-gradient(135deg, #d45454, #e87a7a)
+        }
+
+        .day-num.resonance {
+            background: linear-gradient(135deg, #d4a054, #e8c17a)
+        }
+
+        .day-num.reversal {
+            background: linear-gradient(135deg, #5496d4, #7ab6e8)
+        }
+
+        .day-num.practical {
+            background: linear-gradient(135deg, #2d8b55, #4ecdc4)
+        }
+
+        .day-num.interactive {
+            background: linear-gradient(135deg, #a855f7, #c084fc)
+        }
+
+        .day-num.brand {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8)
+        }
+
+        .day-num.trending {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24)
+        }
+
+        .day-title {
+            flex: 1;
+            font-size: 16px;
+            font-weight: 500
+        }
+
+        .day-type {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            white-space: nowrap
+        }
+
+        .type-争议 {
+            background: rgba(212, 84, 84, .15);
+            color: var(--danger)
+        }
+
+        .type-共鸣 {
+            background: rgba(212, 160, 84, .15);
+            color: var(--earth)
+        }
+
+        .type-颠覆 {
+            background: rgba(84, 150, 212, .15);
+            color: var(--water)
+        }
+
+        .type-干货 {
+            background: rgba(45, 139, 85, .15);
+            color: var(--accent)
+        }
+
+        .type-互动 {
+            background: rgba(168, 85, 247, .15);
+            color: #a855f7
+        }
+
+        .type-品牌 {
+            background: rgba(14, 165, 233, .15);
+            color: #0ea5e9
+        }
+
+        .type-热点 {
+            background: rgba(245, 158, 11, .15);
+            color: #f59e0b
+        }
+
+        .day-body {
+            display: none;
+            padding: 0 16px 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        .day-body.open {
+            display: block
+        }
+
+        .script-box {
+            background: rgba(45, 139, 85, .06);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-size: 15px;
+            line-height: 1.9;
+            white-space: pre-line
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0
+        }
+
+        .meta-row .tag {
+            font-size: 13px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .05);
+            color: var(--text-dim)
+        }
+
+        .visual-guide {
+            background: rgba(168, 85, 247, .06);
+            border-left: 3px solid #a855f7;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 10px 0;
+            font-size: 14px;
+            color: var(--text-dim)
+        }
+
+        .visual-guide h4 {
+            font-size: 14px;
+            color: #a855f7;
+            margin-bottom: 4px
+        }
+
+        .boom-logic {
+            background: rgba(212, 84, 84, .06);
+            border-left: 3px solid var(--danger);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 14px;
+            margin: 10px 0;
+            font-size: 14px;
+            color: var(--text-dim)
+        }
+
+        .boom-logic h4 {
+            font-size: 14px;
+            color: var(--danger);
+            margin-bottom: 4px
+        }
+
+        .comment-strategy {
+            background: rgba(45, 139, 85, .06);
+            border-left: 3px solid var(--accent);
+            padding: 12px 16px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0
+        }
+
+        .comment-strategy h3 {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 10px
+        }
+
+        .comment-strategy table {
+            width: 100%;
+            font-size: 14px;
+            border-collapse: collapse
+        }
+
+        .comment-strategy td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04)
+        }
+
+        .comment-strategy td:first-child {
+            color: var(--text-dim);
+            width: 30%
+        }
+
+        @media(max-width:600px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .hero h1 {
+                font-size: 22px
+            }
+
+            .day-title {
+                font-size: 14px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1>初序 · M1 爆款30天</h1>
+        <p>每天 1 条 ｜ 方案D（你的声音+画面素材）｜ 3秒钩子结构</p>
+        <div class="hero-tags">
+            <span>📅 养号5-7天后开始</span>
+            <span>🎙️ 全部自录音频</span>
+            <span>📱 评论区每条放链接</span>
+            <span>🧪 Day10 做A/B复盘</span>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="num">30</div>
+            <div class="lbl">条视频</div>
+        </div>
+        <div class="stat">
+            <div class="num">7</div>
+            <div class="lbl">种内容类型</div>
+        </div>
+        <div class="stat">
+            <div class="num">24</div>
+            <div class="lbl">张AI素材</div>
+        </div>
+        <div class="stat">
+            <div class="num">¥9.9</div>
+            <div class="lbl">付费报告</div>
+        </div>
+    </div>
+
+    <div class="rules">
+        <h2>📌 每天必做 3 件事</h2>
+        <ul>
+            <li>评论区置顶：五行测试链接 + 引导语</li>
+            <li>发布后 1 小时内回复所有评论</li>
+            <li>标题前 10 字含核心关键词（搜索占 65%）</li>
+        </ul>
+    </div>
+
+    <div class="comment-strategy">
+        <h3>🗣️ 评论区互动话术</h3>
+        <table>
+            <tr>
+                <td>用户报到五行</td>
+                <td>"木行人报到！你有对号入座的感觉吗？"</td>
+            </tr>
+            <tr>
+                <td>问具体建议</td>
+                <td>"每个人不同～评论区置顶测一下，报告里有针对你的方案"</td>
+            </tr>
+            <tr>
+                <td>"中医是伪科学"</td>
+                <td>"理解你的想法！中西医各有所长～欢迎一起理性探讨"</td>
+            </tr>
+            <tr>
+                <td>"有用！收藏了"</td>
+                <td>"收藏了就去试！有变化回来告诉我 ❤️"</td>
+            </tr>
+            <tr>
+                <td>问付费</td>
+                <td>"测试免费！完整AI报告 9.9 解锁，详细方案都有～"</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterCards('all')">全部</button>
+        <button class="filter-btn" onclick="filterCards('争议')">🔥 争议</button>
+        <button class="filter-btn" onclick="filterCards('共鸣')">💛 共鸣</button>
+        <button class="filter-btn" onclick="filterCards('颠覆')">🧠 颠覆</button>
+        <button class="filter-btn" onclick="filterCards('干货')">📌 干货</button>
+        <button class="filter-btn" onclick="filterCards('互动')">🎯 互动</button>
+        <button class="filter-btn" onclick="filterCards('品牌')">👤 品牌</button>
+        <button class="filter-btn" onclick="filterCards('热点')">🌍 热点</button>
+    </div>
+
+    <div id="cards-container"></div>
+
+    <script>
+        const days = [
+            {
+                day: 1, type: '争议', cls: 'controversy', title: '别再跟风吃牛油果了，你的身体可能根本不适合', tags: ['#牛油果', '#早餐误区', '#脾胃虚寒', '#五行体质', '#别跟风'], visual: '牛油果切开特写→画红叉→手翻中医书→五行卡片', boom: '争议性话题（挑战牛油果=健康）→ 激发辩论 → CES飙升', script: `你的早餐是不是牛油果 + 全麦面包 + 黑咖啡？
+
+先别骂我——我也吃了两年。
+
+直到有一天我发现：牛油果性凉润滑，脾胃虚寒的人吃了不是"营养丰富"，是雪上加霜。我就是那个脾胃虚寒的人，吃了两年牛油果，腹胀越来越严重。
+
+后来学中医才知道——食物不分"好坏"，只分"适不适合你"。
+
+同样的牛油果，火行体质的人吃就很好，帮助降火润燥。但土行体质的人吃？等于让本来就弱的脾胃再扛一层寒凉。
+
+你适合吃什么，取决于你是什么体质。评论区有个 8 道题的测试，1 分钟出结果——先搞清楚自己是什么体质，再决定早餐吃什么。`},
+            {
+                day: 2, type: '共鸣', cls: 'resonance', title: '吃得明明不多但肚子一直胀，我终于找到原因了', tags: ['#腹胀', '#脾虚', '#消化不良', '#小米粥', '#中医调理'], visual: '饭后捂肚子→齿痕舌示意卡→小米粥热气特写', boom: '高共鸣（腹胀痛点极普遍）→ 收藏率高', script: `你有没有过这种感觉——吃了一碗米饭都没吃完，肚子就胀得像气球？
+
+我有。而且持续了大半年。去做检查，查不出问题。医生说"功能性消化不良"——翻译过来就是"我也不知道为什么"。
+
+后来自己查中医资料才明白：我的脾太累了。
+
+脾是管消化的总指挥。可我的脾不光要消化食物，还在消化我的焦虑、我的加班、我的失眠。它超负荷了。
+
+最后是一碗小米粥救了我。不是开玩笑——早餐从冷牛奶换成温热的小米粥，一周后那种气球感竟然缓解了。
+
+脾虚的信号很好辨认：舌边有齿痕、饭后犯困、四肢沉重。你中了几个？`},
+            {
+                day: 3, type: '颠覆', cls: 'reversal', title: '指甲上的竖纹不是缺钙，我查完中医书吓了一跳', tags: ['#指甲竖纹', '#不是缺钙', '#肝血不足', '#身体信号', '#中医'], visual: '手指甲特写→"肝其华在爪"文字卡→花茶', boom: '颠覆常识（不是缺钙！）→ 好奇心 → 互动（拍指甲照）', script: `你看看自己的指甲——有竖纹吗？
+
+我以前一直以为竖纹就是缺钙。吃了半年钙片，竖纹还在。
+
+后来翻中医书发现一句话让我愣住了："肝其华在爪"——指甲是肝的外在表现。
+
+竖纹多说明什么？肝血不足。
+
+肝血不足的人还会有这些表现：眼睛干涩、容易生闷气但不说、偏头不舒服、肩颈僵硬。你对一下看看中了几个。
+
+补钙解决不了肝血的问题。真正该做的是：早睡——凌晨1到3点是肝修复时间；少憋气——肝气堵住了血也跟着堵；吃点绿色蔬菜——绿色入肝经。
+
+你的指甲上有竖纹吗？拍张照评论区给我看看。`},
+            {
+                day: 4, type: '争议', cls: 'controversy', title: '我坚持吃沙拉3个月，身体反而更差了', tags: ['#沙拉误区', '#脾胃寒凉', '#减肥反效果', '#做熟再吃'], visual: '沙拉俯拍→画红叉→温热蔬菜对比', boom: '亲身经历+反常识 → 极高分享率', script: `减肥那年我天天吃沙拉。鸡胸肉+生菜+牛油果+低脂沙拉酱，标准"健康餐"。
+
+三个月后：体重没怎么变，反而多了三个毛病——腹胀、大便不成形、手脚冰凉。
+
+去看中医才知道：脾胃喜温恶寒。生菜黄瓜本身偏凉，再从冰箱拿出来，脾胃要先用大量阳气把它"暖热"才能消化。
+
+后来把沙拉换成同样的蔬菜炒熟或蒸熟，热量差不多，脾胃却完全没负担了。
+
+蔬菜不是不能吃——做熟了吃就好。`},
+            {
+                day: 5, type: '共鸣', cls: 'resonance', title: '我忍了3年脾气没发火，结果把肝气忍出了问题', tags: ['#肝气郁结', '#别憋着', '#情绪流动', '#忍脾气', '#内耗'], visual: '握拳→松开→流水→散步脚步', boom: '极强情绪共鸣 → 评论区变树洞 → 互动爆炸', script: `从小被教育"要懂事""别发脾气""忍一忍就过去了"。
+
+所以我成了那种——生气不说、难过不哭、什么都自己消化的人。
+
+三年没跟任何人发过火。觉得自己情绪管理能力很强。
+
+直到身体开始报警：两肋胀痛、频繁叹气、偏头反反复复。
+
+中医说"怒伤肝"——真正伤肝的不是发火，是憋着不让它流通。
+
+后来学到一个方法：生气了就去走路。快步走，走到微微出汗。气随着汗走了，整个人就松了。
+
+如果你也是那种"什么都往肚子里咽"的人——你不是在保护别人，你是在伤害你自己的肝。`},
+            {
+                day: 6, type: '干货', cls: 'practical', title: '每天早上一杯这个，我的脸色从蜡黄变成了有气色', tags: ['#气色变好', '#玫瑰花茶', '#3块钱养颜', '#食养'], visual: '玫瑰花茶冲泡全程→红枣→热气升腾', boom: '实用+低成本+视觉美 → 高收藏', script: `不是贵妇面霜，不是美白精华——就是一杯花茶。
+
+配方：3朵干玫瑰 + 2颗红枣（切开）+ 几颗枸杞。开水泡10分钟。
+
+我喝了两个月。最先注意到变化的不是我自己，是同事——"你最近气色好了诶"。
+
+玫瑰花疏肝理气，红枣补气，枸杞养血。三样加在一起就是"通气""补气""养血"。
+
+成本：不到3块钱一天。效果：不保证，但试两周你会知道。`},
+            {
+                day: 7, type: '互动', cls: 'interactive', title: '你是木火土金水哪种人？测完之后评论区炸了', tags: ['#五行测试', '#人格测试', '#木火土金水', '#评论区报到'], visual: '五行卡片动画→手机测试录屏→评论截图', boom: '"评论区炸了"制造从众效应 → 互动滚雪球', script: `上线两周，已经有好多人测了。评论区简直成了"五行报到大会"。
+
+"我是木行人，报告说我容易把情绪藏起来，看到这句直接红了眼眶。"
+
+"土行人报到！按建议早餐换了小米粥，第三天早上居然没赖床！"
+
+"我跟男朋友一起测的，他是金我是木，金克木——难怪天天吵。"
+
+还没测的朋友——评论区置顶有链接，测完来报到你的五行。`},
+            {
+                day: 8, type: '颠覆', cls: 'reversal', title: '嘴唇干裂涂了100支唇膏没用？问题根本不在嘴唇', tags: ['#嘴唇干裂', '#不缺水', '#脾开窍于口', '#舌诊'], visual: '唇膏涂抹→"脾开窍于口"卡→齿痕舌→粥', boom: '颠覆认知 + 实用 → 收藏', script: `冬天嘴唇干裂，你做的第一件事是不是买一支更贵的唇膏？
+
+唇膏从20块买到200块，水从每天4杯喝到8杯。还是干。
+
+中医有一个被忽略的逻辑："脾开窍于口"。嘴唇是脾的窗户。
+
+脾的运化功能弱了，体内的津液送不到嘴唇——你喝再多水也到不了。
+
+解决办法不在嘴唇，在脾。早餐一碗小米山药粥，连喝一周。`},
+            {
+                day: 9, type: '争议', cls: 'controversy', title: '你的营养师不会告诉你：有些"健康食物"可能在伤害你', tags: ['#健康食物误区', '#因人而异', '#中医饮食', '#药食同源'], visual: '超市健康食品→生姜对比→五行对照表', boom: '挑战营养师权威 → 站队辩论 → 高互动', script: `全麦面包、牛油果、酸奶、蜂蜜——都是"公认的健康食物"。
+
+但中医有一个观点：食物没有绝对的好坏，只有适不适合你的体质。
+
+酸奶对脾胃好的人是好东西。但脾胃虚寒的人喝冷酸奶等于往火上泼水。
+
+蜂蜜对阴虚体质的人很适合。但湿气重的人喝蜂蜜会越喝越黏腻。
+
+药食同源不是"什么好吃什么"——是"什么适合我吃什么"。
+
+你觉得营养应该因人而异还是统一标准？评论区聊。`},
+            {
+                day: 10, type: '品牌', cls: 'brand', title: '做这个账号10天了，说几句真心话', tags: ['#初序', '#10天复盘', '#真心话', '#内容创业'], visual: '手写笔记→数据截图→茶杯', boom: '真实复盘→信任建设。📊今日复盘数据调整方向', script: `做这个账号到今天第10天。
+
+为什么做这件事？因为我自己曾经是个"什么健康趋势都跟"的人。全试了一遍。结果有的有用、有的没感觉、有的反而更差了。
+
+后来意识到：我在用别人的方案解决自己的问题。
+
+学了中医五行之后最大的感受——原来不是一套方案通吃的。
+
+10天下来收获最大的不是数据——是评论区你们分享的故事。`},
+            {
+                day: 11, type: '颠覆', cls: 'reversal', title: '你以为的"心情差"，其实是肚子在控制你的大脑', tags: ['#肠脑轴', '#心情差', '#血清素', '#肠道情绪'], visual: '大脑↔肠道连线→90%血清素卡→迷走神经', boom: '颠覆（不是心理问题）→ "我也是"共鸣互动', script: `你有没有过这种感觉——没有发生任何坏事，但就是莫名烦躁？
+
+你以为是心情问题。但90%以上的血清素是在肠道里生产的，不是大脑。
+
+肠道和大脑之间有一条"高速公路"叫迷走神经。肠道状态实时传回大脑。
+
+所以肚子不舒服的那几天心情也特别差？不是巧合。
+
+中医说"脾胃为后天之本"。两千年前的直觉，今天科学在买单。`},
+            {
+                day: 12, type: '共鸣', cls: 'resonance', title: '面试前疯狂跑厕所？你不是心理素质差', tags: ['#面试紧张', '#跑厕所', '#不是心理素质差', '#肠脑轴'], visual: '紧张抖腿→肠道蠕动动画→"不是你的错"卡', boom: '极高共鸣+去耻感 → 评论区变故事会', script: `考试前、面试前——突然特别想上厕所。
+
+你以为是自己心理素质差。
+
+不是。大脑感知到压力→通过迷走神经告诉肠道"有危险"→肠道加速蠕动清空。
+
+几万年进化的结果。你的"猛兽"变成了面试官。但身体反应没变。
+
+不要怪自己。这恰恰说明你的肠脑连接很灵敏。`},
+            {
+                day: 13, type: '争议', cls: 'controversy', title: '枸杞泡水根本没用，你一直喝了个寂寞', tags: ['#枸杞', '#泡水没用', '#保温杯', '#养生误区'], visual: '保温杯+枸杞→弹幕特效→正确吃法对比', boom: '挑战"保温杯枸杞"全民共识 → 评论区辩论爆炸', script: `每个保温杯里都有几颗枸杞。但泡水喝几乎没啥用。
+
+有效成分大部分停留在果肉里。泡在水里你只喝了一杯甜水加点颜色。
+
+正确的方式：干嚼。或者打进豆浆里。
+
+而且枸杞性温补，阴虚火旺的人吃多了反而上火。
+
+你是"枸杞保温杯党"吗？来评论区报到。`},
+            {
+                day: 14, type: '共鸣', cls: 'resonance', title: '"你只是想太多了"——这句话伤了多少人', tags: ['#想太多', '#不是矫情', '#思伤脾', '#焦虑'], visual: '黑底白字"你只是想太多了"→散步→灯光', boom: '极强情绪共鸣+去耻感 → 收藏+分享', script: `"你想太多了。"
+
+你不是"想太多"，是你的脾累了。
+
+"思伤脾"——思虑过度真实地消耗脾气。脾气虚了更焦虑，更焦虑想更多。恶性循环。
+
+打破方法：饭后走15分钟。或者睡前写三行字——把念头"倒"出来。
+
+你不是想太多。你只是需要换一种方式对待自己。`},
+            {
+                day: 15, type: '干货', cls: 'practical', title: '5种体质的专属早餐搭配，找到你那行直接照着吃', tags: ['#五行早餐', '#食养方案', '#一图看懂', '#体质饮食'], visual: '5组早餐摆盘（五色系）', boom: '极高实用价值 → 收藏率飙升', script: `木行人——玫瑰花茶+菠菜蛋卷+蓝莓
+火行人——莲子百合粥+黄瓜+薄荷水
+土行人——小米山药粥+红枣+蒸南瓜
+金行人——银耳羹+蜂蜜温水+百合
+水行人——黑芝麻糊+核桃+板栗
+
+先收藏了！明天早上起来就用。`},
+            {
+                day: 16, type: '共鸣', cls: 'resonance', title: '悲伤时胸闷，恐惧时腿软——情绪在你身上留过痕迹吗', tags: ['#情绪的痕迹', '#身体记忆', '#胸闷', '#身心一体'], visual: '情绪→身体连线动画', boom: '唤起身体记忆 → 评论区变树洞', script: `特别难过的时候，胸口像被石头压住了？
+被吓到的时候，双腿真的会发软？
+
+中医两千年前就画了这张"情绪身体地图"：怒→肝→头顶。喜→心→胸口。思→脾→胃。悲→肺→肩膀。恐→肾→腰腿。
+
+你的身体上留过什么情绪的痕迹？评论区说说。`},
+            {
+                day: 17, type: '颠覆', cls: 'reversal', title: '中医说的"脾"是假的？它不存在？——不是你想的那样', tags: ['#中医的脾', '#不是伪科学', '#中西医对比', '#脾虚'], visual: '中西医脾对比图', boom: '回应质疑 + 科普价值 → 评论区讨论', script: `有人说："去做B超脾脏没问题啊，中医的脾是不是编的？"
+
+西医的脾脏：一个器官。中医的"脾"：一个功能系统，管消化、吸收、运化。
+
+"脾虚"不是脾脏坏了——是消化运化系统不给力。名字相同，概念不同。
+
+理解了这个，再看中医就不觉得玄了。`},
+            {
+                day: 18, type: '共鸣', cls: 'resonance', title: '11点后明明困了但不想睡？你不是夜猫子，你是在报复', tags: ['#报复性熬夜', '#11点', '#舍不得睡', '#子时'], visual: '深夜手机光→时辰表→"报复性熬夜"卡', boom: '极强共鸣 → 评论区立flag互动', script: `11点，很累，但就是不想睡。不是不困——是舍不得。
+
+觉得白天都不属于自己，只有深夜才有"自己的时间"。
+
+子时——11到1点——肝胆修复黄金时间。你"赚"到2小时自由，代价是次日全面崩溃。
+
+今晚你打算几点睡？评论区立个flag。`},
+            {
+                day: 19, type: '干货', cls: 'practical', title: '三天肠道"放假"计划，我试完第二天就觉得肚子轻了', tags: ['#肠道放假', '#三天计划', '#减法日', '#发酵食物'], visual: 'Day1→Day2→Day3食物分镜', boom: '实操+低门槛+打卡互动 → 收藏+回访', script: `第一天：减法日。只吃温热好消化的。给肠道放假。
+第二天：发酵日。味噌汤、泡菜、无糖酸奶。好菌上岗。
+第三天：纤维日。红薯、燕麦、西兰花。给好菌提供食物。
+
+我试完最大感受：第二天早上肚子是"空的"——那种久违的轻盈感。
+
+要试的扣"我要试"，三天后来汇报。`},
+            {
+                day: 20, type: '互动', cls: 'interactive', title: '测完五行之后最想问我的5个问题，统一回答一次', tags: ['#五行测试', '#常见问题', '#FAQ', '#初序'], visual: '评论截图拼贴→问题卡片→手写回答', boom: '真实互动+解答→信任 → 推动未测用户行动', script: `挑5个被问最多的统一回答：
+
+"测出好几种都像？"——正常！每个人都是混合体。
+"测试准吗？"——不是算命，是体质倾向分析。和身体对一下就知道了。
+"免费和付费区别？"——免费看概述，9.9解锁完整方案。
+"测完怎么做？"——先从一件事开始。比如换一个早餐。`},
+            {
+                day: 21, type: '热点', cls: 'trending', title: '诺贝尔奖都在研究的事：你的免疫力根基不在维C，在肠道', tags: ['#诺贝尔奖', '#免疫力', '#不靠维C', '#肠道菌群'], visual: '诺贝尔奖新闻→70%大字卡→菌群示意', boom: '借势权威 + 挑战"维C=免疫力" → 传播+讨论', script: `肠道里有70%以上的免疫细胞。肠道菌群平衡直接影响免疫系统的"判断力"。
+
+与其花大价钱吃维C片——不如先把肠道养好。
+
+中医说"脾为后天之本"。两千年前的直觉和今天的诺贝尔奖，在说同一件事。`},
+            {
+                day: 22, type: '品牌', cls: 'brand', title: '我为什么放弃跟风养生，开始研究五行体质', tags: ['#初序', '#为什么做这个', '#保健品踩坑', '#因人而异'], visual: '桌上空瓶保健品→手翻中医书→测试录屏', boom: '深度人设故事 → 建立信任', script: `我桌子上曾经摆满了东西：鱼油、益生菌、维生素D、胶原蛋白……
+
+后来有一天我吃了三个月的益生菌突然腹胀。那款菌株对脾胃虚寒的人是反效果。
+
+那天我开始想：有没有一种方式能先了解自己，再决定怎么调？
+
+初序的意思是"回到最初的序列"——你身体本来的运作规律。`},
+            {
+                day: 23, type: '争议', cls: 'controversy', title: '喝热水真的有用吗？我研究完发现好笑又心酸', tags: ['#多喝热水', '#有用还是没用', '#中医', '#评论区站队'], visual: '"多喝热水"弹幕→中西医对比→热水杯', boom: '全民话题+站队 → 评论区两派辩论', script: `"没用"的部分：感冒喝热水不能杀病毒。
+
+"有用"的部分：脾胃喜温恶寒。温水零负担，冷水反之。
+
+真正好笑又心酸的是：男朋友说"多喝热水"——他的直觉可能是对的。
+
+你觉得有用还是没用？评论区站队。`},
+            {
+                day: 24, type: '干货', cls: 'practical', title: '五种体质的"情绪急救法"，收藏了下次心情差直接用', tags: ['#情绪急救', '#五行', '#心情差', '#收藏了'], visual: '5张情绪急救卡片动画', boom: '极高实用+情感关怀 → 收藏率天花板', script: `木行人 → 去走路出汗。
+火行人 → 泡脚或热水澡。
+土行人 → 做一碗饭认真吃。
+金行人 → 对喜欢的人说出来或写下来。
+水行人 → 热饮+毛毯，营造安全感。
+
+先测一下你的体质才知道用哪个。`},
+            {
+                day: 25, type: '共鸣', cls: 'resonance', title: '你的五行体质正在偷偷影响你的恋爱模式', tags: ['#恋爱模式', '#五行配对', '#相生相克', '#你中枪了吗'], visual: '五行配对动画→情侣剪影', boom: '恋爱话题+对号入座 → 极高分享率（@另一半）', script: `木行人——我需要空间，但我不会告诉你。
+火行人——吵完10分钟就好了，但对方记了10天。
+土行人——给太多了，最后委屈爆发。
+金行人——"你猜我怎么了"是金行人口头禅。
+水行人——慢热，一旦爱了深入骨髓，但不安全感会让对方窒息。
+
+跟你对象一起测一下？评论区报到你俩的组合！`},
+            {
+                day: 26, type: '共鸣', cls: 'resonance', title: '一吃完饭就犯困不是因为你懒，你的身体在做一道数学题', tags: ['#饭后犯困', '#不是懒', '#七分饱', '#脾胃'], visual: '打瞌睡→血液分配卡→七分饱', boom: '去耻感 + 即刻可执行 → 收藏', script: `消化需要血液→血液涌向胃肠→大脑供血减少→困了。
+
+为什么你困1小时别人困10分钟？因为你的脾胃花了更多力气。
+
+解决方法：午饭吃七分饱。"还能再吃两口但不吃也行"——那就是了。`},
+            {
+                day: 27, type: '共鸣', cls: 'resonance', title: '测完五行后哭了的那个女生，后来怎么样了', tags: ['#五行测试', '#用户故事', '#你不是一个人', '#初序'], visual: '留言截图→温暖灯光→手写"你不是一个人"', boom: '真实故事+情感深度 → 分享+收藏+树洞', script: `她说：报告写"你习惯把情绪藏起来，用坚强保护自己"——看完哭了。
+
+她后来又发了一条："第8天，我在日记本上写了'今天没有忍着'。"
+
+做测试本来想做工具。但它变成了一面镜子。
+
+你不是一个人在撑着。`},
+            {
+                day: 28, type: '干货', cls: 'practical', title: '睡前做这3件事，木行人能多睡1小时（其他体质也有）', tags: ['#失眠', '#睡前仪式', '#五行睡眠', '#今晚就试'], visual: '睡前场景→泡脚→写字→五行睡眠卡', boom: '高需求话题+个性化方案 → 收藏天花板', script: `木行人：①写日记三行字 ②橘皮泡脚 ③枕边放薰衣草
+火行人：①莲子心茶 ②微凉水澡 ③白噪音
+土行人：①晚餐七分饱 ②饭后走15分钟 ③顺时针揉肚子
+金行人：①给重要的人发消息 ②蜂蜜牛奶 ③厚被子
+水行人：①热水泡脚15分钟 ②黑芝麻糊 ③穿袜子睡
+
+收藏了今晚就试。`},
+            {
+                day: 29, type: '争议', cls: 'controversy', title: '中医到底是不是伪科学？这是我研究一年后的真实想法', tags: ['#中医', '#伪科学', '#理性讨论', '#身体观察'], visual: '"中医是伪科学"弹幕→翻论文→天平', boom: '终极争议 → 评论区两派辩论 → CES核弹级互动', script: `先说我同意的：中医确实有模糊的地方。很多"中医养生"内容在忽悠。
+
+再说不同意的：因为有人滥用就否定整个体系——西医也有过度开抗生素的问题。
+
+我的真实想法：中医是一套用了两千年的"身体观察系统"。它观察到的很多规律正在被现代科学验证。
+
+你觉得中医有用还是没用？评论区理性讨论。`},
+            {
+                day: 30, type: '品牌', cls: 'brand', title: '初序30天，从0开始我学到了什么（真实数据）', tags: ['#30天复盘', '#初序', '#真实数据', '#内容创业'], visual: '真实数据截图→回顾缩略图→手写计划', boom: '真实数据复盘→信任。⚠️必须用真实数字！', script: `30天。100%真实的复盘。
+
+数据：粉丝___，总播放___，测试点击___，付费解锁___。
+（全部填真实数字。好不好都给你们看。）
+
+我学到的3件事：标题决定生死。评论区比视频更重要。真实比完美重要。
+
+评论区告诉我——你最想看什么？下个月优先安排。`}
+        ];
+
+        const container = document.getElementById('cards-container');
+
+        days.forEach(d => {
+            const card = document.createElement('div');
+            card.className = 'day-card';
+            card.dataset.type = d.type;
+            card.innerHTML = `
+<div class="day-header" onclick="this.nextElementSibling.classList.toggle('open')">
+  <div class="day-num ${d.cls}">${d.day}</div>
+  <div class="day-title">${d.title}</div>
+  <span class="day-type type-${d.type}">${d.type}</span>
+</div>
+<div class="day-body">
+  <div class="script-box">${d.script}</div>
+  <div class="meta-row">${d.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+  <div class="visual-guide"><h4>📹 画面素材</h4>${d.visual}</div>
+  <div class="boom-logic"><h4>📊 爆款逻辑</h4>${d.boom}</div>
+</div>`;
+            container.appendChild(card);
+        });
+
+        function filterCards(type) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.day-card').forEach(c => {
+                c.style.display = (type === 'all' || c.dataset.type === type) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

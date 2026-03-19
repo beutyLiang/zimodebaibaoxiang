@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wu Wei Decision System — Yuanmind</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2a2a2a;
+            background: #fff;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* ===== COVER ===== */
+        .cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #0d0d0d 0%, #1a1a2e 40%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '無為';
+            font-size: 200px;
+            color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: serif;
+            letter-spacing: 20px;
+        }
+
+        .cover-badge {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .cover .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 30px;
+        }
+
+        .cover .value-prop {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 420px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .cover .cover-cta {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 16px 45px;
+            background: linear-gradient(135deg, #e6a817 0%, #f0c040 100%);
+            color: #1a1a2e;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .cover .cover-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(230, 168, 23, 0.4);
+        }
+
+        .cover .cover-cta .price {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.8;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .cover .price-context {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .cover-brand {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            bottom: 50px;
+        }
+
+        /* Use Case Section */
+        .use-cases {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            border-radius: 16px;
+            padding: 35px;
+            margin: 30px 0;
+            color: #fff;
+        }
+
+        .use-cases h3 {
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .use-cases ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .use-cases li {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .use-cases li:last-child {
+            border-bottom: none;
+        }
+
+        .use-cases li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #e6a817;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            page-break-after: always;
+        }
+
+        .page-num {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #0f3460;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 35px 0 12px;
+        }
+
+        p {
+            margin-bottom: 18px;
+            color: #3a3a3a;
+        }
+
+        .lead {
+            font-size: 18px;
+            color: #555;
+            font-weight: 300;
+            line-height: 1.9;
+            border-left: 3px solid #0f3460;
+            padding-left: 20px;
+            margin: 25px 0 30px;
+        }
+
+        .big-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-style: italic;
+            color: #1a1a2e;
+            text-align: center;
+            padding: 40px 30px;
+            line-height: 1.5;
+        }
+
+        .big-quote .small {
+            display: block;
+            font-size: 16px;
+            color: #888;
+            font-style: normal;
+            margin-top: 15px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Step boxes */
+        .step-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            border-radius: 16px;
+            padding: 30px 35px;
+            margin: 25px 0;
+        }
+
+        .step-box .step-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #0f3460;
+            margin-bottom: 8px;
+        }
+
+        .step-box .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+        }
+
+        .step-box .step-action {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f3460;
+            margin-top: 12px;
+        }
+
+        /* Scenario */
+        .scenario {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 30px 35px;
+            margin: 30px 0;
+            color: #fff;
+        }
+
+        .scenario .label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+        }
+
+        .scenario .question {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .scenario .answer {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.8;
+        }
+
+        /* Cheat sheet */
+        .cheat-sheet {
+            background: #0f3460;
+            border-radius: 16px;
+            padding: 40px;
+            color: #fff;
+            margin: 30px 0;
+        }
+
+        .cheat-sheet h3 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .cheat-sheet .loop {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .cheat-sheet .loop-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cheat-sheet .loop-item .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cheat-sheet .loop-item .label {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 8px 0 4px;
+        }
+
+        .cheat-sheet .loop-item .desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cheat-sheet .rule {
+            font-size: 16px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .key-insight {
+            background: #fffbf0;
+            border-left: 4px solid #e6a817;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .key-insight strong {
+            color: #1a1a2e;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #ccc;
+            font-size: 20px;
+            letter-spacing: 15px;
+        }
+
+        /* Back cover */
+        .back-cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #0d0d0d 0%, #1a1a2e 40%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .back-cover h2 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+
+        .back-cover p {
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 450px;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .back-cover .cta {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: #fff;
+            color: #1a1a2e;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .back-cover .social {
+            margin-top: 50px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        @media print {
+            body {
+                font-size: 13px;
+            }
+
+            .cover,
+            .back-cover {
+                min-height: auto;
+                height: auto;
+                padding: 200px 40px;
+            }
+
+            .page {
+                padding: 40px;
+            }
+
+            .cheat-sheet .loop {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== COVER ===== -->
+    <div class="cover">
+        <div class="cover-badge">Instant Download · PDF</div>
+        <h1>You're Not Bad<br>at Decisions.<br>You're Overloaded.</h1>
+        <div class="subtitle">Most people stay stuck for days. This gives you clarity in 10 minutes.</div>
+        <div class="value-prop">
+            A simple 3-step system: <strong style="color:rgba(255,255,255,0.9)">Reduce → Align → Act</strong><br>
+            Based on 2,500 years of Eastern philosophy — translated into modern action.
+        </div>
+        <a href="#buy" class="cover-cta">Get the System →<span class="price">$9 · One-time purchase</span></a>
+        <div class="price-context">Most people spend months stuck on decisions. This costs less than a coffee.</div>
+        <div class="cover-brand">YUANMIND · 归元</div>
+    </div>
+
+    <!-- ===== PAGE 1: THE PROBLEM ===== -->
+    <div class="page">
+        <div class="page-num">Page 01</div>
+        <h2>You Don't Lack Discipline.<br>You're Overloaded With Decisions.</h2>
+
+        <p class="lead">The average professional makes 35,000 decisions per day. By 3pm, your brain is running on empty
+            — not because you're weak, but because you're spending cognitive energy on things that don't matter.</p>
+
+        <p>Think about your last 24 hours. How many decisions did you agonize over that, looking back, didn't actually
+            change anything?</p>
+
+        <p>Which email to reply to first. Whether to take that meeting. What to post on social media. Whether to say yes
+            to that project.</p>
+
+        <p><strong>This is decision fatigue.</strong> And it's the silent killer of your productivity, your creativity,
+            and your peace of mind.</p>
+
+        <p>The problem isn't that you're indecisive. The problem is that <strong>you don't have a system.</strong></p>
+
+        <div class="key-insight">
+            <strong>The insight:</strong> You don't need to think harder. You need a structure that removes what doesn't
+            matter — so you can save your energy for what does.
+        </div>
+
+        <p>2,500 years ago, Chinese philosophers solved this problem. They called the solution <strong>Wu Wei
+                (无为)</strong> — often mistranslated as "doing nothing."</p>
+
+        <p>Wu Wei actually means: <strong>stop doing things that don't work, so the things that work can
+                breathe.</strong></p>
+
+        <p>This system is their method. Adapted for 2026. In 10 minutes or less.</p>
+    </div>
+
+    <!-- ===== PAGE 2: THE INSIGHT ===== -->
+    <div class="page">
+        <div class="page-num">Page 02</div>
+        <h2>Every Decision Has Two Forces</h2>
+
+        <div class="big-quote">
+            Bad decisions aren't caused by lack of information.<br>
+            They're caused by using the wrong force.
+        </div>
+
+        <p>Every decision you face involves a tension between two forces:</p>
+
+        <div class="step-box">
+            <div class="step-label">Force 1 — Yang (阳)</div>
+            <div class="step-title">Expansion</div>
+            <p style="margin-bottom:0;">Act. Push forward. Add. Say yes. Move fast. Take the risk.</p>
+        </div>
+
+        <div class="step-box">
+            <div class="step-label">Force 2 — Yin (阴)</div>
+            <div class="step-title">Reduction</div>
+            <p style="margin-bottom:0;">Pause. Remove options. Simplify. Say no. Wait for clarity.</p>
+        </div>
+
+        <p>Most people default to Yang — more effort, more options, more action. They think decisiveness means speed.
+        </p>
+
+        <p>But the best decision-makers know: <strong>sometimes the most decisive thing you can do is subtract.</strong>
+        </p>
+
+        <div class="key-insight">
+            <strong>The Wu Wei Principle:</strong> Don't ask "what should I do?" First ask: "what should I stop doing?"
+            The answer to the second question will make the first one obvious.
+        </div>
+    </div>
+
+    <!-- ===== PAGE 3-5: THE 3-STEP LOOP ===== -->
+    <div class="page">
+        <div class="page-num">Pages 03-05</div>
+        <h2>The 3-Step Wu Wei Decision Loop</h2>
+
+        <p class="lead">Use this every time you're stuck. It takes 10 minutes or less. Over time, it becomes automatic.
+        </p>
+
+        <div class="step-box">
+            <div class="step-label">Step 1 — Reduce (Yin)</div>
+            <div class="step-title">Cut Your Options Down to Three</div>
+            <p>If you have 7 options, you don't have clarity — you have noise. Force yourself to eliminate until only
+                three remain.</p>
+            <p><strong>How:</strong> For each option, ask: "If I could only choose one, would this survive?" Kill
+                everything that doesn't pass this filter.</p>
+            <div class="step-action">→ Write down your 3 remaining options. No more.</div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-label">Step 2 — Align (Balance)</div>
+            <div class="step-title">Ask: What Actually Matters <em>Right Now</em>?</div>
+            <p>Not what matters in general. Not what matters to your ego. What matters <em>in this specific moment of
+                    your life.</em></p>
+            <p><strong>How:</strong> Complete this sentence: "In the next 90 days, the single most important outcome for
+                me is ___." Now look at your 3 options. Which one serves this outcome? That's your answer.</p>
+            <div class="step-action">→ Circle the one that aligns. Cross out the other two.</div>
+        </div>
+
+        <div class="step-box">
+            <div class="step-label">Step 3 — Act (Yang)</div>
+            <div class="step-title">Make the Smallest Irreversible Move Forward</div>
+            <p>Don't plan more. Don't research more. Don't "sleep on it." Take <em>one small action right now</em> that
+                makes the decision real.</p>
+            <p><strong>How:</strong> Send the email. Register the domain. Say it out loud. The smaller the action, the
+                better — as long as you can't undo it easily.</p>
+            <div class="step-action">→ Do it within 10 minutes. Set a timer if you must.</div>
+        </div>
+
+        <div class="divider">· · ·</div>
+
+        <div class="key-insight">
+            <strong>Why this works:</strong> Overthinking is a loop. The only way to break a loop is to introduce an
+            irreversible element. Step 3 is the circuit breaker. Once you act — even in a small way — your brain stops
+            simulating alternatives and starts optimizing for the chosen path.
+        </div>
+    </div>
+
+    <!-- ===== PAGE 6-7: USE CASES ===== -->
+    <div class="page">
+        <div class="page-num">Pages 06-07</div>
+        <h2>The Loop In Action:<br>3 Real Decisions</h2>
+
+        <div class="scenario">
+            <div class="label">Decision 1</div>
+            <div class="question">"Should I quit my job?"</div>
+            <div class="answer">
+                <strong>Step 1 (Reduce):</strong> Your real options are: A) Quit now, B) Quit in 6 months with savings,
+                C) Stay and negotiate. Not 15 variations.<br><br>
+                <strong>Step 2 (Align):</strong> What matters most in the next 90 days? If it's financial stability → B.
+                If it's mental health → A. If it's career growth → C.<br><br>
+                <strong>Step 3 (Act):</strong> If B: open a savings account today and set auto-deposit. If A: write the
+                email (don't send — but write it). If C: book the meeting with your boss. One action. Now.
+            </div>
+        </div>
+
+        <div class="scenario">
+            <div class="label">Decision 2</div>
+            <div class="question">"I have 3 business ideas. Which one should I build?"</div>
+            <div class="answer">
+                <strong>Step 1 (Reduce):</strong> Already at 3. Good.<br><br>
+                <strong>Step 2 (Align):</strong> In the next 90 days, which one can generate $1 in real revenue? Not
+                which one is "biggest" — which one makes money first?<br><br>
+                <strong>Step 3 (Act):</strong> Build a landing page for that one. Today. Put a price on it. If no one
+                pays → you learned something. If someone pays → you have a business.
+            </div>
+        </div>
+
+        <div class="scenario">
+            <div class="label">Decision 3</div>
+            <div class="question">"Should I send this difficult message to someone?"</div>
+            <div class="answer">
+                <strong>Step 1 (Reduce):</strong> A) Send it now, B) Send it after editing, C) Don't send it.<br><br>
+                <strong>Step 2 (Align):</strong> What matters now? If the relationship matters → B (edit for clarity,
+                not emotion). If the truth matters → A. If peace matters → C.<br><br>
+                <strong>Step 3 (Act):</strong> If B: edit it right now and send within 30 minutes. Don't revisit it 10
+                times. Edit once. Send. Done.
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAGE 8: THE 10-MINUTE RULE ===== -->
+    <div class="page">
+        <div class="page-num">Page 08</div>
+        <h2>The 10-Minute Rule</h2>
+
+        <div class="big-quote">
+            If a decision takes longer than 10 minutes,<br>you're not deciding — you're looping.
+            <span class="small">Pin this above your desk.</span>
+        </div>
+
+        <p>Here's the uncomfortable truth: most decisions don't need more information. They need <strong>less
+                time.</strong></p>
+
+        <p>Research shows that decisions made in under 10 minutes are <strong>just as accurate</strong> as decisions
+            people agonize over for days — because the additional time is spent on anxiety, not analysis.</p>
+
+        <p>The Wu Wei approach:</p>
+
+        <div class="step-box">
+            <div class="step-label">The Rule</div>
+            <div class="step-title">10 Minutes. Then Decide. Then Move.</div>
+            <p style="margin-bottom:0;">Set a literal timer. Run the 3-Step Loop. When the timer goes off, you must have
+                taken one irreversible action. No extensions. No "let me think about it more."</p>
+        </div>
+
+        <p>This feels scary at first. It's supposed to. Fear of deciding is what keeps you stuck. The 10-Minute Rule is
+            designed to break that fear — by proving to you, over and over, that fast decisions with small actions
+            produce better results than slow decisions with perfect plans.</p>
+
+        <div class="key-insight">
+            <strong>Remember:</strong> The worst shipped decision is a thousand times more valuable than the perfect
+            decision in your head — because one generates real feedback, and the other never exists.
+        </div>
+    </div>
+
+    <!-- ===== PAGE 9: CHEAT SHEET ===== -->
+    <div class="page">
+        <div class="page-num">Page 09 · Cheat Sheet</div>
+        <h2>Save This Page</h2>
+
+        <div class="cheat-sheet">
+            <h3>The Wu Wei Decision Loop</h3>
+            <div class="loop">
+                <div class="loop-item">
+                    <div class="num">1</div>
+                    <div class="label">Reduce</div>
+                    <div class="desc">Cut to 3 options</div>
+                </div>
+                <div class="loop-item">
+                    <div class="num">2</div>
+                    <div class="label">Align</div>
+                    <div class="desc">What matters now?</div>
+                </div>
+                <div class="loop-item">
+                    <div class="num">3</div>
+                    <div class="label">Act</div>
+                    <div class="desc">Smallest irreversible move</div>
+                </div>
+            </div>
+            <div class="rule">⏱ 10 minutes. Then decide. Then move.</div>
+            <div class="rule" style="margin-top:15px;font-style:normal;color:rgba(255,255,255,0.4);font-size:13px;">
+                Screenshot this. Set it as your phone wallpaper. Use it every day.</div>
+        </div>
+
+        <h3>5 Wu Wei Principles</h3>
+
+        <p><strong>1.</strong> You're not indecisive. You're overloaded. Reduce first.</p>
+        <p><strong>2.</strong> The best decision is the one you actually make — not the "perfect" one.</p>
+        <p><strong>3.</strong> If it takes more than 10 minutes, you're overthinking, not deciding.</p>
+        <p><strong>4.</strong> Action creates clarity. Planning creates illusion of clarity.</p>
+        <p><strong>5.</strong> Effort is not a virtue. Precise effort is.</p>
+    </div>
+
+    <!-- ===== USE CASES ===== -->
+    <div class="page">
+        <div class="page-num">When to Use This</div>
+        <h2>Use This System When...</h2>
+
+        <div class="use-cases">
+            <ul>
+                <li>You can't decide between 2–3 options and keep going back and forth</li>
+                <li>You've been overthinking the same decision for hours (or days)</li>
+                <li>You keep delaying a decision because you're afraid of choosing wrong</li>
+                <li>You feel paralyzed by too many priorities competing for your attention</li>
+                <li>You want a structured process instead of relying on "gut feeling"</li>
+            </ul>
+        </div>
+
+        <div class="key-insight">
+            <strong>This system forces clarity in 10 minutes.</strong> Not by giving you the "right" answer — but by
+            giving you a structure that makes the answer obvious.
+        </div>
+    </div>
+
+    <!-- ===== BACK COVER ===== -->
+    <div class="back-cover" id="buy">
+        <h2>Make Your Next Decision<br>in 10 Minutes</h2>
+        <p>Most people will read this, think "that's interesting," and go back to overthinking.</p>
+        <p><strong>Don't be most people.</strong></p>
+        <p>Get the complete system — the 3-Step Loop, the 10-Minute Rule, real-world scenarios, and the cheat sheet
+            you'll use every day.</p>
+        <a href="#" class="cta" id="buy-button">Get the System → $9</a>
+        <p style="margin-top:20px;font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;">Most people spend
+            months stuck. This costs less than a coffee.</p>
+        <div class="social">
+            X: @yuanmind1 · Substack: yuanmind1.substack.com
+        </div>
+    </div>
+
+</body>
+
+</html>

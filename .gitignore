@@ -21,3 +21,8 @@ node_modules/
 # 系统缓存
 *.tmp
 *.log
+
+# 大视频文件（超过 GitHub 100MB 限制）
+docs/content/tiktok_covers/
+视频/
+*.mp4

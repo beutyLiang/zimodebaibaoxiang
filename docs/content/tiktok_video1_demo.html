@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuanmind TikTok Video 1 — Demo</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a24;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .phone-frame {
+            width: 360px;
+            height: 640px;
+            background: linear-gradient(180deg, #1e2030 0%, #252838 50%, #1a1d2e 100%);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        /* Subtle ink wash background animation */
+        .bg-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.3;
+            background: radial-gradient(ellipse at 30% 40%, rgba(80, 80, 130, 0.5) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(60, 70, 120, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(90, 70, 50, 0.2) 0%, transparent 40%);
+            animation: bgShift 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0.2;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            left: 20%;
+            animation-duration: 12s;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            left: 50%;
+            animation-duration: 15s;
+            animation-delay: 3s;
+        }
+
+        .particle:nth-child(3) {
+            left: 75%;
+            animation-duration: 10s;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(4) {
+            left: 35%;
+            animation-duration: 14s;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(5) {
+            left: 85%;
+            animation-duration: 11s;
+            animation-delay: 5s;
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -10px;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            90% {
+                opacity: 0.1;
+            }
+
+            100% {
+                bottom: 650px;
+                opacity: 0;
+            }
+        }
+
+        /* Text content */
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 35px;
+            text-align: center;
+        }
+
+        .line {
+            opacity: 0;
+            transform: translateY(20px);
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        .line.show {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .line1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.4;
+            animation-delay: 1s;
+        }
+
+        .line2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.4;
+            animation-delay: 3.5s;
+        }
+
+        .line3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 280px;
+            animation-delay: 6s;
+        }
+
+        .line4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            font-style: italic;
+            color: #c9a84c;
+            animation-delay: 9.5s;
+            margin-top: 10px;
+        }
+
+        .line5 {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 2px;
+            animation-delay: 12s;
+            margin-top: 20px;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 13s;
+        }
+
+        .bottom-bar span {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Play button overlay */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            cursor: pointer;
+            transition: opacity 0.5s;
+        }
+
+        .play-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 22px solid rgba(255, 255, 255, 0.8);
+            border-top: 13px solid transparent;
+            border-bottom: 13px solid transparent;
+            margin-left: 5px;
+        }
+
+        .play-text {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            margin-top: 15px;
+            letter-spacing: 2px;
+        }
+
+        /* Timer */
+        .timer {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Inter', monospace;
+            z-index: 5;
+        }
+
+        /* Side label */
+        .side-label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        /* Instructions */
+        .instructions {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            margin-top: 25px;
+            text-align: center;
+            max-width: 360px;
+            line-height: 1.8;
+        }
+
+        .instructions strong {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <div class="phone-frame" id="videoFrame" onclick="playVideo()">
+            <!-- Play overlay -->
+            <div class="play-overlay" id="playOverlay">
+                <div class="play-btn"></div>
+                <div class="play-text">CLICK TO PLAY</div>
+            </div>
+
+            <!-- Background effects -->
+            <div class="bg-effect"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+
+            <!-- Labels -->
+            <div class="side-label">Yuanmind</div>
+            <div class="timer" id="timer">0:00</div>
+
+            <!-- Text content -->
+            <div class="content">
+                <div class="line line1" id="l1">Knowledge is addition.</div>
+                <div class="line line2" id="l2">Wisdom is subtraction.</div>
+                <div class="line line3" id="l3">Most people waste 60% of their energy on things that won't change the
+                    outcome.</div>
+                <div class="line line4" id="l4">What if you stopped?</div>
+                <div class="line line5" id="l5">— Wu Wei 无为</div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="bottom-bar">
+                <span>@yuanmind1 · Follow for more</span>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>☝️ 点击上方画面播放演示</strong><br>
+            这就是你在剪映里要做出的效果<br>
+            文字逐行淡入 + 深色背景 + 安静氛围
+        </div>
+    </div>
+
+    <script>
+        let played = false;
+        let timerInterval;
+
+        function playVideo() {
+            if (played) {
+                // Reset
+                document.querySelectorAll('.line').forEach(el => el.classList.remove('show'));
+                document.querySelector('.bottom-bar').style.animation = 'none';
+                document.getElementById('playOverlay').classList.remove('hidden');
+                clearInterval(timerInterval);
+                document.getElementById('timer').textContent = '0:00';
+                played = false;
+
+                setTimeout(() => {
+                    document.querySelector('.bottom-bar').style.animation = '';
+                    playVideo();
+                }, 100);
+                return;
+            }
+
+            played = true;
+            document.getElementById('playOverlay').classList.add('hidden');
+
+            // Start timer
+            let seconds = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                const s = seconds % 60;
+                document.getElementById('timer').textContent = `0:${s.toString().padStart(2, '0')}`;
+                if (seconds >= 18) clearInterval(timerInterval);
+            }, 1000);
+
+            // Animate lines
+            setTimeout(() => document.getElementById('l1').classList.add('show'), 1000);
+            setTimeout(() => document.getElementById('l2').classList.add('show'), 3500);
+            setTimeout(() => document.getElementById('l3').classList.add('show'), 6000);
+            setTimeout(() => document.getElementById('l4').classList.add('show'), 9500);
+            setTimeout(() => document.getElementById('l5').classList.add('show'), 12000);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8">
+<meta name="ProgId" content="Word.Document">
+<title>归元 · 代运营方案调整 V3.1</title>
+<style>
+    body { font-family: '微软雅黑', sans-serif; font-size: 11pt; color: #1a1a1a; line-height: 1.85; margin: 50px 55px; }
+    h1 { font-size: 20pt; text-align: center; margin-bottom: 4px; }
+    h2 { font-size: 14pt; border-bottom: 2px solid #c5a14e; padding-bottom: 5px; margin-top: 30px; }
+    h3 { font-size: 12pt; color: #333; margin-top: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th { background: #1a1a1a; color: #f5f5f0; padding: 8px 12px; text-align: left; font-size: 10.5pt; }
+    td { border: 1px solid #ddd; padding: 8px 12px; font-size: 10.5pt; vertical-align: top; }
+    tr:nth-child(even) { background: #faf9f6; }
+    blockquote { background: #f9f7f2; border-left: 4px solid #c5a14e; padding: 10px 18px; margin: 14px 0; }
+    .warn { background: #FFF0F0; border-left: 4px solid #D4423E; padding: 10px 18px; margin: 14px 0; }
+    .key { background: #FFF8E1; border-left: 4px solid #c5a14e; padding: 10px 18px; margin: 14px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 5px 0; }
+    em { font-style: normal; font-weight: bold; color: #c5a14e; }
+    .sub { text-align: center; color: #888; font-size: 11pt; margin-bottom: 24px; }
+    .footer { text-align: center; margin-top: 40px; font-size: 9.5pt; color: #999; }
+    hr { border: none; border-top: 1px solid #e0ddd5; margin: 28px 0; }
+</style>
+</head>
+<body>
+
+<h1>归元 · 代运营方案调整</h1>
+<p class="sub">V3.1 修订版 ｜ 2026年3月 ｜ 基于V3.0方案的关键调整</p>
+
+<blockquote>
+<strong>调整原则：</strong>保留V3.0核心战略不变（定位、品牌、六大模型），仅针对<em>执行节奏、AI前置、降成本、内容策略</em>进行优化。
+</blockquote>
+
+<hr>
+
+<h2>一、V3.0 → V3.1 关键调整对照</h2>
+
+<table>
+<tr><th style="width:120px;">维度</th><th>V3.0 原方案</th><th>V3.1 调整</th><th style="width:100px;">调整理由</th></tr>
+<tr>
+    <td><strong>AI上线时间</strong></td>
+    <td>M11 才公测归元AI引擎</td>
+    <td><em>M2 上线MVP版AI认知教练</em>（基于LLM API + 六大模型 System Prompt）</td>
+    <td>AI是核心差异化，不该等到M11</td>
+</tr>
+<tr>
+    <td><strong>冷启动策略</strong></td>
+    <td>14个平台同时铺量</td>
+    <td><em>聚焦3个平台</em>：视频号（主阵地）+ 公众号（深度）+ 小红书（覆盖女性用户）</td>
+    <td>1人团队铺14个平台 = 每个都做不好</td>
+</tr>
+<tr>
+    <td><strong>内容形式</strong></td>
+    <td>长文+深度视频为主</td>
+    <td><em>短视频为主</em>（15-60秒反常识金句）+ 每周1篇长文 + 每月1条深度视频</td>
+    <td>短视频是2026年流量效率最高的形式</td>
+</tr>
+<tr>
+    <td><strong>M1首月目标</strong></td>
+    <td>注册账号+发品牌宣言</td>
+    <td><em>M1就出产品</em>：上线一个简版"归元认知测试"（H5） + 品牌宣言视频 + 10条短视频储备</td>
+    <td>有产品（测试）才有分享裂变</td>
+</tr>
+<tr>
+    <td><strong>社群策略</strong></td>
+    <td>M3建种子群</td>
+    <td><em>M1建核心群</em>（30人邀请制） → M3开放</td>
+    <td>先用核心人群验证内容方向</td>
+</tr>
+<tr>
+    <td><strong>沉浸体验线</strong></td>
+    <td>M13启动短剧</td>
+    <td><em>暂缓</em>至M7重新评估。冷启动期集中资源做内容+产品</td>
+    <td>短剧投入大，先验证基本面</td>
+</tr>
+<tr>
+    <td><strong>国际化</strong></td>
+    <td>M12启动英文内容</td>
+    <td><em>推迟至M18</em>，通过Gate 3决定是否启动</td>
+    <td>先做透国内，再考虑国际</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>二、调整后的M1-M6执行日历</h2>
+
+<h3>M1·品牌上线月（第1个月）</h3>
+
+<table>
+<tr><th style="width:80px;">周</th><th>内容</th><th>产品</th><th>社群</th></tr>
+<tr>
+    <td>W1</td>
+    <td>注册3平台 + 发布品牌宣言视频</td>
+    <td>—</td>
+    <td>邀请30人核心群</td>
+</tr>
+<tr>
+    <td>W2</td>
+    <td>发布3条反常识金句短视频</td>
+    <td>开发"归元六维认知测试"H5</td>
+    <td>群内讨论测试内容</td>
+</tr>
+<tr>
+    <td>W3</td>
+    <td>发布3条短视频 + 1篇长文</td>
+    <td>测试上线·核心群内测</td>
+    <td>收集反馈迭代</td>
+</tr>
+<tr>
+    <td>W4</td>
+    <td>发布3条短视频 + 数据复盘</td>
+    <td>测试正式上线·嵌入视频评论区</td>
+    <td>群邀请扩至50人</td>
+</tr>
+</table>
+
+<h3>M2·AI上线月</h3>
+
+<table>
+<tr><th>事项</th><th>说明</th></tr>
+<tr><td>归元AI认知教练 MVP上线</td><td>基于LLM API + 六大模型知识库的对话式体验。用户描述困惑 → AI用归元模型分析 → 给出结构化回答</td></tr>
+<tr><td>短视频密集输出</td><td>本月目标12条短视频 + 2篇长文</td></tr>
+<tr><td>数据驱动选题</td><td>根据M1数据，找到完播率>30%的选题方向，集中发力</td></tr>
+</table>
+
+<h3>M3·社群验证月</h3>
+
+<table>
+<tr><th>事项</th><th>说明</th></tr>
+<tr><td>种子社群开放招募</td><td>从核心群扩至200人，收19.9元/人（筛选付费意愿）</td></tr>
+<tr><td>社群专属内容</td><td>每周1次语音分享 + AI工具专属使用权</td></tr>
+<tr><td><em>Gate 1 决策门</em></td><td>若单条短视频最高播放<1万 → 暂停扩张，用1个月A/B测试调整方向</td></tr>
+</table>
+
+<h3>M4-M6·产品化阶段</h3>
+
+<table>
+<tr><th>月</th><th>重点</th></tr>
+<tr><td>M4</td><td>认知工具包V1.0（六大模型卡牌/工具）上线。付费测试</td></tr>
+<tr><td>M5</td><td>社群进阶体系设计。月收入目标3万+</td></tr>
+<tr><td>M6</td><td><em>Gate 2 决策门</em>：粉丝3万+ & 付费用户100+ → 进入M7扩张期</td></tr>
+</table>
+
+<hr>
+
+<h2>三、代运营成本结构调整</h2>
+
+<table>
+<tr><th>项目</th><th>V3.0预算</th><th>V3.1调整</th></tr>
+<tr><td>M1-M3 内容生产</td><td>未明确</td><td>AI辅助生产，月均成本<em><3000元</em>（主要是LLM API费用）</td></tr>
+<tr><td>M1-M3 平台投放</td><td>按14平台铺量</td><td><em>0元投放</em>，纯靠自然流量验证内容质量</td></tr>
+<tr><td>AI引擎开发</td><td>M8-M11，预计15万+</td><td>M2上线MVP，<em>成本<5000元</em>（API调用费）</td></tr>
+<tr><td>短剧</td><td>M13，15-45万</td><td><em>暂缓</em>，M7重新评估</td></tr>
+<tr><td><strong>M1-M6总成本</strong></td><td>约15万</td><td><em><3万</em></td></tr>
+</table>
+
+<hr>
+
+<h2>四、未改动的部分（与V3.0完全一致）</h2>
+
+<ul>
+<li>✅ 品牌定位：用东方哲学底层结构构建AI时代认知操作系统</li>
+<li>✅ 品牌名：归元 Yuan</li>
+<li>✅ 视觉体系：墨黑 #1a1a1a / 月白 #f5f5f0 / 赤金 #c5a14e</li>
+<li>✅ 六大认知模型体系</li>
+<li>✅ 冲突内容六步法</li>
+<li>✅ 双飞轮模型（飞轮B推迟启动但不取消）</li>
+<li>✅ 5大决策门机制</li>
+<li>✅ 底线原则（不玄学/不鸡汤/不为流量牺牲深度）</li>
+</ul>
+
+<div class="key">
+<strong>💡 V3.1核心思路总结：</strong><br>
+<em>V3.0是"先花时间做内容，慢慢积累粉丝"。</em><br>
+<em>V3.1是"先出产品，用产品获客，AI第一天就上线，用最小成本跑通验证"。</em><br>
+同样的战略，更快的执行，更低的成本。
+</div>
+
+<p class="footer">归元 Yuan · 代运营方案 V3.1 修订 · 2026年3月<br>子默 为 Zoey 制作</p>
+
+</body>
+</html>

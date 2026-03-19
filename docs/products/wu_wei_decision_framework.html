@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wu Wei Decision Framework — by Yuanmind</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a2e;
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        /* ====== COVER PAGE ====== */
+        .cover {
+            width: 210mm;
+            min-height: 297mm;
+            background: linear-gradient(160deg, #0a0a1a 0%, #16213e 40%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 50px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(100, 149, 237, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 60%, rgba(186, 146, 108, 0.06) 0%, transparent 50%);
+        }
+        .cover-icon {
+            font-size: 72px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .cover h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 700;
+            color: #e8d5b7;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .cover h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: #8a9cc5;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .cover-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ba926c, transparent);
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .cover-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-style: italic;
+            color: #7a8bb5;
+            max-width: 400px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+        .cover-brand {
+            position: absolute;
+            bottom: 50px;
+            font-size: 14px;
+            letter-spacing: 6px;
+            color: #4a5580;
+            text-transform: uppercase;
+            z-index: 1;
+        }
+
+        /* ====== CONTENT PAGES ====== */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 50px 55px;
+            page-break-after: always;
+            position: relative;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0d5c5;
+        }
+        .page-header-brand {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #ba926c;
+            text-transform: uppercase;
+        }
+        .page-header-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            color: #999;
+        }
+        .section-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: #f0e8dc;
+            line-height: 1;
+            margin-bottom: -5px;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .section-subtitle {
+            font-size: 13px;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+        }
+        .step-card {
+            background: #faf8f5;
+            border-left: 3px solid #ba926c;
+            padding: 20px 25px;
+            margin-bottom: 18px;
+            border-radius: 0 8px 8px 0;
+        }
+        .step-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+        .step-card .step-num {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ba926c;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .step-card p {
+            font-size: 13.5px;
+            color: #444;
+            line-height: 1.65;
+        }
+        .step-card .action {
+            margin-top: 8px;
+            font-size: 12.5px;
+            color: #16213e;
+            font-weight: 500;
+            background: #efe8dc;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        /* Checklist */
+        .checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        .checklist-col {
+            padding: 25px;
+        }
+        .checklist-col:first-child {
+            background: #fdf5f5;
+            border-radius: 12px 0 0 12px;
+        }
+        .checklist-col:last-child {
+            background: #f2f8f2;
+            border-radius: 0 12px 12px 0;
+        }
+        .checklist-col h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .checklist-col:first-child h3 { color: #c0392b; }
+        .checklist-col:last-child h3 { color: #27ae60; }
+        .check-item {
+            font-size: 13px;
+            color: #444;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .check-item span {
+            flex-shrink: 0;
+            font-size: 15px;
+        }
+
+        /* Journal */
+        .journal-item {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .journal-day {
+            flex-shrink: 0;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #16213e, #1a1a2e);
+            color: #e8d5b7;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .journal-day strong {
+            font-size: 18px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .journal-content {
+            flex: 1;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .journal-content h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 3px;
+        }
+        .journal-content p {
+            font-size: 12.5px;
+            color: #666;
+            line-height: 1.5;
+        }
+        .journal-content .prompt-box {
+            margin-top: 6px;
+            background: #faf8f5;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            color: #333;
+            font-style: italic;
+            border-left: 2px solid #ba926c;
+        }
+
+        /* Emergency */
+        .emergency-box {
+            background: linear-gradient(135deg, #16213e, #1a1a2e);
+            border-radius: 16px;
+            padding: 35px;
+            color: #fff;
+            margin-top: 20px;
+        }
+        .emergency-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            color: #e8d5b7;
+            margin-bottom: 20px;
+        }
+        .emergency-step {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 22px;
+            align-items: flex-start;
+        }
+        .emergency-num {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ba926c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            color: #e8d5b7;
+        }
+        .emergency-text h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e8d5b7;
+            margin-bottom: 4px;
+        }
+        .emergency-text p {
+            font-size: 13px;
+            color: #8a9cc5;
+            line-height: 1.55;
+        }
+
+        /* Questions */
+        .question-card {
+            background: #faf8f5;
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .question-card::before {
+            content: '?';
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            color: #f0e8dc;
+            font-weight: 700;
+        }
+        .question-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .question-card p {
+            font-size: 13.5px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .question-card .how-to {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ba926c;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .page-footer {
+            position: absolute;
+            bottom: 35px;
+            left: 55px;
+            right: 55px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #bbb;
+        }
+
+        /* Print */
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .page, .cover { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====== COVER ====== -->
+<div class="cover">
+    <div class="cover-icon">☯</div>
+    <h1>Wu Wei<br>Decision Framework</h1>
+    <h2>EFFORTLESS ACTION</h2>
+    <div class="cover-line"></div>
+    <p class="cover-quote">"The wise leader does not force outcomes.<br>They align with the flow of reality<br>and let the right action emerge."</p>
+    <div class="cover-brand">Yuanmind</div>
+</div>
+
+<!-- ====== PAGE 1: 5-Step Process ====== -->
+<div class="page">
+    <div class="page-header">
+        <span class="page-header-brand">Yuanmind</span>
+        <span class="page-header-title">Wu Wei Decision Framework</span>
+    </div>
+
+    <div class="section-number">01</div>
+    <h2 class="section-title">The 5-Step Wu Wei Decision Process</h2>
+    <p class="section-subtitle">FROM OVERTHINKING TO EFFORTLESS CLARITY</p>
+
+    <div class="step-card">
+        <div class="step-num">Step 1</div>
+        <h3>Pause — Stop the Mental Noise</h3>
+        <p>When facing a decision, your first instinct is to think harder. Wu Wei says: stop. Take 3 deep breaths. Close your eyes for 60 seconds. The best decisions come from stillness, not mental friction.</p>
+        <div class="action">✦ Action: Set a 2-minute timer. Breathe. Do nothing.</div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">Step 2</div>
+        <h3>Observe — Read the Situation, Not Your Anxiety</h3>
+        <p>Separate what is actually happening from what you fear might happen. Write down only the observable facts. Strip away assumptions, projections, and catastrophizing. What remains is reality.</p>
+        <div class="action">✦ Action: Write "What I know for certain is…" and list only facts.</div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">Step 3</div>
+        <h3>Test the Flow — Is the Path Opening or Closing?</h3>
+        <p>Wu Wei teaches that the right path has a quality of openness. Ask: Is this door opening naturally, or am I pushing it? If every step requires force, it's probably the wrong time or the wrong direction.</p>
+        <div class="action">✦ Action: Rate 1-10: How much effort does this path require vs. how naturally it unfolds?</div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">Step 4</div>
+        <h3>Act Minimally — Do the Smallest Right Thing</h3>
+        <p>Don't commit fully to an irreversible choice. Take the smallest possible step in the direction that feels most aligned. Wu Wei is not about doing nothing — it's about doing exactly enough. Not more.</p>
+        <div class="action">✦ Action: Ask "What is the ONE smallest action I can take today?"</div>
+    </div>
+
+    <div class="step-card">
+        <div class="step-num">Step 5</div>
+        <h3>Release — Detach from the Outcome</h3>
+        <p>You've paused, observed, tested, and acted. Now let go. The most powerful decisions are made without clinging to a specific result. Trust the process. The outcome will arrive in its own time.</p>
+        <div class="action">✦ Action: Write "I have done my part. The rest is not mine to control."</div>
+    </div>
+
+    <div class="page-footer">
+        <span>© Yuanmind — yuanmind.com</span>
+        <span>Page 1</span>
+    </div>
+</div>
+
+<!-- ====== PAGE 2: Diagnostic Questions ====== -->
+<div class="page">
+    <div class="page-header">
+        <span class="page-header-brand">Yuanmind</span>
+        <span class="page-header-title">Wu Wei Decision Framework</span>
+    </div>
+
+    <div class="section-number">02</div>
+    <h2 class="section-title">3 Diagnostic Questions</h2>
+    <p class="section-subtitle">ASK THESE BEFORE ANY MAJOR DECISION</p>
+
+    <div class="question-card">
+        <h3>"Am I acting from clarity, or from fear?"</h3>
+        <p>Fear-driven decisions feel urgent. They come with a tightness in your chest, a desperate need to "do something NOW." Clarity-driven decisions feel calm, even if the situation is serious. If you feel panicked, wait. Fear is a terrible strategist.</p>
+        <div class="how-to">→ If fear: pause 24 hours before deciding. The urgency is almost always an illusion.</div>
+    </div>
+
+    <div class="question-card">
+        <h3>"Would I still want this if nobody ever knew?"</h3>
+        <p>This question strips away ego, social pressure, and the desire for external validation. If you would still choose this path even if no one applauded, congratulated, or even noticed — you're aligned with your authentic self. That's Wu Wei.</p>
+        <div class="how-to">→ If no: you're chasing recognition, not purpose. Redirect.</div>
+    </div>
+
+    <div class="question-card">
+        <h3>"What would happen if I did nothing?"</h3>
+        <p>Most decisions don't need to be made right now. Many problems resolve themselves if given time. Before acting, genuinely consider: what if I took no action at all? If the answer is "not much would change," then your decision isn't as urgent as you think.</p>
+        <div class="how-to">→ If nothing bad happens: don't act yet. Wait for more information.</div>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <div class="section-number">03</div>
+        <h2 class="section-title">Force vs. Flow Checklist</h2>
+        <p class="section-subtitle">WHICH COLUMN DESCRIBES YOUR CURRENT SITUATION?</p>
+    </div>
+
+    <div class="checklist">
+        <div class="checklist-col">
+            <h3>⚡ You're Forcing</h3>
+            <div class="check-item"><span>□</span> You feel exhausted but keep pushing</div>
+            <div class="check-item"><span>□</span> You need to convince people constantly</div>
+            <div class="check-item"><span>□</span> Every step requires more effort than the last</div>
+            <div class="check-item"><span>□</span> You feel anxious about the outcome 24/7</div>
+            <div class="check-item"><span>□</span> You're ignoring body signals (insomnia, tension)</div>
+            <div class="check-item"><span>□</span> You keep justifying your choice to yourself</div>
+            <div class="check-item"><span>□</span> You dread the process, only wanting the result</div>
+            <div class="check-item"><span>□</span> External circumstances keep blocking you</div>
+        </div>
+        <div class="checklist-col">
+            <h3>🌊 You're Flowing</h3>
+            <div class="check-item"><span>□</span> Work feels energizing, not draining</div>
+            <div class="check-item"><span>□</span> People and resources appear naturally</div>
+            <div class="check-item"><span>□</span> Progress happens with reasonable effort</div>
+            <div class="check-item"><span>□</span> You feel calm confidence, not anxious hope</div>
+            <div class="check-item"><span>□</span> Your body feels relaxed, your sleep is normal</div>
+            <div class="check-item"><span>□</span> The path makes sense without over-explaining</div>
+            <div class="check-item"><span>□</span> You enjoy the process itself, not just the goal</div>
+            <div class="check-item"><span>□</span> Doors open without you having to break them</div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <span>© Yuanmind — yuanmind.com</span>
+        <span>Page 2</span>
+    </div>
+</div>
+
+<!-- ====== PAGE 3: Journal + Emergency ====== -->
+<div class="page">
+    <div class="page-header">
+        <span class="page-header-brand">Yuanmind</span>
+        <span class="page-header-title">Wu Wei Decision Framework</span>
+    </div>
+
+    <div class="section-number">04</div>
+    <h2 class="section-title">Daily Wu Wei Reflection</h2>
+    <p class="section-subtitle">ONE PROMPT FOR EACH DAY OF THE WEEK</p>
+
+    <div class="journal-item">
+        <div class="journal-day"><strong>M</strong>Mon</div>
+        <div class="journal-content">
+            <h4>Intention Without Attachment</h4>
+            <div class="prompt-box">"What do I want this week — and am I willing to let it unfold differently than expected?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>T</strong>Tue</div>
+        <div class="journal-content">
+            <h4>Identify the Force</h4>
+            <div class="prompt-box">"Where in my life am I pushing too hard right now? What would happen if I eased up?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>W</strong>Wed</div>
+        <div class="journal-content">
+            <h4>The Illusion of Busyness</h4>
+            <div class="prompt-box">"Which of today's tasks actually matter, and which am I doing just to feel productive?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>T</strong>Thu</div>
+        <div class="journal-content">
+            <h4>Read the Signals</h4>
+            <div class="prompt-box">"What is my body telling me today? Am I tight, anxious, calm, excited? What does that mean?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>F</strong>Fri</div>
+        <div class="journal-content">
+            <h4>Celebrate Doing Less</h4>
+            <div class="prompt-box">"What went well this week that I didn't have to force? What flowed naturally?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>S</strong>Sat</div>
+        <div class="journal-content">
+            <h4>Release & Restore</h4>
+            <div class="prompt-box">"What worry or decision am I carrying that I can put down this weekend?"</div>
+        </div>
+    </div>
+    <div class="journal-item">
+        <div class="journal-day"><strong>S</strong>Sun</div>
+        <div class="journal-content">
+            <h4>The Bigger Picture</h4>
+            <div class="prompt-box">"If I zoom out 5 years from now — does this thing I'm stressed about actually matter?"</div>
+        </div>
+    </div>
+
+    <div class="emergency-box">
+        <h3>⚡ Wu Wei Emergency Protocol</h3>
+        <p style="font-size: 12px; color: #7a8bb5; margin-bottom: 20px;">When you feel overwhelmed, paralyzed, or stuck — do only these 3 things:</p>
+        <div class="emergency-step">
+            <div class="emergency-num">1</div>
+            <div class="emergency-text">
+                <h4>STOP — Remove all stimulation for 5 minutes</h4>
+                <p>Close the laptop. Put down the phone. Sit somewhere quiet. Do nothing. Let the noise settle like sediment in still water.</p>
+            </div>
+        </div>
+        <div class="emergency-step">
+            <div class="emergency-num">2</div>
+            <div class="emergency-text">
+                <h4>SIMPLIFY — Find the one thing that actually matters</h4>
+                <p>Ask: "If I could only do ONE thing right now, what would it be?" Ignore everything else. Your overwhelm comes from carrying 50 tasks. You only need to carry one.</p>
+            </div>
+        </div>
+        <div class="emergency-step">
+            <div class="emergency-num">3</div>
+            <div class="emergency-text">
+                <h4>MOVE — Take one physical action in 60 seconds</h4>
+                <p>Send one message. Write one sentence. Make one call. Movement breaks paralysis. The action doesn't need to be perfect. It needs to exist.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <span>© Yuanmind — yuanmind.com</span>
+        <span>Page 3</span>
+    </div>
+</div>
+
+</body>
+</html>
