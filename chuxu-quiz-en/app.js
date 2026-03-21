@@ -352,7 +352,7 @@
             + '<p style="font-size:0.85rem;color:var(--text);margin-bottom:0.5rem;">✅ Understand your dominant imbalance<br>'
             + '✅ Daily food, habits & routines<br>'
             + '✅ What to avoid (most people get this wrong)</p>'
-            + '<a href="https://checkout.dodopayments.com/buy/pdt_0NasrfmpRqOUCjRX0YOZi" class="cta-btn" target="_blank">Get My Balance Plan — $9</a>'
+            + '<a href="https://checkout.dodopayments.com/buy/pdt_0NasrfmpRqOUCjRX0YOZi" class="cta-btn" target="_blank">Get My Balance Plan — $7</a>'
             + '<p class="cta-sub">No supplements. No complex routines.<br>Most people notice changes within days.</p>'
             + '</div>';
 
