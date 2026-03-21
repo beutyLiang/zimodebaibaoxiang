@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Element Quiz — Discover Your Body Type | Yuanmind</title>
+    <meta name="description"
+        content="Take the free Five Elements quiz to discover your body type. 8 questions, 1 minute. Based on 2,500 years of Eastern wisdom.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Home Page -->
+        <section id="page-home" class="page active">
+            <div class="home-deco">
+                <div class="element-float e-wood">Wood</div>
+                <div class="element-float e-fire">Fire</div>
+                <div class="element-float e-earth">Earth</div>
+                <div class="element-float e-metal">Metal</div>
+                <div class="element-float e-water">Water</div>
+            </div>
+            <div class="home-content">
+                <p class="home-eyebrow">Element Quiz by Yuanmind</p>
+                <h1 class="home-title">Discover Your<br>Body Type</h1>
+                <p class="home-desc">8 questions. 1 minute.<br>Based on 2,500 years of Eastern wisdom.</p>
+                <button id="btn-start" class="btn-start">Start the Quiz →</button>
+                <p class="home-count"><span id="test-count">3,281</span> people have taken this quiz</p>
+            </div>
+        </section>
+
+        <!-- Chat Quiz Page -->
+        <section id="page-chat" class="page">
+            <div class="chat-header">
+                <div class="chat-avatar">Y</div>
+                <div class="chat-header-info">
+                    <span class="chat-name">Yuanmind</span>
+                    <span class="chat-status">Your Element Guide</span>
+                </div>
+                <div class="chat-progress">
+                    <div id="chat-progress-fill" class="chat-progress-fill"></div>
+                </div>
+            </div>
+            <div id="chat-body" class="chat-body"></div>
+            <div id="chat-input" class="chat-input-area"></div>
+        </section>
+
+        <!-- Result Page -->
+        <section id="page-result" class="page">
+            <div id="result-content" class="result-content"></div>
+        </section>
+    </div>
+
+    <script src="quiz-data-en.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
