@@ -1,0 +1,14 @@
+﻿{
+    "name":  "The Overthinking Detox",
+    "description":  "Stop mental spirals in 10 minutes. A 7-day system to break the loop, decide fast, and move forward.",
+    "tax_category":  "digital_products",
+    "type":  "digital",
+    "price":  {
+                  "discount":  0,
+                  "currency":  "USD",
+                  "price":  700,
+                  "purchasing_power_parity":  false,
+                  "type":  "one_time_price"
+              },
+    "business_id":  "bus_0NaniUzTn0utr0fhZs2jY"
+}

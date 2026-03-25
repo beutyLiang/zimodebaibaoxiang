@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肠道菌群 AI 运营服务方案 · 合作提案</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        :root {
+            --bg: #0b0b12;
+            --bg-card: #12121e;
+            --bg-card-alt: #181828;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --accent4: #fdcb6e;
+            --text: #e0e0e8;
+            --text-muted: #8888a0;
+            --border: rgba(255, 255, 255, 0.06);
+            --glow: 0 0 30px rgba(108, 92, 231, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0b12 0%, #1a1a3e 50%, #0b0b12 100%);
+            padding: 80px 24px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(108, 92, 231, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(0, 206, 201, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, -10px);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6c5ce7, #00cec9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin: 48px 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .icon-purple {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .icon-teal {
+            background: rgba(0, 206, 201, 0.2);
+        }
+
+        .icon-pink {
+            background: rgba(253, 121, 168, 0.2);
+        }
+
+        .icon-yellow {
+            background: rgba(253, 203, 110, 0.2);
+        }
+
+        .icon-green {
+            background: rgba(0, 184, 148, 0.2);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        th,
+        td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: rgba(108, 92, 231, 0.04);
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .alert-important {
+            background: rgba(108, 92, 231, 0.08);
+            border-left: 4px solid var(--accent);
+        }
+
+        .alert-tip {
+            background: rgba(0, 206, 201, 0.08);
+            border-left: 4px solid var(--accent2);
+        }
+
+        .alert-warning {
+            background: rgba(253, 203, 110, 0.08);
+            border-left: 4px solid var(--accent4);
+        }
+
+        .alert-danger {
+            background: rgba(253, 121, 168, 0.08);
+            border-left: 4px solid var(--accent3);
+        }
+
+        .alert-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .flow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            position: relative;
+        }
+
+        .flow-step {
+            display: flex;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .flow-step:last-child {
+            padding-bottom: 0;
+        }
+
+        .flow-step::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 44px;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), rgba(108, 92, 231, 0.1));
+        }
+
+        .flow-step:last-child::before {
+            display: none;
+        }
+
+        .step-num {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1rem;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin: 2px 4px 2px 0;
+        }
+
+        .tag-purple {
+            background: rgba(108, 92, 231, 0.15);
+            color: #a29bfe;
+        }
+
+        .tag-teal {
+            background: rgba(0, 206, 201, 0.15);
+            color: #81ecec;
+        }
+
+        .tag-pink {
+            background: rgba(253, 121, 168, 0.15);
+            color: #fab1c4;
+        }
+
+        .tag-yellow {
+            background: rgba(253, 203, 110, 0.15);
+            color: #fdd77d;
+        }
+
+        .tag-green {
+            background: rgba(0, 184, 148, 0.15);
+            color: #55efc4;
+        }
+
+        .tag-red {
+            background: rgba(214, 48, 49, 0.15);
+            color: #ff7675;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .timeline {
+            margin: 16px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .conclusion h3 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+
+        .conclusion blockquote {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--accent2);
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero -->
+    <div class="hero">
+        <h1>肠道菌群 AI 运营服务方案</h1>
+        <p class="subtitle">用 AI 和数字化运营，帮您从"供货商"升级为"消费者健康服务平台"</p>
+        <span class="badge">📅 2026-03 · V0.3 合作提案</span>
+    </div>
+
+    <div class="container">
+
+        <!-- 一、市场机会 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-purple">📊</div>
+                一、市场机会
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value">400-800元</div>
+                    <div class="stat-label">消费级 16s 检测/次</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">~$15亿</div>
+                    <div class="stat-label">FMT 全球市场 2024</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">20%+</div>
+                    <div class="stat-label">消费级赛道年增长</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">三甲医院 FMT 临床试验</div>
+                </div>
+            </div>
+
+            <div class="alert alert-important">
+                <div class="alert-title">⚡ 核心判断</div>
+                您已拥有<strong>检测技术、健康机构合作关系、产品供应链</strong>。缺的是<strong>线上获客、AI 工具化、品牌化包装</strong>三大能力。本方案的核心价值是：用 AI
+                和数字化运营帮您从"供货商"升级为"面向消费者的健康服务平台"。
+            </div>
+        </div>
+
+        <!-- 二、AI 在肠道健康的成熟案例 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-teal">🤖</div>
+                二、AI 在肠道健康的成熟案例
+            </div>
+
+            <table>
+                <tr>
+                    <th>应用场景</th>
+                    <th>产品/案例</th>
+                    <th>效果</th>
+                </tr>
+                <tr>
+                    <td>AI 饮食分析</td>
+                    <td>PillarBiome / Biome App</td>
+                    <td>分析饮食→生成肠道健康评分→个性化建议</td>
+                </tr>
+                <tr>
+                    <td>AI 智能客服</td>
+                    <td>科大讯飞医院系统</td>
+                    <td>24h 自动应答门诊/住院/医保咨询</td>
+                </tr>
+                <tr>
+                    <td>AI 疾病预测</td>
+                    <td>Random Forest 算法</td>
+                    <td>结直肠癌分类（NIH 论文验证）</td>
+                </tr>
+                <tr>
+                    <td>AI 益生菌定制</td>
+                    <td>GUTolution</td>
+                    <td>基因测序→AI 生成个性化益生菌配方</td>
+                </tr>
+            </table>
+
+            <div class="alert alert-tip">
+                <div class="alert-title">💡 行业验证</div>
+                行业已验证的核心闭环是 <strong>"检测→建议→产品"</strong>。通过 16s 检测识别个体肠道特征，AI 提供个性化干预建议，最终形成益生菌产品销售。这正是本方案要帮您搭建的链路。
+            </div>
+        </div>
+
+        <!-- 三、我们能帮您解决什么 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-pink">🔍</div>
+                三、我们能帮您解决什么
+            </div>
+
+            <div class="card">
+                <h3>✅ 您已有的</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                    <span class="tag tag-green">🧬 16s 检测能力</span>
+                    <span class="tag tag-green">🏥 健康机构合作关系</span>
+                    <span class="tag tag-green">💊 肠道菌群产品供应</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>❌ 目前缺的（我们来补）</h3>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                    <span class="tag tag-red">📱 线上流量 = 0</span>
+                    <span class="tag tag-red">🤖 AI 工具 = 0</span>
+                    <span class="tag tag-red">🎨 品牌包装 = 0</span>
+                </div>
+                <p style="margin-top:12px;">→ 我们提供：4 平台代运营 + AI 问卷筛选 + AI 客服 + 品牌视觉 + 内容矩阵</p>
+            </div>
+        </div>
+
+        <!-- 四、5 步闭环商业模式 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-purple">🔄</div>
+                四、5 步闭环商业模式
+            </div>
+
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-num">1</div>
+                    <div class="step-content">
+                        <h4>🎯 线上引流</h4>
+                        <p>小红书/抖音/视频号/公众号 发科普内容 → "免费肠道健康评估"吸引用户 → AI 问卷自动筛选优质客户</p>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-purple">AI 内容生成</span>
+                            <span class="tag tag-teal">AI 客户筛选</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">2</div>
+                    <div class="step-content">
+                        <h4>🏥 线下采集</h4>
+                        <p>筛选后的用户来线下健康管理中心 → 科普讲座（建信任）+ 粪便样本采集</p>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-yellow">您提供场地</span>
+                            <span class="tag tag-purple">我们出科普 PPT</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">3</div>
+                    <div class="step-content">
+                        <h4>🧬 检测报告</h4>
+                        <p>16s 基因检测 → 出报告 → 小程序上查看 → AI 自动解读基础内容 → 复杂问题触发专家连线</p>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-teal">AI 报告解读</span>
+                            <span class="tag tag-green">专家连线</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">4</div>
+                    <div class="step-content">
+                        <h4>👥 社群运营</h4>
+                        <p>客户进私域社群 → AI 客服日常维护 → 每日推送个性化饮食/作息建议 → 异常指标自动预警</p>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-teal">AI 客服</span>
+                            <span class="tag tag-pink">AI 预警系统</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-num">5</div>
+                    <div class="step-content">
+                        <h4>💰 产品变现</h4>
+                        <p>根据检测结果 → AI 推荐定制益生菌套餐 → 持续复购 + 定期复检</p>
+                        <div style="margin-top:8px;">
+                            <span class="tag tag-yellow">AI 个性化推荐</span>
+                            <span class="tag tag-green">复购循环</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table style="margin-top:24px;">
+                <tr>
+                    <th>步骤</th>
+                    <th>我们做什么</th>
+                    <th>您需配合</th>
+                </tr>
+                <tr>
+                    <td>引流</td>
+                    <td>4 平台内容 + AI 问卷</td>
+                    <td>提供专业素材支持</td>
+                </tr>
+                <tr>
+                    <td>采集</td>
+                    <td>科普讲座 PPT + 流程设计</td>
+                    <td>线下场地 + 人员</td>
+                </tr>
+                <tr>
+                    <td>检测</td>
+                    <td>小程序开发 + 报告可视化</td>
+                    <td>实验室出报告</td>
+                </tr>
+                <tr>
+                    <td>社群</td>
+                    <td>AI 客服训练 + 运营策略</td>
+                    <td>专家资源对接</td>
+                </tr>
+                <tr>
+                    <td>变现</td>
+                    <td>产品推荐算法 + 营销</td>
+                    <td>供货 + 物流</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 五、交付清单 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-teal">📦</div>
+                五、您将获得的交付物
+            </div>
+
+            <div class="card">
+                <h3>前期交付物（搭建期 2 周内）</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>交付物</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>AI 客户筛选问卷</td>
+                        <td>用户填写→AI 评分→分级（优质/普通/不适合）</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4 平台代运营启动</td>
+                        <td>小红书+视频号+抖音+公众号，从 0 搭建</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>品牌视觉包</td>
+                        <td>Logo+配色+封面模板+科普图文模板</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>首月内容矩阵</td>
+                        <td>30 条短视频脚本+15 篇图文+5 条长文</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>客户健康档案小程序</td>
+                        <td>健康档案+报告查看+专家预约+AI 问答</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>持续运营服务</h3>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>服务</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>AI 社群客服</td>
+                        <td>自动回答 80% 日常健康问题</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>内容持续更新</td>
+                        <td>每月新增科普内容</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>数据后台</td>
+                        <td>客户画像、转化漏斗、复购率监控</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>系统迭代</td>
+                        <td>根据反馈持续优化 AI 模型</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 六、执行计划 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-yellow">📅</div>
+                六、执行计划（3 阶段）
+            </div>
+
+            <div class="card">
+                <h3>阶段一：搭建期（第 1-2 周）</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:var(--accent);"></div>
+                        <div><strong>D1-D3</strong> 品牌定位 + 视觉设计 + 账号注册</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:var(--accent2);"></div>
+                        <div><strong>D4-D7</strong> AI 问卷系统开发 + 首批内容制作</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:var(--accent3);"></div>
+                        <div><strong>D8-D10</strong> 小程序原型 + AI 客服训练</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background:var(--accent4);"></div>
+                        <div><strong>D11-D14</strong> 内测 + 修改 + 上线</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>阶段二：获客期（第 3-6 周）</h3>
+                <table>
+                    <tr>
+                        <th>周</th>
+                        <th>里程碑</th>
+                        <th>关键指标</th>
+                    </tr>
+                    <tr>
+                        <td>W3</td>
+                        <td>4 平台正式发布内容</td>
+                        <td>日更 1 条</td>
+                    </tr>
+                    <tr>
+                        <td>W4</td>
+                        <td>首批用户通过 AI 问卷</td>
+                        <td>筛选转化率</td>
+                    </tr>
+                    <tr>
+                        <td>W5</td>
+                        <td>首次线下采集活动</td>
+                        <td>到场人数</td>
+                    </tr>
+                    <tr>
+                        <td>W6</td>
+                        <td>首批 16s 报告出炉</td>
+                        <td>用户满意度</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>阶段三：变现期（第 7 周起）</h3>
+                <table>
+                    <tr>
+                        <th>动作</th>
+                        <th>目标</th>
+                    </tr>
+                    <tr>
+                        <td>AI 推荐定制益生菌套餐</td>
+                        <td>首批付费转化</td>
+                    </tr>
+                    <tr>
+                        <td>复检服务上线</td>
+                        <td>建立复购机制</td>
+                    </tr>
+                    <tr>
+                        <td>数据积累 → 模型优化</td>
+                        <td>推荐准确率提升</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 七、合作模式 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-green">🤝</div>
+                七、合作模式与报价
+            </div>
+
+            <table>
+                <tr>
+                    <th>项目</th>
+                    <th>金额</th>
+                    <th>说明</th>
+                </tr>
+                <tr>
+                    <td><strong>前期服务费</strong></td>
+                    <td><strong>6 万元</strong>（可分两期）</td>
+                    <td>覆盖搭建期全部交付物（AI 系统+小程序+内容库+品牌视觉）</td>
+                </tr>
+                <tr>
+                    <td>检测分成</td>
+                    <td>产品销售额的 <strong>10-15%</strong></td>
+                    <td>16s 检测等一次性收入</td>
+                </tr>
+                <tr>
+                    <td>复购分成</td>
+                    <td>益生菌/耗材复购的 <strong>20%</strong></td>
+                    <td>AI 持续维护驱动的复购收入</td>
+                </tr>
+                <tr>
+                    <td>对赌条款</td>
+                    <td>达标后升至 <strong>20-25%</strong></td>
+                    <td>运营达到约定指标后上调分成</td>
+                </tr>
+                <tr>
+                    <td>AI 维护费</td>
+                    <td>约 <strong>500-1,000 元/月</strong></td>
+                    <td>AI 客服日常运行消耗</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 八、预期收益推演 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-yellow">💰</div>
+                八、预期收益推演（12 个月）
+            </div>
+
+            <div class="alert alert-tip">
+                <div class="alert-title">📊 基准假设</div>
+                月增长率 20%，客单价 1200 元，分成 15%
+            </div>
+
+            <table>
+                <tr>
+                    <th>月</th>
+                    <th>累计客户</th>
+                    <th>客户营收</th>
+                    <th>分成收入</th>
+                    <th>总成本</th>
+                    <th>月净利</th>
+                    <th>累计利润</th>
+                </tr>
+                <tr>
+                    <td>M0</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td style="color:#55efc4;">+60,000（服务费）</td>
+                    <td>60,000</td>
+                </tr>
+                <tr>
+                    <td>M1</td>
+                    <td>15</td>
+                    <td>18,000</td>
+                    <td>2,700</td>
+                    <td>8,500</td>
+                    <td style="color:#ff7675;">-5,800</td>
+                    <td>54,200</td>
+                </tr>
+                <tr>
+                    <td>M3</td>
+                    <td>44</td>
+                    <td>52,800</td>
+                    <td>7,920</td>
+                    <td>9,500</td>
+                    <td style="color:#ff7675;">-1,580</td>
+                    <td>49,040</td>
+                </tr>
+                <tr style="font-weight:700;">
+                    <td>M5</td>
+                    <td>75</td>
+                    <td>90,000</td>
+                    <td>13,500</td>
+                    <td>10,800</td>
+                    <td style="color:#55efc4;">+2,700</td>
+                    <td>52,840</td>
+                </tr>
+                <tr>
+                    <td>M8</td>
+                    <td>141</td>
+                    <td>169,200</td>
+                    <td>25,380</td>
+                    <td>13,700</td>
+                    <td style="color:#55efc4;">+11,680</td>
+                    <td>76,200</td>
+                </tr>
+                <tr style="font-weight:700;">
+                    <td>M12</td>
+                    <td>298</td>
+                    <td>357,600</td>
+                    <td>53,640</td>
+                    <td>21,300</td>
+                    <td style="color:#55efc4;">+32,340</td>
+                    <td>141,000</td>
+                </tr>
+            </table>
+
+            <div class="card" style="margin-top:20px;">
+                <h3>三场景对比</h3>
+                <table>
+                    <tr>
+                        <th>场景</th>
+                        <th>条件</th>
+                        <th>12 个月结果</th>
+                    </tr>
+                    <tr>
+                        <td>📉 保守</td>
+                        <td>增长 10%，客单价 800</td>
+                        <td style="color:#ff7675;">亏损 ~5 万</td>
+                    </tr>
+                    <tr>
+                        <td>📊 基准</td>
+                        <td>增长 20%，客单价 1200</td>
+                        <td style="color:#55efc4;">利润 ~14 万</td>
+                    </tr>
+                    <tr>
+                        <td>🚀 乐观</td>
+                        <td>增长 35%，客单价 1500</td>
+                        <td style="color:#55efc4;">利润 40 万+</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="alert alert-tip">
+                <div class="alert-title">💡 额外收益</div>
+                上表未计入益生菌复购分成（20%）。如果复购率 >30%，实际收益将显著高于上表。
+            </div>
+        </div>
+
+        <!-- 九、合作保障 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-pink">🛡️</div>
+                九、合作保障
+            </div>
+
+            <div class="card">
+                <h3>效果检查节点</h3>
+                <table>
+                    <tr>
+                        <th>时间</th>
+                        <th>检查项</th>
+                        <th>行动</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 6</strong></td>
+                        <td>获客成本 / 转化率 / 首批客户数据</td>
+                        <td>如效果不达预期，双方协商调整获客策略</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Week 12</strong></td>
+                        <td>累计客户数 / 月营收 / 客户满意度</td>
+                        <td>全面复盘，决定下阶段计划</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>合规保障</h3>
+                <p>• 所有内容使用"肠道健康评估"而非"治疗/诊断"措辞<br>
+                    • AI 生成的科普内容由专业人员审核把关<br>
+                    • 国家标准 GB/T41910-2022 粪菌质控与分级标准全面遵守</p>
+            </div>
+        </div>
+
+        <!-- 十、AI 自进化模型 -->
+        <div class="section">
+            <div class="section-title">
+                <div class="icon icon-teal">🧬</div>
+                十、AI 自进化模型 — 我们的核心差异
+            </div>
+
+            <div class="alert alert-important">
+                <div class="alert-title">⚡ 不是一次性工具，而是持续进化的智能体</div>
+                普通服务商交付工具，工具会过时。我们交付的是<strong>会自己进化的 AI 系统</strong>，越用越聪明。3 个月积累的用户行为数据和洞察模型，是真正的竞争壁垒。
+            </div>
+
+            <div class="card">
+                <h3>三层反馈循环</h3>
+                <table>
+                    <tr>
+                        <th>循环</th>
+                        <th>频率</th>
+                        <th>做什么</th>
+                        <th>产出</th>
+                    </tr>
+                    <tr>
+                        <td>🔄 微循环</td>
+                        <td>每天自动</td>
+                        <td>AI 客服对话日志分析 → 发现"答不上来"的高频问题 → 自动补充知识库</td>
+                        <td>每周《AI 自检报告》</td>
+                    </tr>
+                    <tr>
+                        <td>🔍 中循环</td>
+                        <td>每月洞察</td>
+                        <td>用户问题聚类 → 流失节点定位 → 竞品内容监控 → 新需求识别</td>
+                        <td>每月《需求洞察报告》</td>
+                    </tr>
+                    <tr>
+                        <td>🧬 宏循环</td>
+                        <td>每季进化</td>
+                        <td>多维数据交叉分析 → 新产品可行性评估 → 定价调整建议</td>
+                        <td>每季度《进化路线图》</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>AI 能帮您发现什么？（真实案例推演）</h3>
+                <table>
+                    <tr>
+                        <th>AI 发现</th>
+                        <th>洞察</th>
+                        <th>行动建议</th>
+                    </tr>
+                    <tr>
+                        <td>用户频繁问"孩子的肠道健康"</td>
+                        <td>儿童肠道管理需求上升 18%</td>
+                        <td>开发儿童专题 + 亲子检测套餐</td>
+                    </tr>
+                    <tr>
+                        <td>报价环节流失率 42%</td>
+                        <td>价格敏感型用户占比高</td>
+                        <td>推出入门级轻量检测包 + 分期付款</td>
+                    </tr>
+                    <tr>
+                        <td>睡前咨询量是白天的 2.3 倍</td>
+                        <td>焦虑型健康关注者为主</td>
+                        <td>推出"睡眠+肠道"联合管理方案</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 结论 -->
+        <div class="conclusion">
+            <h3>🎯 为什么选择我们</h3>
+            <p style="margin-bottom:16px;color:var(--text-muted);">
+                您有产品、有技术、有供应链<br>
+                我们有 AI、有运营能力、有内容矩阵
+            </p>
+            <blockquote>
+                "您的检测产品是弹药，我们的 AI + 运营是枪。<br>
+                枪 + 弹药 = 一起服务好客户，一起赚钱。"
+            </blockquote>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        肠道菌群 AI 运营服务方案 · V0.3 合作提案<br>
+        © 2026 Yuanmind · 保密文件，请勿外传
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肠道菌群 AI 项目 — 客户关心的三个问题</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+
+        :root {
+            --bg: #0b0b12;
+            --bg-card: #12121e;
+            --accent: #6c5ce7;
+            --accent2: #00cec9;
+            --accent3: #fd79a8;
+            --accent4: #fdcb6e;
+            --text: #e0e0e8;
+            --text-muted: #8888a0;
+            --border: rgba(255, 255, 255, 0.06);
+            --green: #00b894;
+            --red: #d63031;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            padding: 0;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0b0b12, #1a1a3e, #0b0b12);
+            padding: 60px 24px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(108, 92, 231, 0.08), transparent 50%), radial-gradient(circle at 70% 50%, rgba(0, 206, 201, 0.06), transparent 50%);
+            animation: f 20s ease-in-out infinite;
+        }
+
+        @keyframes f {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(-20px, -10px)
+            }
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #6c5ce7, #00cec9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-size: .9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin: 48px 0;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(108, 92, 231, 0.12);
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        th,
+        td {
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: .88rem;
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .alert-important {
+            background: rgba(108, 92, 231, 0.08);
+            border-left: 4px solid var(--accent);
+        }
+
+        .alert-warning {
+            background: rgba(253, 203, 110, 0.08);
+            border-left: 4px solid var(--accent4);
+        }
+
+        .alert-danger {
+            background: rgba(253, 121, 168, 0.08);
+            border-left: 4px solid var(--accent3);
+        }
+
+        .alert-tip {
+            background: rgba(0, 206, 201, 0.08);
+            border-left: 4px solid var(--accent2);
+        }
+
+        .alert-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: .72rem;
+            font-weight: 500;
+            margin: 2px 4px 2px 0;
+        }
+
+        .tag-green {
+            background: rgba(0, 184, 148, .15);
+            color: #55efc4;
+        }
+
+        .tag-red {
+            background: rgba(214, 48, 49, .15);
+            color: #ff7675;
+        }
+
+        .tag-yellow {
+            background: rgba(253, 203, 110, .15);
+            color: #fdd77d;
+        }
+
+        .tag-purple {
+            background: rgba(108, 92, 231, .15);
+            color: #a29bfe;
+        }
+
+        .tag-teal {
+            background: rgba(0, 206, 201, .15);
+            color: #81ecec;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 16px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+        }
+
+        .tl-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg);
+        }
+
+        .tl-item.phase2::before {
+            background: var(--accent2);
+        }
+
+        .tl-item.phase3::before {
+            background: var(--accent4);
+        }
+
+        .tl-item.phase4::before {
+            background: var(--green);
+        }
+
+        .tl-title {
+            font-weight: 700;
+            font-size: .95rem;
+            margin-bottom: 4px;
+        }
+
+        .tl-desc {
+            color: var(--text-muted);
+            font-size: .85rem;
+        }
+
+        /* Risk matrix */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .risk-card {
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .risk-card h4 {
+            font-size: .9rem;
+            margin-bottom: 8px;
+        }
+
+        .risk-card li {
+            font-size: .82rem;
+            color: var(--text-muted);
+            margin: 5px 0;
+            list-style: none;
+        }
+
+        .risk-policy {
+            background: rgba(253, 121, 168, .06);
+            border: 1px solid rgba(253, 121, 168, .15);
+        }
+
+        .risk-market {
+            background: rgba(253, 203, 110, .06);
+            border: 1px solid rgba(253, 203, 110, .15);
+        }
+
+        .risk-tech {
+            background: rgba(108, 92, 231, .06);
+            border: 1px solid rgba(108, 92, 231, .15);
+        }
+
+        .risk-ops {
+            background: rgba(0, 206, 201, .06);
+            border: 1px solid rgba(0, 206, 201, .15);
+        }
+
+        /* 3-year bar chart */
+        .bar-chart {
+            margin: 16px 0;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .bar-label {
+            width: 80px;
+            font-size: .82rem;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 28px;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: .75rem;
+            font-weight: 700;
+            transition: width 1.5s ease;
+        }
+
+        .bar-fill.y1 {
+            background: linear-gradient(90deg, rgba(108, 92, 231, .3), rgba(108, 92, 231, .7));
+        }
+
+        .bar-fill.y2 {
+            background: linear-gradient(90deg, rgba(0, 206, 201, .3), rgba(0, 206, 201, .7));
+        }
+
+        .bar-fill.y3 {
+            background: linear-gradient(90deg, rgba(0, 184, 148, .3), rgba(0, 184, 148, .7));
+        }
+
+        .conclusion {
+            background: linear-gradient(135deg, rgba(108, 92, 231, .1), rgba(0, 206, 201, .1));
+            border: 1px solid rgba(108, 92, 231, .2);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .conclusion h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .conclusion blockquote {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--accent2);
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: .78rem;
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+        }
+
+        @media(max-width:600px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hero">
+        <h1>客户最关心的三个问题</h1>
+        <p>变现周期 · 多维风险评估 · 三年发展预测（知远 CRO 审计后 V0.2）</p>
+    </div>
+
+    <div class="container">
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 问题一：变现周期 -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="section">
+            <div class="section-title">💰 问题一：多久能赚到钱？</div>
+
+            <div class="alert alert-important">
+                <div class="alert-title">核心结论</div>
+                <strong>第 6 周</strong>可见首批检测收入，<strong>第 12 周</strong>（约 3 个月）进入产品变现期，<strong>第 6 个月</strong>实现正向现金流。
+            </div>
+
+            <div class="card">
+                <h3>变现时间线</h3>
+                <div class="timeline">
+                    <div class="tl-item">
+                        <div class="tl-title">第 1-2 周 · 搭建期 <span class="tag tag-purple">投入期</span></div>
+                        <div class="tl-desc">品牌搭建 + AI 系统开发 + 4 平台账号建立 + 首批内容制作<br><strong>收入：0</strong></div>
+                    </div>
+                    <div class="tl-item phase2">
+                        <div class="tl-title">第 3-4 周 · 获客启动期 <span class="tag tag-teal">流量积累</span></div>
+                        <div class="tl-desc">4 平台开始发布科普内容 → 用户进入 AI 问卷 → 开始积累潜在客户池<br><strong>收入：0（但积累数据）</strong></div>
+                    </div>
+                    <div class="tl-item phase3">
+                        <div class="tl-title">第 5-6 周 · 首批转化 <span class="tag tag-yellow">⭐ 第一笔钱</span></div>
+                        <div class="tl-desc">首批筛选用户 → 线下采集 → 16s 检测（500-2000 元/次）<br><strong>预估首批收入：10-30 人 × 800 元 =
+                                8,000-24,000 元</strong></div>
+                    </div>
+                    <div class="tl-item phase4">
+                        <div class="tl-title">第 7-12 周 · 产品变现期 <span class="tag tag-green">持续收入</span></div>
+                        <div class="tl-desc">检测报告出炉 → 社群建立 → AI 推荐益生菌套餐 → 定制化管理方案<br><strong>复合收入：检测费 + 益生菌产品 +
+                                管理方案</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>收入来源分层</h3>
+                <table>
+                    <tr>
+                        <th>收入类型</th>
+                        <th>客单价</th>
+                        <th>预计启动时间</th>
+                        <th>复购性</th>
+                    </tr>
+                    <tr>
+                        <td>16s 基础检测</td>
+                        <td>500-800 元</td>
+                        <td>第 6 周</td>
+                        <td>年 1-2 次</td>
+                    </tr>
+                    <tr>
+                        <td>16s 进阶检测</td>
+                        <td>1,500-2,000 元</td>
+                        <td>第 8 周</td>
+                        <td>年 1 次</td>
+                    </tr>
+                    <tr>
+                        <td>定制益生菌套餐</td>
+                        <td>300-800 元/月</td>
+                        <td>第 10 周</td>
+                        <td><strong>月度复购 ⭐</strong></td>
+                    </tr>
+                    <tr>
+                        <td>健康管理方案</td>
+                        <td>2,000-5,000 元</td>
+                        <td>第 12 周</td>
+                        <td>季度/年度</td>
+                    </tr>
+                    <tr>
+                        <td>专家咨询</td>
+                        <td>300-500 元/次</td>
+                        <td>第 10 周</td>
+                        <td>按需</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="alert alert-tip">
+                <div class="alert-title">💡 关键认知</div>
+                检测只是入口（一次性收入），<strong>益生菌套餐的月度复购才是真正的利润引擎</strong>。数据显示中国大部分人有肠道健康困扰（行业白皮书数据），市场需求是真实存在的。
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 问题二：多维风险评估 -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="section">
+            <div class="section-title">⚠️ 问题二：有什么风险？（多维评估）</div>
+
+            <div class="risk-grid">
+                <div class="risk-card risk-policy">
+                    <h4>🔴 政策合规风险</h4>
+                    <ul>
+                        <li>🔴 粪菌移植在中国属「实验性医疗技术」，不可宣传疗效</li>
+                        <li>🔴 健康类内容审查日趋严格，平台封号风险</li>
+                        <li>🟡 益生菌产品需符合《益生菌食品活菌率分级规范》</li>
+                        <li>🟢 国标 GB/T41910-2022 已发布，行业有法可依</li>
+                    </ul>
+                    <div style="margin-top:10px;font-size:.82rem;">
+                        <strong>应对：</strong>所有内容限定在"健康管理/科普教育"范畴，禁用"治疗/诊断/疗效"。聘请合规顾问审核关键内容。
+                    </div>
+                </div>
+                <div class="risk-card risk-market">
+                    <h4>🟡 市场竞争风险</h4>
+                    <ul>
+                        <li>🔴 华大基因等大厂已布局消费级基因检测</li>
+                        <li>🟡 uBiome（美国）巨额融资后破产，行业有前车之鉴</li>
+                        <li>🟡 消费者对"粪菌"概念接受度低</li>
+                        <li>🟢 AI 运营+本地化服务是大厂不擅长的差异点</li>
+                    </ul>
+                    <div style="margin-top:10px;font-size:.82rem;">
+                        <strong>应对：</strong>前端品牌包装避开"粪便"措辞，用"肠道微生态检测"替代。走差异化路线（AI 个性化 + 本地社群）。
+                    </div>
+                </div>
+                <div class="risk-card risk-tech">
+                    <h4>🟡 技术执行风险</h4>
+                    <ul>
+                        <li>🟡 AI 客服回答错误可能引发健康误导</li>
+                        <li>🟡 供体合格率极低（100人中 &lt;1 人）</li>
+                        <li>🟢 16s 检测技术已成熟，成本持续下降</li>
+                        <li>🟢 AI 健康管理已有成熟案例可参考</li>
+                    </ul>
+                    <div style="margin-top:10px;font-size:.82rem;">
+                        <strong>应对：</strong>AI 客服设置严格边界，超出范围自动转人工专家。供体筛选不作为核心卖点。
+                    </div>
+                </div>
+                <div class="risk-card risk-ops">
+                    <h4>🟢 运营执行风险</h4>
+                    <ul>
+                        <li>🟡 获客成本可能高于预期（健康领域 CAC 偏高）</li>
+                        <li>🟡 前期内容需要合作方提供专业素材配合</li>
+                        <li>🟢 AI 批量内容生产可大幅降低运营成本</li>
+                        <li>🟢 社群运营模式已被大量健康品牌验证</li>
+                    </ul>
+                    <div style="margin-top:10px;font-size:.82rem;">
+                        <strong>应对：</strong>第一阶段小范围测试（1 城市 1 采集点），验证获客模型后再复制。
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger">
+                <div class="alert-title">🚫 最大风险不是这些</div>
+                最大的风险是<strong>"不做"</strong>。行业已有国标、大厂在布局、消费者意识在觉醒。等别人占好位再进场，成本只会更高。现在启动 = 早期红利。
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 问题三：3年发展预测 -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="section">
+            <div class="section-title">📈 问题三：未来 3 年会怎样？</div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value">1400亿+</div>
+                    <div class="stat-label">2025 中国益生菌市场</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">20%+</div>
+                    <div class="stat-label">消费级赛道年增长率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">150-300元</div>
+                    <div class="stat-label">C端获客成本/人</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2374亿</div>
+                    <div class="stat-label">2024 体检市场规模</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>中国益生菌市场规模预测</h3>
+                <div class="bar-chart">
+                    <div class="bar-row">
+                        <div class="bar-label">2024</div>
+                        <div class="bar-track">
+                            <div class="bar-fill y1" style="width:60%;">1,349 亿</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">2025</div>
+                        <div class="bar-track">
+                            <div class="bar-fill y1" style="width:66%;">1,400+ 亿</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">2026</div>
+                        <div class="bar-track">
+                            <div class="bar-fill y2" style="width:72%;">~1,570 亿</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">2027</div>
+                        <div class="bar-track">
+                            <div class="bar-fill y2" style="width:80%;">~1,770 亿</div>
+                        </div>
+                    </div>
+                    <div class="bar-row">
+                        <div class="bar-label">2028</div>
+                        <div class="bar-track">
+                            <div class="bar-fill y3" style="width:90%;">~2,000 亿</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size:.78rem;color:var(--text-muted);margin-top:8px;">数据来源：华经产业研究院、Fortune Business
+                    Insights、行业公开数据综合估算</p>
+            </div>
+
+            <div class="card">
+                <h3>3 年发展路线图</h3>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>第 1 年（2026）</th>
+                        <th>第 2 年（2027）</th>
+                        <th>第 3 年（2028）</th>
+                    </tr>
+                    <tr>
+                        <td><strong>目标</strong></td>
+                        <td>验证模型<br>跑通闭环</td>
+                        <td>复制扩张<br>多城市覆盖</td>
+                        <td>品牌化<br>数据资产变现</td>
+                    </tr>
+                    <tr>
+                        <td><strong>采集点</strong></td>
+                        <td>1 个城市<br>1-2 个点</td>
+                        <td>3-5 个城市<br>5-10 个点</td>
+                        <td>10+ 城市<br>20+ 个点</td>
+                    </tr>
+                    <tr>
+                        <td><strong>检测用户</strong></td>
+                        <td>300-500 人</td>
+                        <td>2,000-5,000 人</td>
+                        <td>10,000+ 人</td>
+                    </tr>
+                    <tr>
+                        <td><strong>社群规模</strong></td>
+                        <td>500 人</td>
+                        <td>3,000 人</td>
+                        <td>15,000+ 人</td>
+                    </tr>
+                    <tr>
+                        <td><strong>核心收入</strong></td>
+                        <td>检测费为主</td>
+                        <td>益生菌复购为主</td>
+                        <td>数据 + 品牌授权</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI 能力</strong></td>
+                        <td>基础问卷 + 客服</td>
+                        <td>个性化推荐引擎</td>
+                        <td>预测模型 + 研究合作</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>政策红利窗口（为什么是现在）</h3>
+                <table>
+                    <tr>
+                        <th>政策/事件</th>
+                        <th>对我们的影响</th>
+                    </tr>
+                    <tr>
+                        <td>「健康中国 2035」国家战略</td>
+                        <td>✅ 大健康产业持续获政策支持</td>
+                    </tr>
+                    <tr>
+                        <td>「十五五规划」（2026-2030）</td>
+                        <td>✅ 预防医学、个性化健康管理被列为重点方向</td>
+                    </tr>
+                    <tr>
+                        <td>GB/T41910-2022 粪菌国标发布</td>
+                        <td>✅ 行业有法可依，劣币被淘汰，利好合规玩家</td>
+                    </tr>
+                    <tr>
+                        <td>《益生菌食品活菌率分级规范》推进中</td>
+                        <td>✅ 标准化利好正规产品</td>
+                    </tr>
+                    <tr>
+                        <td>2025 肠道微生态发展策略共创会</td>
+                        <td>✅ 行业共识：从规模扩张→精准化/差异化转型</td>
+                    </tr>
+                    <tr>
+                        <td>中国 87.6% 人口有肠道问题</td>
+                        <td>✅ 需求端确定性极高</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="alert alert-warning">
+                <div class="alert-title">⚠️ 3 年内必须关注的变量</div>
+                <strong>1. 政策收紧</strong>：如果监管将肠道检测纳入医疗器械管理，合规成本将大增<br>
+                <strong>2. 大厂入局</strong>：华大基因等如果下沉做消费级市场，将挤压中小玩家空间<br>
+                <strong>3. 科学进展</strong>：如果 16s 检测被更便宜的技术替代，需要快速跟进
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- 前期报价建议 -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="section">
+            <div class="section-title">💵 附：前期报价建议</div>
+
+            <div class="alert alert-important">
+                <div class="alert-title">定价逻辑</div>
+                不以"工作量"定价，以<strong>"帮客户省了多少钱"</strong>定价。如果客户自己招 1 个运营 + 1 个技术，月薪至少 1.5 万 × 2 = 3 万/月。我们的前期服务费 = 他自建团队
+                2-3 个月的成本。
+            </div>
+
+            <div class="card">
+                <h3>推荐报价方案</h3>
+                <table>
+                    <tr>
+                        <th>项目</th>
+                        <th>金额</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td><strong>前期服务费</strong></td>
+                        <td><strong>6 万元</strong>（可分两期）</td>
+                        <td>覆盖搭建期全部交付物（品牌+AI系统+4平台+小程序+首月内容）</td>
+                    </tr>
+                    <tr>
+                        <td>检测分成</td>
+                        <td>产品销售额的 <strong>10-15%</strong></td>
+                        <td>16s 检测等一次性收入</td>
+                    </tr>
+                    <tr>
+                        <td>复购分成</td>
+                        <td>益生菌/耗材复购的 <strong>20%</strong></td>
+                        <td>持续复购产品收入</td>
+                    </tr>
+                    <tr>
+                        <td>AI 维护费</td>
+                        <td><strong>500-1,000 元/月</strong></td>
+                        <td>AI 客服 token + 系统维护</td>
+                    </tr>
+                    <tr>
+                        <td>对赌上调</td>
+                        <td>达标后分成升至 <strong>20-25%</strong></td>
+                        <td>激励我方全力运营</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>对标参考</h3>
+                <table>
+                    <tr>
+                        <th>参照物</th>
+                        <th>费用</th>
+                        <th>对比</th>
+                    </tr>
+                    <tr>
+                        <td>自建运营 + 技术团队</td>
+                        <td>3 万/月（2 人最低配）</td>
+                        <td>半年 = 18 万</td>
+                    </tr>
+                    <tr>
+                        <td>外包开发小程序</td>
+                        <td>3-8 万</td>
+                        <td>只有技术没有运营</td>
+                    </tr>
+                    <tr>
+                        <td>企业管理咨询（1 节课）</td>
+                        <td>1-2 万/半天</td>
+                        <td>只有建议没有执行</td>
+                    </tr>
+                    <tr>
+                        <td><strong>我们的方案</strong></td>
+                        <td><strong>6 万 + 分成</strong></td>
+                        <td><strong>技术 + 运营 + AI + 持续迭代</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 结论 -->
+        <div class="conclusion">
+            <h3>给客户的一句话</h3>
+            <blockquote>
+                "你的技术和产品已经验证过了。<br>
+                差的只是一套 AI 运营系统，把线下能力搬到线上。<br>
+                我们做的就是这件事。"
+            </blockquote>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        V0.2 修订版 | 知远 CRO 审计后更新 | 数据来源：华经产业研究院、Fortune Business Insights、NIH、新华网<br>
+        整理人：子默（COO/CTO）| 审核人：知远（CRO）| 2026-03-21
+    </div>
+
+</body>
+
+</html>

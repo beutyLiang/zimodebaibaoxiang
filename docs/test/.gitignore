@@ -1,0 +1,28 @@
+# 一键上传脚本（仅本地使用）
+一键上传到GitHub.bat
+
+# Word 临时文件
+~$*
+
+# Windows 系统文件
+Thumbs.db
+Desktop.ini
+
+# macOS 系统文件
+.DS_Store
+
+# IDE 配置
+.vscode/
+.idea/
+
+# Node.js 依赖
+node_modules/
+
+# 系统缓存
+*.tmp
+*.log
+
+# 大视频文件（超过 GitHub 100MB 限制）
+docs/content/tiktok_covers/
+视频/
+*.mp4

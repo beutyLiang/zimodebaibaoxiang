@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Overthinking Detox — Yuanmind</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2a2a2a;
+            background: #fff;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* ===== COVER ===== */
+        .cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #1a0a2e 0%, #2d1b4e 40%, #0d1f3c 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .cover::before {
+            content: '靜';
+            font-size: 220px;
+            color: rgba(255, 255, 255, 0.03);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: serif;
+        }
+
+        .cover-badge {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .cover h1 em {
+            font-style: italic;
+            color: #c4a0ff;
+        }
+
+        .cover-subtitle {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 50px;
+        }
+
+        .cover-cta {
+            background: linear-gradient(135deg, #9b59b6, #6c3483);
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+        }
+
+        .cover-bottom {
+            position: absolute;
+            bottom: 40px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            min-height: 100vh;
+            padding: 70px 80px;
+            page-break-after: always;
+            position: relative;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 11px;
+            color: #bbb;
+            letter-spacing: 2px;
+        }
+
+        .page-brand {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            font-size: 10px;
+            color: #ccc;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a0a2e;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d1b4e;
+            margin-bottom: 12px;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: #3a3a3a;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f8f4ff, #f0e8ff);
+            border-left: 4px solid #9b59b6;
+            padding: 20px 24px;
+            margin: 24px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #4a3a5a;
+        }
+
+        .insight-box {
+            background: #fafafa;
+            border: 1px solid #eee;
+            padding: 16px 20px;
+            margin: 16px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .insight-box strong {
+            color: #2d1b4e;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, #2d1b4e, #1a0a2e);
+            color: #fff;
+            padding: 16px 24px;
+            margin: 16px 0 30px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .action-box::before {
+            content: '⚡ ';
+        }
+
+        .trap-card {
+            background: #fff;
+            border: 2px solid #e8e0f0;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin: 16px 0;
+            transition: all 0.3s;
+        }
+
+        .trap-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: #9b59b6;
+            margin-bottom: 8px;
+        }
+
+        .trap-card p {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .trap-card .arrow {
+            color: #9b59b6;
+            font-weight: 600;
+        }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            margin-top: 40px;
+        }
+
+        .day-header:first-of-type {
+            margin-top: 20px;
+        }
+
+        .day-number {
+            background: linear-gradient(135deg, #9b59b6, #6c3483);
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .day-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a0a2e;
+        }
+
+        /* ===== RESET PAGE ===== */
+        .reset-page {
+            background: linear-gradient(160deg, #1a0a2e 0%, #2d1b4e 100%);
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reset-page h2 {
+            color: #fff;
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .reset-page .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
+
+        .reset-step {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 20px 32px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .reset-step .step-num {
+            color: #c4a0ff;
+            font-weight: 700;
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        .reset-remember {
+            margin-top: 50px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== FRAMEWORK PAGE ===== */
+        .framework-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .framework-icon {
+            background: linear-gradient(135deg, #9b59b6, #6c3483);
+            color: #fff;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .framework-text h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a0a2e;
+            margin-bottom: 4px;
+        }
+
+        .framework-text p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== BACK COVER ===== */
+        .back-cover {
+            height: 100vh;
+            min-height: 1100px;
+            background: linear-gradient(160deg, #1a0a2e 0%, #2d1b4e 40%, #0d1f3c 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 50px;
+            page-break-after: avoid;
+        }
+
+        .back-cover h2 {
+            color: #fff;
+            font-size: 34px;
+            margin-bottom: 30px;
+        }
+
+        .back-cover .check-list {
+            text-align: left;
+            max-width: 460px;
+            margin-bottom: 50px;
+        }
+
+        .back-cover .check-item {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-cover .check-icon {
+            color: #c4a0ff;
+            font-size: 18px;
+        }
+
+        .back-cover .next-step {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 30px 40px;
+            max-width: 460px;
+            margin-bottom: 40px;
+        }
+
+        .back-cover .next-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .back-cover .next-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .back-cover .next-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .back-cover .next-cta {
+            background: linear-gradient(135deg, #9b59b6, #6c3483);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .back-cover .brand-footer {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== COVER ===== -->
+    <div class="cover">
+        <div class="cover-badge">Yuanmind</div>
+        <h1>The Overthinking<br><em>Detox</em></h1>
+        <p class="cover-subtitle">
+            Stop mental spirals in 10 minutes.<br>
+            A system to break the loop, decide fast, and move forward.
+        </p>
+        <div class="cover-cta">Break the Loop → Start Now</div>
+        <div class="cover-bottom">Yuanmind · Eastern Wisdom × Modern Clarity</div>
+    </div>
+
+    <!-- ===== PAGE 1: YOUR BRAIN IS NOT THE PROBLEM ===== -->
+    <div class="page">
+        <h2>Your Brain Is Not<br>the Problem</h2>
+
+        <p>You make 35,000 decisions every day.</p>
+        <p>No wonder you're exhausted before noon.</p>
+        <p>But here's what nobody tells you:</p>
+
+        <div class="highlight-box">
+            Overthinking is not a personality flaw. It's a signal.
+        </div>
+
+        <p>Your mind is trying to protect you — from mistakes, from regret, from the unknown.</p>
+        <p>The problem? <strong>Protection mode became your default mode.</strong></p>
+        <p>This guide will show you how to stop it — <strong>today.</strong> Not with willpower. With a system.</p>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">01</div>
+    </div>
+
+    <!-- ===== PAGE 2: THE 3 TRAPS ===== -->
+    <div class="page">
+        <h2>The 3 Types of<br>Overthinking Traps</h2>
+
+        <div class="trap-card">
+            <h4>Trap 1: The Replay Loop</h4>
+            <p>You keep replaying past decisions. "What if I chose differently?"</p>
+            <p class="arrow">→ This drains energy on things you cannot change.</p>
+        </div>
+
+        <div class="trap-card">
+            <h4>Trap 2: The Analysis Spiral</h4>
+            <p>You research, compare, weigh options — but never choose.</p>
+            <p class="arrow">→ More information doesn't create clarity. It creates confusion.</p>
+        </div>
+
+        <div class="trap-card">
+            <h4>Trap 3: The Future Panic</h4>
+            <p>You imagine worst-case scenarios that haven't happened.</p>
+            <p class="arrow">→ You're solving problems that don't exist yet.</p>
+        </div>
+
+        <div class="highlight-box">
+            Which trap do you fall into most? Circle it. That's your starting point.
+        </div>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">02</div>
+    </div>
+
+    <!-- ===== PAGE 3: WU WEI PRINCIPLE ===== -->
+    <div class="page">
+        <h2>The Wu Wei Principle</h2>
+        <h3>Why Eastern Philosophy Works Here</h3>
+
+        <p>Ancient Chinese philosophers discovered something 2,500 years ago:</p>
+
+        <div class="highlight-box">
+            The best decisions feel effortless. Not because they're easy — but because you stopped fighting yourself.
+        </div>
+
+        <p>This is called <strong>Wu Wei (无为)</strong> — "effortless action."</p>
+        <p>It doesn't mean "do nothing." It means:</p>
+        <p><strong>Stop forcing. Start flowing.</strong></p>
+        <p>When you overthink, you're forcing your brain to find the "perfect" answer.</p>
+        <p>Wu Wei says: <strong>there is no perfect answer. There is only the next step.</strong></p>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">03</div>
+    </div>
+
+    <!-- ===== PAGES 4-5: THE 7-DAY SYSTEM ===== -->
+    <div class="page">
+        <h2>The 7-Day Detox System</h2>
+
+        <div class="day-header">
+            <div class="day-number">1</div>
+            <div class="day-title">The Decision Audit</div>
+        </div>
+        <p>Write down every decision you made today. All of them. Now circle the ones that actually matter (hint: it's
+            less than 5).</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> 90% of your decisions don't deserve your energy.</div>
+        <div class="action-box">Open your notes app and list every decision from the last 3 hours.</div>
+
+        <div class="day-header">
+            <div class="day-number">2</div>
+            <div class="day-title">The 2-Minute Rule</div>
+        </div>
+        <p>For any decision that takes less than 2 minutes to reverse: decide NOW. Set a timer. When it rings, choose.
+            No exceptions.</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> Speed beats perfection for reversible decisions.</div>
+        <div class="action-box">Pick one small decision you've been putting off — and decide in 2 minutes.</div>
+
+        <div class="day-header">
+            <div class="day-number">3</div>
+            <div class="day-title">The "Good Enough" Practice</div>
+        </div>
+        <p>Pick one decision today and intentionally choose the "good enough" option. Not the best. Not the optimal.
+            Just good enough.</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> "Good enough" done today > "perfect" done never.</div>
+        <div class="action-box">The next time you're choosing between options, pick the first one that's 70% right.
+        </div>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">04</div>
+    </div>
+
+    <div class="page">
+        <div class="day-header">
+            <div class="day-number">4</div>
+            <div class="day-title">The Input Fast</div>
+        </div>
+        <p>No articles. No podcasts. No advice. For 24 hours. Your brain has enough information. It needs silence to
+            process.</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> More information ≠ better decisions.</div>
+        <div class="action-box">Unfollow 3 accounts that make you overthink. Right now.</div>
+
+        <div class="day-header">
+            <div class="day-number">5</div>
+            <div class="day-title">The Body Check</div>
+        </div>
+        <p>Before your next decision, close your eyes for 60 seconds. Ask: "What does my gut say?" Write it down. Then
+            decide.</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> Your body often knows the answer before your mind does.
+        </div>
+        <div class="action-box">Close your eyes. Think of a decision you're stuck on. What does your gut say? Write it
+            down.</div>
+
+        <div class="day-header">
+            <div class="day-number">6</div>
+            <div class="day-title">The Regret Reframe</div>
+        </div>
+        <p>Write down a past decision you regret. Now list 3 things that happened BECAUSE of that decision — things that
+            wouldn't have happened otherwise.</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> Every "wrong" decision created something right.</div>
+        <div class="action-box">Write down your biggest regret. Now find 3 good things that came from it.</div>
+
+        <div class="day-header">
+            <div class="day-number">7</div>
+            <div class="day-title">The Next Step Protocol</div>
+        </div>
+        <p>Stop asking: "What's the best choice?" Start asking: "What's the smallest next step?"</p>
+        <div class="insight-box">💡 <strong>Insight:</strong> Clarity comes from action, not from thinking.</div>
+        <div class="action-box">What's the ONE thing you've been overthinking? Write down the smallest possible next
+            step. Do it.</div>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">05</div>
+    </div>
+
+    <!-- ===== PAGE 6: THE 60-SECOND RESET ===== -->
+    <div class="page reset-page">
+        <h2>The 60-Second Reset</h2>
+        <p class="subtitle">Use This When You're Stuck</p>
+
+        <div class="reset-step">
+            <span class="step-num">1</span> Name the trap (Replay / Analysis / Future Panic)
+        </div>
+        <div class="reset-step">
+            <span class="step-num">2</span> Ask: "Is this decision reversible?" (90% are)
+        </div>
+        <div class="reset-step">
+            <span class="step-num">3</span> Set a 2-minute timer
+        </div>
+        <div class="reset-step">
+            <span class="step-num">4</span> Choose. Move. Don't look back.
+        </div>
+
+        <p class="reset-remember">Print this page. Tape it to your monitor. Use it every time.</p>
+
+        <div class="page-brand" style="color: rgba(255,255,255,0.2);">YUANMIND</div>
+        <div class="page-number" style="color: rgba(255,255,255,0.3);">06</div>
+    </div>
+
+    <!-- ===== PAGE 7: FRAMEWORK ===== -->
+    <div class="page">
+        <h2>Reduce → Align → Act</h2>
+        <h3>The Core Framework</h3>
+
+        <p>This is the system behind everything in this guide. Memorize it. Use it daily.</p>
+
+        <div class="framework-step">
+            <div class="framework-icon">R</div>
+            <div class="framework-text">
+                <h4>Reduce</h4>
+                <p>Cut the noise. Fewer inputs, fewer options, fewer criteria. When in doubt, remove — don't add.</p>
+            </div>
+        </div>
+
+        <div class="framework-step">
+            <div class="framework-icon">A</div>
+            <div class="framework-text">
+                <h4>Align</h4>
+                <p>Check with your gut, not just your head. If it doesn't feel right, it isn't — no matter how logical
+                    it looks.</p>
+            </div>
+        </div>
+
+        <div class="framework-step">
+            <div class="framework-icon">A</div>
+            <div class="framework-text">
+                <h4>Act</h4>
+                <p>Take the smallest next step. Now. Don't wait for certainty — certainty comes after action, not
+                    before.</p>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            10 minutes. That's all it takes. Reduce the noise. Align with your gut. Act on the smallest step. Done.
+        </div>
+
+        <div class="page-brand">YUANMIND</div>
+        <div class="page-number">07</div>
+    </div>
+
+    <!-- ===== BACK COVER ===== -->
+    <div class="back-cover">
+        <h2>You Did It.</h2>
+
+        <div class="check-list">
+            <div class="check-item"><span class="check-icon">✓</span> 90% of decisions don't deserve your energy</div>
+            <div class="check-item"><span class="check-icon">✓</span> Speed beats perfection for reversible decisions
+            </div>
+            <div class="check-item"><span class="check-icon">✓</span> Your body knows the answer before your mind</div>
+            <div class="check-item"><span class="check-icon">✓</span> Clarity comes from action, not from thinking</div>
+        </div>
+
+        <div class="next-step">
+            <div class="next-label">Want to Go Deeper?</div>
+            <div class="next-title">The Wu Wei Decision System</div>
+            <div class="next-desc">
+                The full framework for effortless decision-making.<br>
+                Go beyond detox — build a complete system.
+            </div>
+            <div class="next-cta">Get the Full System → $9</div>
+        </div>
+
+        <div class="brand-footer">Yuanmind · Eastern Wisdom × Modern Clarity</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>AI 肠道健康智能筛查</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #060a14;
+            --bg2: #0c1322;
+            --bg3: #131c30;
+            --bg4: #1a2540;
+            --accent: #00e6b8;
+            --accent2: #00c4ff;
+            --accent3: #a78bfa;
+            --text: #f0f4f8;
+            --text2: #94a3b8;
+            --text3: #64748b;
+            --danger: #ff4d6a;
+            --warn: #ffb84d;
+            --success: #4ade80;
+            --card: rgba(12, 19, 34, .9);
+            --border: rgba(0, 230, 184, .12);
+            --glow: rgba(0, 230, 184, .06);
+            --font: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        /* Cosmic background */
+        .cosmos {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .cosmos::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(0, 230, 184, .08), transparent 60%);
+            top: -200px;
+            right: -200px;
+            animation: drift 12s ease-in-out infinite
+        }
+
+        .cosmos::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(167, 139, 250, .06), transparent 60%);
+            bottom: -150px;
+            left: -150px;
+            animation: drift 15s ease-in-out infinite 3s
+        }
+
+        @keyframes drift {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1)
+            }
+
+            50% {
+                transform: translate(30px, -20px) scale(1.1)
+            }
+        }
+
+        /* Container */
+        .app {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            padding: .35rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: .65rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 230, 184, .03)
+        }
+
+        .header-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: blink 2s ease-in-out infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .3
+            }
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: .6rem
+        }
+
+        .header h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        .header p {
+            color: var(--text2);
+            font-size: .88rem;
+            line-height: 1.6
+        }
+
+        /* Main card */
+        .main-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .03)
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            margin-bottom: 2rem
+        }
+
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            flex: 1
+        }
+
+        .progress-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .7rem;
+            font-weight: 700;
+            border: 2px solid var(--bg4);
+            color: var(--text3);
+            background: var(--bg2);
+            transition: all .4s
+        }
+
+        .progress-num.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0, 230, 184, .1);
+            box-shadow: 0 0 12px rgba(0, 230, 184, .2)
+        }
+
+        .progress-num.done {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg)
+        }
+
+        .progress-line {
+            flex: 1;
+            height: 2px;
+            background: var(--bg4);
+            border-radius: 1px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .progress-line .fill {
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform .5s ease
+        }
+
+        .progress-line .fill.done {
+            transform: scaleX(1)
+        }
+
+        .progress-label {
+            font-size: .6rem;
+            color: var(--text3);
+            white-space: nowrap;
+            margin-top: .2rem
+        }
+
+        /* Step content */
+        .step {
+            display: none;
+            animation: stepIn .5s ease
+        }
+
+        .step.active {
+            display: block
+        }
+
+        @keyframes stepIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .q-num {
+            font-size: .65rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: .5rem
+        }
+
+        .q-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: .3rem
+        }
+
+        .q-desc {
+            font-size: .82rem;
+            color: var(--text3);
+            margin-bottom: 1.5rem
+        }
+
+        /* Symptom cards */
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .6rem;
+            margin-bottom: 1.8rem
+        }
+
+        .sym-card {
+            position: relative;
+            padding: 1rem .8rem;
+            background: var(--bg3);
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all .25s;
+            text-align: center;
+            user-select: none;
+            overflow: hidden
+        }
+
+        .sym-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 230, 184, .08), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .sym-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 230, 184, .2)
+        }
+
+        .sym-card:hover::before {
+            opacity: 1
+        }
+
+        .sym-card.selected {
+            border-color: var(--accent);
+            background: rgba(0, 230, 184, .05);
+            box-shadow: 0 0 20px rgba(0, 230, 184, .08)
+        }
+
+        .sym-card.selected::before {
+            opacity: 1
+        }
+
+        .sym-card .check {
+            position: absolute;
+            top: .5rem;
+            right: .5rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--bg4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .6rem;
+            transition: all .3s
+        }
+
+        .sym-card.selected .check {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: var(--bg)
+        }
+
+        .sym-icon {
+            font-size: 1.8rem;
+            margin-bottom: .4rem;
+            display: block
+        }
+
+        .sym-name {
+            font-size: .85rem;
+            font-weight: 600;
+            color: var(--text)
+        }
+
+        .sym-hint {
+            font-size: .68rem;
+            color: var(--text3);
+            margin-top: .2rem
+        }
+
+        /* Option cards */
+        .opt-list {
+            display: flex;
+            flex-direction: column;
+            gap: .6rem;
+            margin-bottom: 1.8rem
+        }
+
+        .opt-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            background: var(--bg3);
+            border: 2px solid transparent;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .opt-card:hover {
+            border-color: rgba(0, 230, 184, .2);
+            transform: translateX(4px)
+        }
+
+        .opt-card.selected {
+            border-color: var(--accent);
+            background: rgba(0, 230, 184, .05)
+        }
+
+        .opt-radio {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid var(--bg4);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s
+        }
+
+        .opt-card.selected .opt-radio {
+            border-color: var(--accent)
+        }
+
+        .opt-card.selected .opt-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent)
+        }
+
+        .opt-icon {
+            font-size: 1.3rem
+        }
+
+        .opt-text {
+            font-size: .88rem;
+            color: var(--text)
+        }
+
+        .opt-sub {
+            font-size: .72rem;
+            color: var(--text3)
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: .8rem
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 14px;
+            font-size: .9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s;
+            font-family: var(--font);
+            position: relative;
+            overflow: hidden
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: var(--bg)
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .15), transparent);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 230, 184, .25)
+        }
+
+        .btn-primary:disabled {
+            opacity: .3;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text2)
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        /* Phone input */
+        .input-group {
+            margin-bottom: 1.5rem
+        }
+
+        .input-group label {
+            display: block;
+            font-size: .8rem;
+            color: var(--text2);
+            margin-bottom: .5rem
+        }
+
+        .input-row {
+            display: flex;
+            gap: .5rem
+        }
+
+        .input-field {
+            flex: 1;
+            padding: .8rem 1rem;
+            background: var(--bg3);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: .9rem;
+            font-family: var(--font);
+            outline: none;
+            transition: border-color .3s
+        }
+
+        .input-field:focus {
+            border-color: var(--accent)
+        }
+
+        .input-field::placeholder {
+            color: var(--text3)
+        }
+
+        .input-prefix {
+            padding: .8rem 1rem;
+            background: var(--bg4);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text2);
+            font-size: .85rem;
+            white-space: nowrap
+        }
+
+        /* Analyzing */
+        .analyze-view {
+            text-align: center;
+            padding: 3rem 0
+        }
+
+        .dna-helix {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem
+        }
+
+        .dna-ring {
+            position: absolute;
+            inset: 0;
+            border: 3px solid transparent;
+            border-radius: 50%
+        }
+
+        .dna-ring:nth-child(1) {
+            border-top-color: var(--accent);
+            animation: spin 1.5s linear infinite
+        }
+
+        .dna-ring:nth-child(2) {
+            inset: 8px;
+            border-right-color: var(--accent2);
+            animation: spin 2s linear infinite reverse
+        }
+
+        .dna-ring:nth-child(3) {
+            inset: 16px;
+            border-bottom-color: var(--accent3);
+            animation: spin 2.5s linear infinite
+        }
+
+        .dna-center {
+            position: absolute;
+            inset: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .analyze-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: .5rem
+        }
+
+        .analyze-status {
+            font-size: .82rem;
+            color: var(--text2);
+            margin-bottom: 1.5rem
+        }
+
+        .analyze-steps {
+            text-align: left;
+            max-width: 300px;
+            margin: 0 auto
+        }
+
+        .a-step {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            padding: .5rem 0;
+            font-size: .82rem;
+            color: var(--text3);
+            transition: color .3s
+        }
+
+        .a-step.active {
+            color: var(--accent)
+        }
+
+        .a-step.done {
+            color: var(--success)
+        }
+
+        .a-step .a-icon {
+            width: 20px;
+            text-align: center
+        }
+
+        /* Result view */
+        .result-view {
+            animation: stepIn .6s ease
+        }
+
+        /* Risk meter */
+        .risk-meter {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-bottom: 1.5rem
+        }
+
+        .meter-label {
+            font-size: .75rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem
+        }
+
+        .meter-bar {
+            position: relative;
+            height: 8px;
+            background: var(--bg4);
+            border-radius: 4px;
+            margin: 0 auto;
+            max-width: 360px;
+            overflow: visible
+        }
+
+        .meter-gradient {
+            position: absolute;
+            inset: 0;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--success), var(--warn) 50%, var(--danger))
+        }
+
+        .meter-pointer {
+            position: absolute;
+            top: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--danger);
+            box-shadow: 0 0 15px rgba(255, 77, 106, .4);
+            transform: translateX(-50%);
+            transition: left 1s ease
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: .6rem;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto
+        }
+
+        .meter-labels span {
+            font-size: .65rem;
+            color: var(--text3)
+        }
+
+        .risk-text {
+            margin-top: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1px
+        }
+
+        .risk-text.high {
+            color: var(--danger)
+        }
+
+        .risk-text.mid {
+            color: var(--warn)
+        }
+
+        .risk-text.low {
+            color: var(--success)
+        }
+
+        /* Result cards */
+        .result-block {
+            margin: 1.2rem 0;
+            padding: 1.2rem;
+            background: var(--bg3);
+            border-radius: 14px;
+            border-left: 3px solid var(--accent)
+        }
+
+        .result-block h4 {
+            font-size: .75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: .8rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .result-block p {
+            font-size: .85rem;
+            color: var(--text2);
+            line-height: 1.7
+        }
+
+        .result-block strong {
+            color: var(--warn)
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin-top: .8rem
+        }
+
+        .tag {
+            padding: .25rem .7rem;
+            border-radius: 8px;
+            font-size: .7rem;
+            font-weight: 600
+        }
+
+        .tag-danger {
+            background: rgba(255, 77, 106, .12);
+            color: var(--danger);
+            border: 1px solid rgba(255, 77, 106, .2)
+        }
+
+        .tag-warn {
+            background: rgba(255, 184, 77, .12);
+            color: var(--warn);
+            border: 1px solid rgba(255, 184, 77, .2)
+        }
+
+        .tag-info {
+            background: rgba(0, 196, 255, .12);
+            color: var(--accent2);
+            border: 1px solid rgba(0, 196, 255, .2)
+        }
+
+        .advice-list {
+            list-style: none
+        }
+
+        .advice-list li {
+            padding: .5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: .85rem;
+            color: var(--text2);
+            border-bottom: 1px solid rgba(255, 255, 255, .03)
+        }
+
+        .advice-list li:last-child {
+            border: none
+        }
+
+        .advice-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: .85rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent)
+        }
+
+        /* CTA */
+        .cta-card {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 230, 184, .06), rgba(0, 196, 255, .06));
+            border: 1px solid rgba(0, 230, 184, .2);
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden
+        }
+
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3))
+        }
+
+        .cta-card .price-tag {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: .5rem 0
+        }
+
+        .cta-card .price-sub {
+            font-size: .8rem;
+            color: var(--text3);
+            margin-bottom: 1rem
+        }
+
+        .cta-card .price-original {
+            text-decoration: line-through;
+            color: var(--text3);
+            font-size: .9rem
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 184, 77, .06);
+            border: 1px solid rgba(255, 184, 77, .15);
+            border-radius: 12px;
+            font-size: .75rem;
+            color: var(--warn);
+            line-height: 1.6
+        }
+
+        .disclaimer strong {
+            display: block;
+            margin-bottom: .3rem;
+            font-size: .8rem
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: .68rem;
+            color: var(--text3);
+            line-height: 1.6
+        }
+
+        @media(max-width:480px) {
+            .app {
+                padding: 1rem .8rem
+            }
+
+            .main-card {
+                padding: 1.5rem 1.2rem
+            }
+
+            .header h1 {
+                font-size: 1.5rem
+            }
+
+            .symptom-grid {
+                gap: .5rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cosmos"></div>
+
+    <div class="app">
+        <div class="header">
+            <div class="header-badge"><span class="dot"></span> AI 驱动 · 实时分析</div>
+            <h1>🧬 <span>肠道健康</span>智能筛查</h1>
+            <p>基于 16S rRNA 基因数据库，AI 为你生成<br>个性化肠道健康风险评估报告</p>
+        </div>
+
+        <div class="main-card">
+            <!-- Progress -->
+            <div class="progress-bar">
+                <div class="progress-step">
+                    <div class="progress-num active" id="pn1">1</div>
+                </div>
+                <div class="progress-line">
+                    <div class="fill" id="pl1"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-num" id="pn2">2</div>
+                </div>
+                <div class="progress-line">
+                    <div class="fill" id="pl2"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-num" id="pn3">3</div>
+                </div>
+                <div class="progress-line">
+                    <div class="fill" id="pl3"></div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-num" id="pn4">4</div>
+                </div>
+            </div>
+
+            <!-- STEP 1: Symptoms -->
+            <div class="step active" id="step1">
+                <div class="q-num">Question 01 / 04</div>
+                <div class="q-title">你最近有哪些身体信号？</div>
+                <div class="q-desc">请选择所有符合的症状（可多选）</div>
+                <div class="symptom-grid">
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="bloating" data-weight="3">
+                        <div class="check">✓</div><span class="sym-icon">🫃</span>
+                        <div class="sym-name">腹胀腹痛</div>
+                        <div class="sym-hint">饭后明显</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="constipation" data-weight="3">
+                        <div class="check">✓</div><span class="sym-icon">😣</span>
+                        <div class="sym-name">便秘</div>
+                        <div class="sym-hint">排便困难/不规律</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="badbreath" data-weight="2">
+                        <div class="check">✓</div><span class="sym-icon">😮‍💨</span>
+                        <div class="sym-name">口臭</div>
+                        <div class="sym-hint">持续性异味</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="insomnia" data-weight="2">
+                        <div class="check">✓</div><span class="sym-icon">🌙</span>
+                        <div class="sym-name">失眠</div>
+                        <div class="sym-hint">入睡困难/易醒</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="fatigue" data-weight="1">
+                        <div class="check">✓</div><span class="sym-icon">😩</span>
+                        <div class="sym-name">持续疲劳</div>
+                        <div class="sym-hint">休息后仍疲惫</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="skin" data-weight="2">
+                        <div class="check">✓</div><span class="sym-icon">✨</span>
+                        <div class="sym-name">皮肤问题</div>
+                        <div class="sym-hint">痘痘/暗沉/过敏</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="diarrhea" data-weight="3">
+                        <div class="check">✓</div><span class="sym-icon">💧</span>
+                        <div class="sym-name">腹泻</div>
+                        <div class="sym-hint">大便稀/频繁</div>
+                    </div>
+                    <div class="sym-card" onclick="toggleSym(this)" data-val="mood" data-weight="2">
+                        <div class="check">✓</div><span class="sym-icon">🧠</span>
+                        <div class="sym-name">焦虑低落</div>
+                        <div class="sym-hint">情绪波动大</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="btn1" disabled onclick="goStep(2)">下一步 →</button>
+            </div>
+
+            <!-- STEP 2: Duration & Severity -->
+            <div class="step" id="step2">
+                <div class="q-num">Question 02 / 04</div>
+                <div class="q-title">症状持续多久了？</div>
+                <div class="q-desc">时间越长，菌群失调的可能性越高</div>
+                <div class="opt-list">
+                    <div class="opt-card" onclick="pickOpt(this,'duration',1)">
+                        <div class="opt-radio"></div><span class="opt-icon">⚡</span>
+                        <div>
+                            <div class="opt-text">最近才开始</div>
+                            <div class="opt-sub">不到 2 周</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'duration',2)">
+                        <div class="opt-radio"></div><span class="opt-icon">📅</span>
+                        <div>
+                            <div class="opt-text">1-3 个月</div>
+                            <div class="opt-sub">持续但可忍受</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'duration',3)">
+                        <div class="opt-radio"></div><span class="opt-icon">📆</span>
+                        <div>
+                            <div class="opt-text">3-6 个月</div>
+                            <div class="opt-sub">反复出现</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'duration',4)">
+                        <div class="opt-radio"></div><span class="opt-icon">🔴</span>
+                        <div>
+                            <div class="opt-text">超过半年</div>
+                            <div class="opt-sub">长期困扰</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goStep(1)">← 上一步</button>
+                    <button class="btn btn-primary" id="btn2" disabled onclick="goStep(3)">下一步 →</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Lifestyle -->
+            <div class="step" id="step3">
+                <div class="q-num">Question 03 / 04</div>
+                <div class="q-title">你的日常饮食与生活习惯</div>
+                <div class="q-desc">肠道菌群与饮食结构高度相关</div>
+                <div class="opt-list">
+                    <div class="opt-card" onclick="pickOpt(this,'diet',1)">
+                        <div class="opt-radio"></div><span class="opt-icon">🥗</span>
+                        <div>
+                            <div class="opt-text">健康饮食</div>
+                            <div class="opt-sub">蔬果为主，少油少盐，规律运动</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'diet',2)">
+                        <div class="opt-radio"></div><span class="opt-icon">🍚</span>
+                        <div>
+                            <div class="opt-text">基本均衡</div>
+                            <div class="opt-sub">荤素搭配，偶尔外卖</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'diet',3)">
+                        <div class="opt-radio"></div><span class="opt-icon">🍔</span>
+                        <div>
+                            <div class="opt-text">外卖为主</div>
+                            <div class="opt-sub">高油高糖，蔬果少</div>
+                        </div>
+                    </div>
+                    <div class="opt-card" onclick="pickOpt(this,'diet',4)">
+                        <div class="opt-radio"></div><span class="opt-icon">🍺</span>
+                        <div>
+                            <div class="opt-text">不太健康</div>
+                            <div class="opt-sub">经常饮酒，熬夜，压力大</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goStep(2)">← 上一步</button>
+                    <button class="btn btn-primary" id="btn3" disabled onclick="goStep(4)">下一步 →</button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Contact -->
+            <div class="step" id="step4">
+                <div class="q-num">Question 04 / 04</div>
+                <div class="q-title">获取你的专属报告</div>
+                <div class="q-desc">AI 将为你生成个性化评估，报告同步发送至手机</div>
+                <div class="input-group">
+                    <label>手机号码</label>
+                    <div class="input-row">
+                        <div class="input-prefix">🇨🇳 +86</div>
+                        <input class="input-field" type="tel" id="phoneInput" placeholder="请输入手机号" maxlength="11"
+                            oninput="checkPhone()">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>你的称呼（选填）</label>
+                    <input class="input-field" type="text" id="nameInput" placeholder="方便我们称呼你">
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-ghost" onclick="goStep(3)">← 上一步</button>
+                    <button class="btn btn-primary" id="btn4" disabled onclick="startAnalysis()">🧬 开始 AI 分析</button>
+                </div>
+            </div>
+
+            <!-- ANALYZING -->
+            <div class="step" id="stepAnalyze">
+                <div class="analyze-view">
+                    <div class="dna-helix">
+                        <div class="dna-ring"></div>
+                        <div class="dna-ring"></div>
+                        <div class="dna-ring"></div>
+                        <div class="dna-center">🧬</div>
+                    </div>
+                    <div class="analyze-title">AI 正在分析你的肠道健康状态</div>
+                    <div class="analyze-status" id="analyzeStatus">正在初始化分析引擎...</div>
+                    <div class="analyze-steps">
+                        <div class="a-step" id="as1"><span class="a-icon">○</span> 症状特征提取</div>
+                        <div class="a-step" id="as2"><span class="a-icon">○</span> 匹配 16S rRNA 数据库（2,847 菌种）</div>
+                        <div class="a-step" id="as3"><span class="a-icon">○</span> 菌群失调风险建模</div>
+                        <div class="a-step" id="as4"><span class="a-icon">○</span> 生成个性化调理方案</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT -->
+            <div class="step" id="stepResult">
+                <div class="result-view">
+                    <div class="risk-meter">
+                        <div class="meter-label">肠道菌群失调风险评估</div>
+                        <div class="meter-bar">
+                            <div class="meter-gradient"></div>
+                            <div class="meter-pointer" id="meterPointer" style="left:0%"></div>
+                        </div>
+                        <div class="meter-labels"><span>低风险</span><span>中等</span><span>较高</span><span>高风险</span></div>
+                        <div class="risk-text" id="riskText">--</div>
+                    </div>
+
+                    <div class="result-block">
+                        <h4>🤖 AI 分析摘要</h4>
+                        <p id="summaryText"></p>
+                        <div class="tag-row" id="tagRow"></div>
+                    </div>
+
+                    <div class="result-block" style="border-left-color:var(--accent2)">
+                        <h4>💊 个性化调理建议</h4>
+                        <ul class="advice-list" id="adviceList"></ul>
+                    </div>
+
+                    <div class="cta-card">
+                        <p style="font-size:.9rem;color:var(--text)">🔬 想要精准了解你的菌群组成？</p>
+                        <div class="price-original">原价 ¥899</div>
+                        <div class="price-tag">¥599</div>
+                        <div class="price-sub">16S rRNA 基因检测 · 含 AI 个性化报告解读</div>
+                        <button class="btn btn-primary" style="margin-top:.5rem"
+                            onclick="alert('演示版本 · 实际环境中将跳转到预约采样页面')">立即预约检测 →</button>
+                    </div>
+
+                    <div class="disclaimer">
+                        <strong>⚠️ 重要声明</strong>
+                        本评估基于 AI 算法模型，仅供健康参考，<strong
+                            style="color:var(--danger)">不构成任何医疗诊断或治疗建议</strong>。如有健康问题，请咨询专业医疗机构。AI 生成内容由合作方医学团队审核把关。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            AI 肠道健康智能筛查系统 · Demo v2.0<br>
+            技术支持：子默 AI 运营团队 · 数据仅用于演示
+        </div>
+    </div>
+
+    <script>
+        const state = { symptoms: [], weights: {}, duration: 0, diet: 0 };
+        const nameMap = { bloating: '腹胀腹痛', constipation: '便秘', badbreath: '口臭', insomnia: '失眠', fatigue: '持续疲劳', skin: '皮肤问题', diarrhea: '腹泻', mood: '焦虑/情绪波动' };
+
+        function toggleSym(el) {
+            el.classList.toggle('selected');
+            const v = el.dataset.val, w = +el.dataset.weight;
+            if (el.classList.contains('selected')) { state.symptoms.push(v); state.weights[v] = w; }
+            else { state.symptoms = state.symptoms.filter(s => s !== v); delete state.weights[v]; }
+            document.getElementById('btn1').disabled = state.symptoms.length === 0;
+        }
+
+        function pickOpt(el, key, val) {
+            el.parentElement.querySelectorAll('.opt-card').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            state[key] = val;
+            if (key === 'duration') document.getElementById('btn2').disabled = false;
+            if (key === 'diet') document.getElementById('btn3').disabled = false;
+        }
+
+        function checkPhone() {
+            const v = document.getElementById('phoneInput').value.replace(/\D/g, '');
+            document.getElementById('btn4').disabled = v.length < 11;
+        }
+
+        function goStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            // progress
+            for (let i = 1; i <= 4; i++) {
+                const num = document.getElementById('pn' + i);
+                num.className = 'progress-num';
+                if (i < n) num.classList.add('done');
+                if (i === n) num.classList.add('active');
+            }
+            for (let i = 1; i <= 3; i++) {
+                const fill = document.getElementById('pl' + i);
+                fill.className = 'fill';
+                if (i < n) fill.classList.add('done');
+            }
+        }
+
+        function startAnalysis() {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('stepAnalyze').classList.add('active');
+            document.querySelectorAll('.progress-num').forEach(n => { n.className = 'progress-num done'; });
+            document.querySelectorAll('.fill').forEach(f => f.classList.add('done'));
+
+            const steps = ['as1', 'as2', 'as3', 'as4'];
+            const msgs = ['正在提取症状特征向量...', '正在匹配菌群数据库...', '正在计算风险概率模型...', '正在生成个性化方案...'];
+            let i = 0;
+            const iv = setInterval(() => {
+                if (i < steps.length) {
+                    document.getElementById(steps[i]).classList.add('active');
+                    document.getElementById(steps[i]).querySelector('.a-icon').textContent = '◉';
+                    document.getElementById('analyzeStatus').textContent = msgs[i];
+                    if (i > 0) { document.getElementById(steps[i - 1]).classList.remove('active'); document.getElementById(steps[i - 1]).classList.add('done'); document.getElementById(steps[i - 1]).querySelector('.a-icon').textContent = '✓'; }
+                    i++;
+                } else {
+                    clearInterval(iv);
+                    document.getElementById(steps[3]).classList.add('done');
+                    document.getElementById(steps[3]).querySelector('.a-icon').textContent = '✓';
+                    setTimeout(showResult, 500);
+                }
+            }, 1000);
+        }
+
+        function showResult() {
+            // Calculate score
+            let score = Object.values(state.weights).reduce((a, b) => a + b, 0);
+            score += state.duration * 2;
+            score += state.diet * 1.5;
+            const maxScore = 30; // theoretical max
+            const pct = Math.min(score / maxScore * 100, 95);
+
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('stepResult').classList.add('active');
+
+            // Animate meter
+            setTimeout(() => { document.getElementById('meterPointer').style.left = pct + '%'; }, 200);
+
+            const riskEl = document.getElementById('riskText');
+            const symNames = state.symptoms.map(s => nameMap[s]).join('、');
+            const summary = document.getElementById('summaryText');
+            const tags = document.getElementById('tagRow');
+            const advice = document.getElementById('adviceList');
+
+            if (pct >= 65) {
+                riskEl.textContent = '⚠️ 高风险 · 建议立即检测';
+                riskEl.className = 'risk-text high';
+                document.getElementById('meterPointer').style.borderColor = 'var(--danger)';
+                summary.innerHTML = `根据你的症状组合（<strong>${symNames}</strong>），结合持续时间和生活习惯，AI 模型综合评分 <strong style="color:var(--danger)">${score.toFixed(1)} 分</strong>（满分 30）。<br><br>该评分区间在 16S rRNA 临床数据中，与 <strong>肠道菌群多样性显著降低</strong> 高度关联。提示可能存在 <strong style="color:var(--danger)">厚壁菌门/拟杆菌门比例严重失调</strong>，有益菌种（双歧杆菌属、乳杆菌属）可能大幅减少。`;
+                tags.innerHTML = '<span class="tag tag-danger">菌群多样性↓↓</span><span class="tag tag-danger">有益菌显著减少</span><span class="tag tag-warn">肠屏障功能风险</span>';
+                advice.innerHTML = '<li><strong>强烈建议</strong>进行 16S rRNA 基因检测，精准定位菌群组成</li><li>优先补充含 <strong>双歧杆菌 BB-12</strong> 和 <strong>嗜酸乳杆菌 NCFM</strong> 的复合益生菌</li><li>每日膳食纤维摄入目标 25-30g（全谷物、蔬菜、豆类）</li><li>建立规律作息，每天固定就寝时间</li><li>减少精加工食品和含糖饮料的摄入</li>';
+            } else if (pct >= 40) {
+                riskEl.textContent = '⚡ 中等风险 · 建议关注';
+                riskEl.className = 'risk-text mid';
+                document.getElementById('meterPointer').style.borderColor = 'var(--warn)';
+                summary.innerHTML = `根据你的症状（<strong>${symNames}</strong>），AI 模型综合评分 <strong style="color:var(--warn)">${score.toFixed(1)} 分</strong>（满分 30）。<br><br>该评分提示你的肠道菌群可能处于 <strong>亚健康状态</strong>，部分有益菌种可能减少。建议通过饮食调理改善，如持续无好转，建议进行专业检测。`;
+                tags.innerHTML = '<span class="tag tag-warn">菌群平衡波动</span><span class="tag tag-info">可通过调理改善</span>';
+                advice.innerHTML = '<li>增加发酵食品摄入（酸奶、纳豆、泡菜）</li><li>每日补充益生菌制剂，连续 4 周观察变化</li><li>减少外卖频率，每周至少 4 天自己做饭</li><li>如 1 个月内无改善，建议进行 16S 检测确认</li>';
+            } else {
+                riskEl.textContent = '✅ 低风险 · 状态良好';
+                riskEl.className = 'risk-text low';
+                document.getElementById('meterPointer').style.borderColor = 'var(--success)';
+                summary.innerHTML = `根据你的症状（<strong>${symNames}</strong>），AI 模型综合评分 <strong style="color:var(--success)">${score.toFixed(1)} 分</strong>（满分 30）。<br><br>你的肠道菌群状态 <strong style="color:var(--success)">总体良好</strong>，当前症状可能与短期生活习惯变化有关，通常可通过自我调理恢复。`;
+                tags.innerHTML = '<span class="tag tag-info">菌群状态良好</span><span class="tag tag-info">建议持续维护</span>';
+                advice.innerHTML = '<li>保持当前健康饮食习惯</li><li>适量补充膳食纤维和发酵食品</li><li>保持规律运动和充足睡眠</li><li>建议每年进行一次肠道菌群基线检测</li>';
+            }
+        }
+    </script>
+</body>
+
+</html>

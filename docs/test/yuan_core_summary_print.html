@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>归元 (Yuan) · 核心方案总览</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        :root {
+            --ink: #1a1a1a;
+            --moon: #f5f5f0;
+            --gold: #c5a14e;
+            --gray: #666;
+            --light-gray: #e8e6e0;
+            --bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', '微软雅黑', 'PingFang SC', sans-serif;
+            font-size: 10pt;
+            line-height: 1.75;
+            color: var(--ink);
+            background: var(--bg);
+            margin: 0 auto;
+            max-width: 210mm;
+            padding: 20mm 18mm;
+        }
+
+        /* ── Title ── */
+        .doc-title {
+            text-align: center;
+            padding-bottom: 14px;
+            border-bottom: 3px solid var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .doc-title h1 {
+            font-size: 22pt;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .doc-title .subtitle {
+            font-size: 9pt;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ── Section Headers ── */
+        h2 {
+            font-size: 13pt;
+            font-weight: 700;
+            color: var(--ink);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 4px;
+            margin-top: 22px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: #333;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            page-break-after: avoid;
+        }
+
+        /* ── Paragraphs & Lists ── */
+        p {
+            margin: 6px 0;
+        }
+
+        ul,
+        ol {
+            padding-left: 20px;
+            margin: 6px 0;
+        }
+
+        li {
+            margin: 3px 0;
+        }
+
+        /* ── Tables ── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0 12px 0;
+            font-size: 9.5pt;
+            page-break-inside: avoid;
+        }
+
+        th {
+            background: var(--ink);
+            color: var(--moon);
+            padding: 6px 10px;
+            text-align: left;
+            font-weight: 500;
+            font-size: 9pt;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            vertical-align: top;
+        }
+
+        tr:nth-child(even) {
+            background: #faf9f6;
+        }
+
+        /* ── Blockquotes ── */
+        blockquote {
+            background: #f9f7f2;
+            border-left: 4px solid var(--gold);
+            padding: 8px 14px;
+            margin: 10px 0;
+            font-size: 9.5pt;
+        }
+
+        blockquote strong {
+            color: var(--ink);
+        }
+
+        /* ── Code blocks (diagrams) ── */
+        pre {
+            background: #f7f6f3;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-family: 'Consolas', 'Source Code Pro', monospace;
+            font-size: 8.5pt;
+            line-height: 1.55;
+            overflow-x: auto;
+            margin: 8px 0;
+            page-break-inside: avoid;
+            white-space: pre;
+        }
+
+        /* ── Horizontal Rule ── */
+        hr {
+            border: none;
+            border-top: 1px solid var(--light-gray);
+            margin: 16px 0;
+        }
+
+        /* ── Emphasis ── */
+        strong {
+            font-weight: 700;
+        }
+
+        em {
+            color: var(--gold);
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            font-size: 8.5pt;
+            color: #999;
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        /* ── Page Breaks ── */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ── Target heading ── */
+        .target-note {
+            background: #FFF8E1;
+            border-left: 4px solid var(--gold);
+            padding: 6px 12px;
+            margin: 8px 0;
+            font-size: 9pt;
+        }
+
+        /* ── Print tweaks ── */
+        @media print {
+            body {
+                padding: 0;
+                max-width: none;
+            }
+
+            h2 {
+                page-break-after: avoid;
+            }
+
+            table,
+            pre,
+            blockquote {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══════ TITLE ═══════ -->
+    <div class="doc-title">
+        <h1>归元 (Yuan) · 核心方案总览</h1>
+        <div class="subtitle">
+            📅 2026-03-10 整理 ｜ 将所有讨论和调整汇总为一份完整文档<br>
+            🎯 供品牌方通读审阅，确认后即可启动执行
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ═══════ 〇 方案演进 ═══════ -->
+    <h2>〇、方案演进脉络</h2>
+
+    <p>我们先后产出了 <strong>3 个版本</strong> 的方案，最终融合为推荐版：</p>
+
+    <table>
+        <tr>
+            <th>版本</th>
+            <th>核心思路</th>
+            <th>问题</th>
+        </tr>
+        <tr>
+            <td>V1.0 稳健版</td>
+            <td>聚焦国内 3 平台（视频号/公号/小红书），M3 目标 1 万粉</td>
+            <td>缺少抖音流量引擎，增长天花板低</td>
+        </tr>
+        <tr>
+            <td>V2.0 全量版</td>
+            <td>Day 1 上线 6 平台（含海外），M3 目标 5 万粉</td>
+            <td>人力不足，单条内容质量难以把控</td>
+        </tr>
+        <tr>
+            <td><strong>V3.0 推荐版</strong></td>
+            <td><strong>以抖音+视频号为流量引擎，M2 启动国际线，M3 目标 3 万粉</strong></td>
+            <td><strong>平衡流量爆发力与执行可持续性</strong></td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 一 IP定位 ═══════ -->
+    <h2>一、归元是谁——IP 定位锚点</h2>
+
+    <table>
+        <tr>
+            <th>维度</th>
+            <th>归元的定位</th>
+            <th>❌ 归元不做</th>
+        </tr>
+        <tr>
+            <td>核心概念</td>
+            <td><strong>东方哲学认知操作系统</strong></td>
+            <td>国学讲座、心灵鸡汤、易经占卜</td>
+        </tr>
+        <tr>
+            <td>竞品对标</td>
+            <td><strong>东方版 Daily Stoic</strong></td>
+            <td>曾仕强式说教</td>
+        </tr>
+        <tr>
+            <td>内容原则</td>
+            <td><strong>结构重于情绪、不玄学、不鸡汤</strong></td>
+            <td>玄学化、神秘化</td>
+        </tr>
+        <tr>
+            <td>美学调性</td>
+            <td><strong>极简、克制、高级感</strong></td>
+            <td>花哨、低质、随意</td>
+        </tr>
+        <tr>
+            <td>全球定位</td>
+            <td><strong>"重构而非翻译"</strong></td>
+            <td>简单中译英</td>
+        </tr>
+    </table>
+
+    <blockquote>
+        <strong>最大蓝海发现：</strong> Stoicism 在 YouTube/TikTok 已验证"哲学→认知工具→变现"路径（Daily Stoic
+        200万+订阅）。<strong>东方哲学在英文世界的"认知工具"赛道几乎空白</strong>——这是归元的全球级机会。
+    </blockquote>
+
+    <hr>
+
+    <!-- ═══════ 二 合作模式 ═══════ -->
+    <h2>二、合作模式——核心商业结构</h2>
+
+    <pre>M1 ──── M2 ──── M3 ──── M4 ──── M5 ──── M6 ──── M7+ ────→
+│←── 代运营期（月费4万） ──→│←──── 分润期（15%收入）  ────→│
+│   品牌方付：月费+硬成本    │  品牌方付：硬成本+15%分润   │
+│   Zoey：全案操盘           │  Zoey：持续运营+享增长红利   │</pre>
+
+    <table>
+        <tr>
+            <th>核心参数</th>
+            <th>数值</th>
+        </tr>
+        <tr>
+            <td><strong>代运营月费</strong></td>
+            <td><strong>40,000 元/月</strong>（M1-M3，共 12 万）</td>
+        </tr>
+        <tr>
+            <td><strong>分润比例</strong></td>
+            <td><strong>15%</strong>（M4 起，基于品牌全渠道收入）</td>
+        </tr>
+        <tr>
+            <td><strong>品牌方总预算</strong></td>
+            <td><strong>15-20 万</strong>（M1-M3 约 13.6 万，留有缓冲）</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 三 平台矩阵 ═══════ -->
+    <h2>三、平台矩阵——分层启动策略</h2>
+
+    <table>
+        <tr>
+            <th>层级</th>
+            <th>平台</th>
+            <th>启动时间</th>
+            <th>角色</th>
+        </tr>
+        <tr>
+            <td>🔥 <strong>核心层</strong></td>
+            <td><strong>抖音 + 视频号</strong></td>
+            <td>M1 Day 1</td>
+            <td>流量引擎 + 私域沉淀</td>
+        </tr>
+        <tr>
+            <td>📚 <strong>内容层</strong></td>
+            <td><strong>公众号</strong></td>
+            <td>M1 Day 1</td>
+            <td>深度内容中枢 + SEO</td>
+        </tr>
+        <tr>
+            <td>📸 <strong>辅助层</strong></td>
+            <td><strong>小红书</strong></td>
+            <td>M1 W2 起</td>
+            <td>结构图文 + 搜索 + 元气子策略</td>
+        </tr>
+        <tr>
+            <td>🌍 <strong>国际层</strong></td>
+            <td><strong>YouTube + Substack</strong></td>
+            <td>M2 起</td>
+            <td>全球蓝海抢位</td>
+        </tr>
+        <tr>
+            <td>⚡ <strong>国际短视频</strong></td>
+            <td><strong>TikTok</strong></td>
+            <td>M3 起</td>
+            <td>从 YouTube 素材剪辑</td>
+        </tr>
+    </table>
+
+    <h3>为什么分层而非一次铺开？</h3>
+    <ul>
+        <li><strong>策略聚焦</strong>：先在国内跑通内容模型和变现逻辑，再国际化</li>
+        <li><strong>成本控制</strong>：国际线每月增加 2,000-3,000 元，放到 M2 更合理</li>
+        <li><strong>数据验证</strong>：M1 在国内验证爆款方向，M2 用验证过的模型做英文重构</li>
+    </ul>
+
+    <h3>"一鱼多吃"内容分发</h3>
+
+    <pre>品牌方拍1条口播视频（3-5分钟深度版）
+    │
+    ├── 抖音：剪成 3条 15-60s 反常识金句
+    ├── 视频号：1条 60-90s 精华版（含社交裂变CTA）
+    ├── 公众号：1篇 深度长文（六步冲突法）
+    ├── 小红书：2张 结构卡图文
+    │
+    └── [M2起]
+        ├── YouTube：1条 3-5min 英文重构版
+        ├── TikTok：2条 15-30s 英文金句版 [M3起]
+        └── Substack：整合进周刊 Newsletter</pre>
+
+    <hr>
+
+    <!-- ═══════ 四 小红书元气子策略 ═══════ -->
+    <h2>四、小红书「元气」子策略</h2>
+
+    <p>小红书不硬推"认知操作系统"，而是用<strong>「元气」</strong>作为切入点：</p>
+
+    <pre>归元 (Yuan) 认知操作系统
+    │
+    ├── 🧠 Mind · 认知线 ← 抖音/视频号/公号（主推）
+    │
+    ├── 🌿 Body · 元气线 ← 小红书（主推）⭐
+    │     五行 × 情绪 × 身体节律 × 能量管理
+    │
+    └── 🌒 Growth · 成长线 ← 后期</pre>
+
+    <table>
+        <tr>
+            <th>系列</th>
+            <th>内容方向</th>
+            <th>形式</th>
+            <th>频率</th>
+        </tr>
+        <tr>
+            <td><strong>#今日元气</strong></td>
+            <td>五行时辰+当日能量提示</td>
+            <td>日签图文卡</td>
+            <td>每日1张</td>
+        </tr>
+        <tr>
+            <td><strong>#元气解码</strong></td>
+            <td>五行结构解读身体信号</td>
+            <td>图文+短视频</td>
+            <td>每周2条</td>
+        </tr>
+        <tr>
+            <td><strong>#元气测评</strong></td>
+            <td>五行人格测评 H5</td>
+            <td>互动 H5</td>
+            <td>持续引流</td>
+        </tr>
+        <tr>
+            <td><strong>#元气实验室</strong></td>
+            <td>真人出镜调养实践</td>
+            <td>短视频</td>
+            <td>每周1条</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 五 拍摄外包 ═══════ -->
+    <h2>五、拍摄外包方案</h2>
+
+    <blockquote>核心思路：<strong>品牌方每周集中拍1次（2小时），一次拍完一周素材</strong></blockquote>
+
+    <pre>子默（周一）→ 输出 3 条脚本 + 1 篇长文 + 2 张图文
+品牌方（周三）→ 集中拍摄 2h，产出 3-5 条素材
+外包剪辑（周三-周五）→ 剪辑 3 条短视频
+子默（周五）→ 审核 → 安排发布</pre>
+
+    <table>
+        <tr>
+            <th>推荐模式</th>
+            <th>月费</th>
+            <th>说明</th>
+        </tr>
+        <tr>
+            <td><strong>M1-M2：品牌方自拍 + 外包剪辑</strong></td>
+            <td><strong>~1,000-1,800元/月</strong></td>
+            <td>性价比最优</td>
+        </tr>
+        <tr>
+            <td>M3起可升级：摄影师上门 + 剪辑</td>
+            <td>~2,400-3,600元/月</td>
+            <td>画面质感提升</td>
+        </tr>
+        <tr>
+            <td>品牌宣言片（仅 M1 一次性）</td>
+            <td>5,000 元</td>
+            <td>专业团队拍摄</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 六 变现 ═══════ -->
+    <h2>六、变现五层阶梯</h2>
+
+    <pre>                    归元变现阶梯
+
+ (5) 企业服务 · 5万-50万/年              M12+
+     企业认知工作坊 / 团队决策教练
+ ──────────────────────────────────────
+ (4) 1v1 深度咨询 · 299-999元/次        M4+
+     个人认知诊断 + 定制方案
+ ──────────────────────────────────────
+ (3) 付费社群 · 29.9/99/299元/年        M3
+     归元认知学院 · AI教练 · 周深度分享
+ ──────────────────────────────────────
+ (2) 数字产品 · 9.9-99元                M2-M3
+     认知卡牌(数字版) · 课程 · 付费专栏
+ ──────────────────────────────────────
+ (1) 免费内容 · 0元                     M1 Day 1
+     短视频 + 公号长文 + AI教练(基础版)</pre>
+
+    <hr>
+
+    <!-- ═══════ 七 M1-M3执行 ═══════ -->
+    <h2>七、M1-M3 执行总表</h2>
+
+    <h3>M1：品牌引爆月（W1-W4）</h3>
+    <blockquote>🎯 粉丝 <strong>5,000+</strong> / 种子群 <strong>50人</strong> / 4平台上线</blockquote>
+
+    <table>
+        <tr>
+            <th>周</th>
+            <th>核心任务</th>
+            <th>关键交付</th>
+        </tr>
+        <tr>
+            <td>W1</td>
+            <td>基建冲刺</td>
+            <td>商标/Logo/4平台账号/Prompt库/品牌宣言长文</td>
+        </tr>
+        <tr>
+            <td>W2</td>
+            <td>品牌首发</td>
+            <td>品牌视频全平台发布 + 日更启动</td>
+        </tr>
+        <tr>
+            <td>W3</td>
+            <td>日更+追数据</td>
+            <td>短视频×8 + 长文×1 + 图文×4</td>
+        </tr>
+        <tr>
+            <td>W4</td>
+            <td>冲刺+复盘</td>
+            <td>短视频×8 + 长文×1 + 图文×4 + M1 验收</td>
+        </tr>
+    </table>
+
+    <h3>M2：内容爆发月（W5-W8）</h3>
+    <blockquote>🎯 粉丝 <strong>15,000+</strong> / 国际 <strong>500+</strong> / AI教练 MVP 上线</blockquote>
+
+    <table>
+        <tr>
+            <th>周</th>
+            <th>核心任务</th>
+            <th>里程碑</th>
+        </tr>
+        <tr>
+            <td>W5</td>
+            <td>切换阴阳主题 + YouTube 建站</td>
+            <td><strong>国际线启动</strong></td>
+        </tr>
+        <tr>
+            <td>W6</td>
+            <td>AI 认知教练 MVP 上线</td>
+            <td><strong>产品上线</strong></td>
+        </tr>
+        <tr>
+            <td>W7</td>
+            <td>爆款追踪+复制</td>
+            <td>爆款公式锁定</td>
+        </tr>
+        <tr>
+            <td>W8</td>
+            <td>变现测试启动</td>
+            <td><strong>双线变现测试</strong></td>
+        </tr>
+    </table>
+
+    <h3>M3：收割验证月（W9-W12）</h3>
+    <blockquote>🎯 粉丝 <strong>30,000+</strong> / 国际 <strong>2,000+</strong> / 付费 30人+ / 月收入测试</blockquote>
+
+    <table>
+        <tr>
+            <th>周</th>
+            <th>核心任务</th>
+            <th>里程碑</th>
+        </tr>
+        <tr>
+            <td>W9</td>
+            <td>无为/内耗主题引爆</td>
+            <td>TikTok 启动</td>
+        </tr>
+        <tr>
+            <td>W10</td>
+            <td>付费社群上线（9.9-29.9）</td>
+            <td><strong>变现正式启动</strong></td>
+        </tr>
+        <tr>
+            <td>W11</td>
+            <td>推广冲刺 + SOP 固化</td>
+            <td>SOP 交接完成</td>
+        </tr>
+        <tr>
+            <td>W12</td>
+            <td>M1-M3 总复盘</td>
+            <td><strong>Gate 1 决策门</strong></td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 八 Gate 1 ═══════ -->
+    <h2>八、M3 决策门（Gate 1）</h2>
+
+    <table>
+        <tr>
+            <th>指标</th>
+            <th>✅ 通过线</th>
+            <th>🚨 止损线</th>
+            <th>未达标动作</th>
+        </tr>
+        <tr>
+            <td>国内全平台粉丝</td>
+            <td>≥ 3 万</td>
+            <td>&lt; 8,000</td>
+            <td>砍弱势平台，聚焦 2 个</td>
+        </tr>
+        <tr>
+            <td>抖音单条最高播放</td>
+            <td>≥ 5 万</td>
+            <td>&lt; 1 万</td>
+            <td>调整内容策略</td>
+        </tr>
+        <tr>
+            <td>YouTube 订阅</td>
+            <td>≥ 1,000</td>
+            <td>&lt; 200</td>
+            <td>暂缓国际线</td>
+        </tr>
+        <tr>
+            <td>付费用户</td>
+            <td>≥ 30 人</td>
+            <td>&lt; 10 人</td>
+            <td>延长免费期</td>
+        </tr>
+        <tr>
+            <td>内容 SOP</td>
+            <td>可独立运转</td>
+            <td>仍依赖代运营</td>
+            <td>补充培训 1 月</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- ═══════ 九 阐述 ═══════ -->
+    <h2>九、阐述</h2>
+
+    <blockquote>
+        "我的合作方式很简单：<strong>前3个月我用固定费用帮你从0到1搭建整个IP体系</strong>——包括品牌、内容、社群、AI工具，全部交钥匙。3个月后你能看到明确的数据成果。<br><br>
+        <strong>从第4个月起，我不收任何固定费用</strong>，只从品牌收入中拿15%的分成。品牌赚不到钱，我一分不拿。<br><br>
+        这意味着：你的风险锁定在前3个月的投入上。如果3个月后数据达标，说明模式跑通了，后面我们一起分享增长红利。"
+    </blockquote>
+
+    <div class="footer">
+        归元 · 核心方案总览 · 2026年3月10日 · 子默 制
+    </div>
+
+</body>
+
+</html>
