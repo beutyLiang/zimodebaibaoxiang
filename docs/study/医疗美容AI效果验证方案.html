@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗美容 · AI 效果验证平台方案</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --card: #13131a;
+            --border: #1e1e2a;
+            --text: #e4e4e7;
+            --text-dim: #71717a;
+            --accent-rose: #f43f5e;
+            --accent-pink: #ec4899;
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --accent-green: #22c55e;
+            --gradient-rose: linear-gradient(135deg, #f43f5e, #ec4899);
+            --gradient-purple: linear-gradient(135deg, #a855f7, #ec4899);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(244, 63, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-30px, 20px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #f43f5e, #ec4899, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+        }
+
+        .hero .pain-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 32px;
+            text-align: left;
+            max-width: 700px;
+        }
+
+        .pain-box .pain-quote {
+            background: rgba(244, 63, 94, 0.06);
+            border-left: 3px solid var(--accent-rose);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 16px 0;
+            font-size: 1rem;
+            color: var(--accent-rose);
+            font-style: italic;
+        }
+
+        .pain-box .highlight {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+
+        .pain-box ul {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .pain-box ul li {
+            padding: 4px 0;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        .pain-box ul li::before {
+            content: '• ';
+            color: var(--accent-rose);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .tag-rose {
+            background: rgba(244, 63, 94, 0.15);
+            color: var(--accent-rose);
+        }
+
+        .tag-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .tag-blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .tag-gold {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-gold);
+        }
+
+        .tag-green {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-rose);
+            border-radius: 3px;
+            margin: 60px auto;
+        }
+
+        /* ===== CORE INSIGHT ===== */
+        .insight-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .insight-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            color: var(--accent-rose);
+        }
+
+        .insight-card p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .insight-card .key-point {
+            background: rgba(244, 63, 94, 0.06);
+            border-left: 3px solid var(--accent-rose);
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            margin: 16px 0;
+            font-size: 0.9rem;
+        }
+
+        .insight-card .key-point.purple {
+            background: rgba(168, 85, 247, 0.06);
+            border-left-color: var(--accent-purple);
+        }
+
+        .insight-card .key-point.gold {
+            background: rgba(245, 158, 11, 0.06);
+            border-left-color: var(--accent-gold);
+        }
+
+        .insight-card .key-point.green {
+            background: rgba(34, 197, 94, 0.06);
+            border-left-color: var(--accent-green);
+        }
+
+        /* ===== OPTIMIZATION CARDS ===== */
+        .opt-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        @media (max-width: 700px) {
+            .opt-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .opt-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .opt-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .opt-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .opt-card.rose::before {
+            background: var(--gradient-rose);
+        }
+
+        .opt-card.purple::before {
+            background: var(--gradient-purple);
+        }
+
+        .opt-card.blue::before {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+        }
+
+        .opt-card.green::before {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .opt-card .opt-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .opt-card.rose .opt-num {
+            background: rgba(244, 63, 94, 0.15);
+            color: var(--accent-rose);
+        }
+
+        .opt-card.purple .opt-num {
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .opt-card.blue .opt-num {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .opt-card.green .opt-num {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+        }
+
+        .opt-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .opt-card .opt-sub {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .opt-card p,
+        .opt-card li {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 32px 0;
+        }
+
+        .timeline-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timeline-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            align-items: center;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .timeline-row {
+                grid-template-columns: 80px 1fr;
+                gap: 8px;
+            }
+
+            .timeline-row .feeling {
+                display: none;
+            }
+        }
+
+        .timeline-row:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-row .time {
+            font-weight: 700;
+            color: var(--accent-rose);
+        }
+
+        .timeline-row .action {
+            color: var(--text);
+        }
+
+        .timeline-row .feeling {
+            color: var(--accent-gold);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* ===== BEAUTY TIMELINE DEMO ===== */
+        .beauty-timeline {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 24px 0;
+        }
+
+        .beauty-timeline h4 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+        }
+
+        .bt-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .bt-row:last-child {
+            border-bottom: none;
+        }
+
+        .bt-date {
+            width: 80px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+
+        .bt-bar-wrap {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .bt-bar {
+            height: 100%;
+            border-radius: 100px;
+            transition: width 1s ease;
+        }
+
+        .bt-bar.age38 {
+            width: 100%;
+            background: rgba(244, 63, 94, 0.4);
+        }
+
+        .bt-bar.age35 {
+            width: 72%;
+            background: var(--gradient-rose);
+        }
+
+        .bt-bar.age33 {
+            width: 50%;
+            background: var(--gradient-purple);
+        }
+
+        .bt-label {
+            width: 120px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .bt-label.dim {
+            color: var(--text-dim);
+        }
+
+        .bt-label.rose {
+            color: var(--accent-rose);
+        }
+
+        .bt-label.purple {
+            color: var(--accent-purple);
+        }
+
+        /* ===== COMPARE TABLE ===== */
+        .compare {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 32px 0;
+        }
+
+        .compare-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare-header div {
+            padding: 16px 24px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .compare-header .before {
+            color: var(--text-dim);
+        }
+
+        .compare-header .after {
+            color: var(--accent-rose);
+        }
+
+        .compare-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare-row:last-child {
+            border-bottom: none;
+        }
+
+        .compare-row div {
+            padding: 14px 24px;
+            font-size: 0.85rem;
+        }
+
+        .compare-row .old {
+            color: var(--text-dim);
+        }
+
+        .compare-row .new {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* ===== ACQUISITION FORMULA ===== */
+        .formula {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), rgba(168, 85, 247, 0.08));
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .formula .formula-text {
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+
+        .formula .formula-text .num {
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        .formula .formula-text .rose {
+            color: var(--accent-rose);
+        }
+
+        .formula .formula-text .purple {
+            color: var(--accent-purple);
+        }
+
+        .formula .formula-text .gold {
+            color: var(--accent-gold);
+        }
+
+        .formula .formula-text .green {
+            color: var(--accent-green);
+        }
+
+        /* ===== SOCIAL TABLE ===== */
+        .social-table {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .st-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .st-header div {
+            padding: 14px 24px;
+        }
+
+        .st-header .func {
+            color: var(--accent-purple);
+        }
+
+        .st-header .effect {
+            color: var(--accent-green);
+        }
+
+        .st-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .st-row:last-child {
+            border-bottom: none;
+        }
+
+        .st-row div {
+            padding: 14px 24px;
+        }
+
+        .st-row .func {
+            color: var(--text-dim);
+        }
+
+        .st-row .effect {
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        /* ===== FINAL ===== */
+        .final {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .final .big-quote {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: 700;
+            line-height: 2;
+        }
+
+        .final .big-quote .rose {
+            color: var(--accent-rose);
+        }
+
+        .final .big-quote .purple {
+            color: var(--accent-purple);
+        }
+
+        .final .big-quote .gold {
+            color: var(--accent-gold);
+        }
+
+        .final .bottom-line {
+            color: var(--text-dim);
+            font-size: 1rem;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>医疗美容<br>AI 效果验证平台</h1>
+            <p class="subtitle">从「消费者视角」出发的反查方案</p>
+
+            <div class="pain-box">
+                <p style="font-weight:700; margin-bottom:12px;">消费者最大的隐藏痛点</p>
+                <p style="color:var(--text-dim);">不是"找不到好机构"。是——</p>
+
+                <div class="pain-quote">
+                    "我花了 5000 块做了光子，我照镜子……我也不知道有没有效果。"
+                </div>
+
+                <p style="font-size:0.9rem;">这才是真正的痛。她不敢确定自己花的钱值不值。每次照镜子都在"好像变好了？又好像没有？"<span
+                        class="highlight">这种不确定感</span>让她：</p>
+
+                <ul>
+                    <li>下次不想再做了（机构丢了复购）</li>
+                    <li>或者怀疑自己被骗了（产生投诉）</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CORE INSIGHT ===== -->
+    <section class="section">
+        <div class="section-header">
+            <span class="tag tag-rose">核心洞察</span>
+            <h2>AI 解决的不是"信任机构"的问题</h2>
+            <p>是"让她确认自己花的钱有用"的问题</p>
+        </div>
+
+        <div class="insight-card">
+            <h3>消费者视角的核心动机</h3>
+            <div class="key-point">
+                消费者要的不是数据，是<strong>"看到自己在变好"</strong>
+            </div>
+            <p>干巴巴说"改善率 23%"她不会感动。</p>
+            <p style="color:var(--text); font-weight:700; margin-top:12px;">她要的是这样：</p>
+        </div>
+
+        <div class="beauty-timeline">
+            <h4>📱 打开小程序 → 看到自己的「美丽时间线」</h4>
+            <div class="bt-row">
+                <div class="bt-date">3月1日</div>
+                <div class="bt-bar-wrap">
+                    <div class="bt-bar age38"></div>
+                </div>
+                <div class="bt-label dim">术前 · 皮肤年龄 38 岁</div>
+            </div>
+            <div class="bt-row">
+                <div class="bt-date">4月1日</div>
+                <div class="bt-bar-wrap">
+                    <div class="bt-bar age35"></div>
+                </div>
+                <div class="bt-label rose">术后30天 · 皮肤年龄 35 岁</div>
+            </div>
+            <div class="bt-row">
+                <div class="bt-date">6月1日</div>
+                <div class="bt-bar-wrap">
+                    <div class="bt-bar age33"></div>
+                </div>
+                <div class="bt-label purple">术后90天 · 皮肤年龄 33 岁</div>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="key-point gold">
+                这不是冰冷的报告，是她的<strong>个人变美日记</strong>。她会截图发朋友圈。这就是<strong>零成本传播</strong>。
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== 4 OPTIMIZATIONS ===== -->
+    <section class="section">
+        <div class="section-header">
+            <span class="tag tag-purple">四大优化</span>
+            <h2>让消费者"非用不可"</h2>
+        </div>
+
+        <div class="opt-grid">
+            <!-- OPT 1 -->
+            <div class="opt-card rose">
+                <div class="opt-num">1</div>
+                <h3>看到自己在变好</h3>
+                <div class="opt-sub">消费者要的不是数据，是情感确认</div>
+                <p style="color:var(--text); margin-bottom:12px;">干巴巴说"改善率23%"她不会感动。</p>
+                <p>但打开小程序看到自己的「美丽时间线」，皮肤年龄从 38→35→33，<strong style="color:var(--accent-rose)">一条肉眼可见的变美曲线</strong>——</p>
+                <p style="margin-top:8px; color:var(--accent-gold);">她会截图发朋友圈 → 零成本传播</p>
+            </div>
+
+            <!-- OPT 2 -->
+            <div class="opt-card purple">
+                <div class="opt-num">2</div>
+                <h3>"不推荐做" = 最强获客</h3>
+                <div class="opt-sub">让"不推荐做"变成最强的获客方式</div>
+                <p style="color:var(--text); margin-bottom:12px;">如果 AI 检测后告诉她：</p>
+                <div
+                    style="background:rgba(168,85,247,0.06); border-left:3px solid var(--accent-purple); padding:12px 16px; border-radius:0 12px 12px 0; font-size:0.85rem; margin:12px 0;">
+                    "你的皮肤年龄比实际年龄小 3 岁，目前状态很好，不建议做任何项目。3 个月后再来复查。"
+                </div>
+                <p><strong style="color:var(--accent-gold);">她会怎么样？她会疯狂推荐给闺蜜。</strong></p>
+                <p style="font-size:0.85rem; color:var(--text-dim); margin-top:8px;">因为她从来没遇到过一个机构对她说"你不用花钱"。这比任何广告都管用。
+                </p>
+            </div>
+
+            <!-- OPT 3 -->
+            <div class="opt-card blue">
+                <div class="opt-num">3</div>
+                <h3>不做完就走，持续陪伴</h3>
+                <div class="opt-sub">从「做完项目→关系结束」变成「全程陪伴」</div>
+
+                <div style="margin-top:12px;">
+                    <div
+                        style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--accent-rose);">术后 3 天</span>
+                        <span style="color:var(--text-dim);">AI 推送："恢复期正常，别担心"</span>
+                    </div>
+                    <div
+                        style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--accent-rose);">术后 7 天</span>
+                        <span style="color:var(--text-dim);">提醒来做第一次 AI 复查</span>
+                    </div>
+                    <div
+                        style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--accent-rose);">术后 30 天</span>
+                        <span style="color:var(--text-dim);">推送个人报告 + 护肤建议</span>
+                    </div>
+                    <div
+                        style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--accent-rose);">日常</span>
+                        <span style="color:var(--text-dim);">根据肤质推送护肤/饮食提醒</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:0.85rem;">
+                        <span style="color:var(--accent-rose);">90 天后</span>
+                        <span style="color:var(--text-dim);">"皮肤状态变化了，建议复查"</span>
+                    </div>
+                </div>
+
+                <div
+                    style="background:rgba(59,130,246,0.06); border-left:3px solid var(--accent-blue); padding:12px 16px; border-radius:0 12px 12px 0; font-size:0.85rem; margin-top:16px;">
+                    消费者留下来不是因为"被绑定"，是因为<strong>"离不开这个陪伴感"</strong>。
+                </div>
+            </div>
+
+            <!-- OPT 4 -->
+            <div class="opt-card green">
+                <div class="opt-num">4</div>
+                <h3>社交属性</h3>
+                <div class="opt-sub">让她不只是用，还想分享</div>
+
+                <div style="margin-top:12px;">
+                    <div
+                        style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--text-dim);">"和你同龄的人平均皮肤年龄是 XX"</span>
+                        <span style="color:var(--accent-green);">好奇心 → 打开率高</span>
+                    </div>
+                    <div
+                        style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:0.85rem;">
+                        <span style="color:var(--text-dim);">匿名进步排行（同龄/同肤质）</span>
+                        <span style="color:var(--accent-green);">成就感 → 持续使用</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:10px 0; font-size:0.85rem;">
+                        <span style="color:var(--text-dim);">"你的90天皮肤改善超过了 80% 的同龄人"</span>
+                        <span style="color:var(--accent-green);">分享欲 → 自传播</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== ACQUISITION FORMULA ===== -->
+    <section class="section">
+        <div class="section-header">
+            <span class="tag tag-gold">获客公式</span>
+            <h2>"不推荐做"的蝴蝶效应</h2>
+        </div>
+
+        <div class="formula">
+            <div class="formula-text">
+                <span class="rose"><span class="num">10</span> 个客户做检测</span> →
+                <span class="purple"><span class="num">3</span> 个被告知"现在不用做"</span> →
+                <span class="gold">这 3 个人每人推荐 <span class="num">5</span> 个闺蜜</span> →
+                <span class="green"><span class="num">15</span> 个新客户</span>
+            </div>
+        </div>
+
+        <div class="insight-card">
+            <div class="key-point green">
+                <strong>获客成本 = 0。</strong> 因为推荐动力不是返利，是<strong>"我终于遇到了一个不忽悠我的地方"</strong>。
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===== BEFORE / AFTER ===== -->
+    <section class="section">
+        <div class="section-header">
+            <span class="tag tag-rose">对比</span>
+            <h2>消费者为什么"非用不可"</h2>
+        </div>
+
+        <div class="compare">
+            <div class="compare-header">
+                <div class="before">她现在的生活</div>
+                <div class="after">用了这个平台后</div>
+            </div>
+            <div class="compare-row">
+                <div class="old">花钱做项目，不确定有没有效果</div>
+                <div class="new">AI 告诉她确切改善了多少</div>
+            </div>
+            <div class="compare-row">
+                <div class="old">做完就走，没人管</div>
+                <div class="new">全程陪伴，像私人美容管家</div>
+            </div>
+            <div class="compare-row">
+                <div class="old">被每家店推销到烦</div>
+                <div class="new">被告知"你现在不用做" → 反而信了</div>
+            </div>
+            <div class="compare-row">
+                <div class="old">想分享又没东西可发</div>
+                <div class="new">美丽时间线 → 一键分享朋友圈</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL ===== -->
+    <section class="final">
+        <div class="big-quote">
+            她留下来不是因为便宜<br><br>
+            是因为这是唯一一个<br>
+            <span class="rose">「让她看到自己在变好」</span><br>
+            的地方
+        </div>
+        <p class="bottom-line">
+            全行业都在卖项目卖套餐卖焦虑<br>
+            你卖的是<strong>「确定感」</strong>
+        </p>
+    </section>
+
+</body>
+
+</html>
