@@ -16,24 +16,68 @@
 3. 加品牌结尾页 → 导出
 4. 发布到 TikTok + YouTube Shorts
 
-### 发布节奏（3/20 更新）
-- **X**：每天 ≥2 条（至少 1 条带 CTA），美国上午=中国晚上，**晚上 20:00-21:00 是黄金时间**
+### 发布节奏（3/27 更新 · 适配 Grok Phoenix 新算法）
+- **X**：每天 ≥2 条**纯文字推文**（新算法文字比视频多 30% 曝光），**禁止帖内放外链**（严重降权），CTA 改为「Link in bio」
+- **X 评论分发**：每天 ≥5 条，**目标：引发原作者回复**（被回复 = 150x 点赞权重），用提问型/补充型评论，不用「赞美型」
 - **YouTube**：每天 1 条 Shorts
+- **YouTube 评论分发**：每天 ≥5 条，搜 burnout/overthinking/productivity 等关键词，找 10万+播放的热门 Shorts 评论
 - **TikTok**：每天 21:30 发视频 + 同步 YouTube Shorts（❌ 暂停等美国 eSIM）
 - **Substack**：每周三发 1 篇英文长文
 
+### X 评论分发策略（3/27 更新 · Grok Phoenix 算法适配）
+
+> ❗ **核心变化**：Grok 新算法下，被原作者回复的评论权重 = **150× 点赞**。所以评论的目标不再是「发观点」，而是「**引发对话**」。
+
+#### 评论类型排序（效果从高到低）
+| 类型 | 举例 | 为什么有效 |
+|------|------|----------|
+| 🥇 **提问型** | "What if the real burnout isn't from working hard, but from working on the wrong thing?" | 大 V 爱回答问题 |
+| 🥈 **补充型** | "This reminds me of Wu Wei — the art of effortless action. Not doing less, but forcing less. What do you think?" | 提供新角度 + 开放式结尾 |
+| 🥉 **个人故事型** | "I burned out at 28. Then I learned this from ancient Chinese philosophy: stop pushing, start flowing." | 情绪共鸣 + 好奇心 |
+| ❌ **赞美型** | "Great post! So true!" | 没人回，没有权重 |
+
+#### 评论写法铁律
+- ✅ **必须以问号或开放式结尾**（“What do you think?” / “Does anyone else feel this?”）
+- ✅ **必须提供新角度**（东方哲学 / 反常识观点），不是重复原帖
+- ❌ **禁止纯赞美**（“Love this!” 在新算法下 = 0 权重）
+- ❌ **禁止放链接**（X 新算法严重降权含链接内容）
+- ❌ **禁止模板化**（Grok 能识别重复模式，会降权）
+
+#### 搜索关键词
+- burnout, overthinking, productivity, work life balance, follow your passion, quit my job, mental health, hustle culture
+
+### Reddit 养号（3/28 新增 · 每日常规任务）
+
+> **账号**：u/New-Explorer-5458 · **目标**：100+ Karma 后进入正式引流阶段
+> **限制**：新号每条评论需等 10 分钟冷却
+
+#### 阶段 1：攒 Karma（当前）
+- 每天 **3-5 条**评论，利用碎片时间
+- 优先找：r/AskReddit、r/KidsAreFuckingStupid、r/NameThisThing 等热门搞笑帖
+- 写法：**短、有趣、有共鸣**，不放链接、不推广
+- ❌ 不碰政治帖
+
+#### 阶段 2：建立人设（Karma 100+ 后）
+- 转向：r/selfimprovement、r/productivity、r/philosophy、r/stoicism
+- 写法：3-5 段深度回答，自然融入东方哲学
+- 个人主页 bio 写 Yuanmind
+
+#### 阶段 3：内容引流（Karma 500+ 后）
+- 发原创长帖（"How Wu Wei Changed My Decision Making"）
+- 评论中自然提到 YouTube/X
+
 ### 脚本来源
 - Week 1 脚本：`docs/content/week1_tiktok_scripts.md`（7条，用 Flow 提示词）
-- **Week 2 脚本**：`docs/content/notebooklm_scripts_week2.md`（NotebookLM × Wu Wei，当前在用）
-- **Week 3 脚本**：`docs/content/notebooklm_scripts_week3.md`（NotebookLM × Yin-Yang，已备好）
+- **Week 2 脚本**：`docs/content/notebooklm_scripts_week2.md`（NotebookLM × Wu Wei）
+- **Week 3 脚本**：`docs/content/notebooklm_scripts_week3.md`（NotebookLM × Yin-Yang，当前在用）
 - **Week 4 脚本**：`docs/content/notebooklm_scripts_week4.md`（NotebookLM × Yi Jing，已备好）
 - **YouTube 标题描述**：`docs/content/youtube_titles_day1_to_day5.md`（实际已含 Day 1-7）
 - NotebookLM 笔记本：`b4ab8513`（Wu Wei 模型，1 source），`39c239c0`（归元全模型，16 sources）
 
-### 当前进度（截至 2026-03-21 晚）
-- X：Day 8 已发（共鸣型），评论分发 x1
-- YouTube：已发到 Day 7（Stop Comparing，用TikTok视频同步）
-- TikTok：Day 1 已发（3/16），❓ 暂停等美国 eSIM
+### 当前进度（截至 2026-03-26 晚）
+- X：Day 11 已发（Follow Your Passion · Yin-Yang），评论分发 x5（蹭帖总曝光 3.3M+）
+- YouTube：Day 11 已发，评论分发 x5（蹭 Shorts 总曝光 1.9M+）
+- TikTok：Day 1 已发（3/16），❌ 暂停等美国 eSIM
 - Substack：已发 2 篇，Week 2 已发
 
 ### 剪映设置
@@ -114,79 +158,25 @@
 
 ---
 
-## 📡 海外每日信息雷达（知远执行，每天交付）
+## 📡 知远调研（按需触发，不再每日扫描）
 
-> **2026-03-22 调整** — 原为 Zoey 执行，因英文门槛改为知远负责
-> 知远扫完后用中文整理要点 → 交子默 → 子默转 Zoey
-> 详细计划见：`docs/strategy/overseas_info_radar_plan.md`
+> **2026-03-27 调整** — 原「每日海外信息雷达」砍掉，改为按需出击。原因：每天 30min 扫描没产出过可落地结果。
 
-### 每天 3 步（共 30 分钟）
-1. **扫需求（10分钟）**：Reddit 搜 "I struggle with" / "I feel stuck" → 整理中文要点
-2. **扫赚钱项目（10分钟）**：Gumroad Discover + Product Hunt → 记录产品名+定价+痛点
-3. **扫爆款内容（10分钟）**：X 看 Dan Koe / Sahil Bloom → 标记可蹭帖子
+### 触发条件（子默判断）
+| 场景 | 知远做什么 |
+|------|----------|
+| 🆕 进新平台/新赛道 | 深度调研（市场+竾品+规则） |
+| 💰 上新产品/改定价/谈合作 | 竞品审计 + 定价验证 |
+| 📊 每周日 | 三平台数据复盘结论 |
+| 📋 方案审核 | 48h 内给评分+验证+风险 |
+| ❓ Zoey 有具体数据问题 | 子默转给知远查 |
 
-### 每天交付格式
-📌 今日痛点：（用户原话）
-💰 热卖产品：名字 + 价格 + 为什么卖
-🔥 可蹭帖子：链接 + 为什么能蹭
-💡 $7方案：产品名 + 具体解决什么
-🚀 **是否今天上线：YES / NO** + 理由
-
-### 铁律
-- 每天最多推 **1 个产品方向**
-- 所有报告必须包含“我们今天能卖什么”，否则不算完成
-
-### 团队闭环
-> 知远找机会（1个）→ 子默 48h 做出来 → 明哲改成能卖 → Zoey 推出去验证
+### 输出原则
+- **出结论不出报告** — 短、准、有数据
+- 不超过 500 字，除非 Zoey 要求展开
+- 必须标注数据来源和置信度
 
 ---
-
-## 📡 国内商业周报（知远执行，每周一交付）
-
-> **2026-03-21 新增** — 知远负责国内商业情报，Zoey 不需要额外花时间
-> 每周一子默提醒知远跑报告 → 知远交付 → 子默整理要点给 Zoey
-
-### 扫描范围（4 大板块）
-
-| 板块 | 扫描内容 | 关注重点 |
-|------|---------|---------|
-| 🏥 健康行业政策 | 药监局/卫健委/市场监管总局最新通知 | 肠道项目合规、益生菌标准、健康类内容审核 |
-| 📱 小红书趋势 | 健康/养生类爆款话题 + 竞品账号动态 | 初序内容方向参考 |
-| 📹 抖音趋势 | 健康/养生类爆款视频 + 对标账号 | 选题方向、爆款结构、流量玩法 |
-| 📺 视频号趋势 | 健康/知识类视频 + 私域打法 | 视频号生态差异、转化路径参考 |
-| 🏢 竞品动态 | 华大基因/热心肠/同类 AI 代运营/新入局者 | 定价变化、新产品、融资动态 |
-| 🔧 工具与平台 | 国内新 AI 工具/支付渠道/小程序平台变化 | 效率提升、成本优化 |
-| 📰 最新商业动态 | 36氪/虎嗅/创业邦/财经头条 | 融资事件、行业并购、新商业模式、政策红利 |
-
-### 交付格式（明哲审核版）
-
-```
-# 知远国内商业周报 — 第 X 周（日期）
-
-## 🔴 本周必知
-- 情报：...
-- 💰 我们可以卖什么：（必须具体到产品）
-
-## 🟡 值得关注
-- 情报：...
-- 💰 可变现动作：...
-
-## 🟢 趋势信号
-- ...
-
-## 💡 知远建议
-- ...
-```
-
-### ⚠️ 铁律
-- 每条 🔴 和 🟡 必须附带"我们可以卖什么"，否则不算完成
-
-### 存档位置
-- `docs/research/知远周报_YYYYMMDD.md`
-
-### 第一份周报（3/23）专项任务
-- 🔴 **华大基因 C 端 ROI 摸底**：安馨可在抖音/小红书的投放投产比，对我们定价的参考
-- 🔴 **小红书敏感词实测**：知远发现"粪菌移植"在小红书被限流，需确认替代词（FMT/菌群干预/肠道微生态重启）
 
 ### 🔔 持续跟踪事项
 - **广州海珠区 OPC 一人公司政策**（2026-03-19 公布，正式文件待发布）
