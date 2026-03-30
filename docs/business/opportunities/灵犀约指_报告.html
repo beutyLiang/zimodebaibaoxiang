@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵犀约指 · 竞品分析 & 出圈方案</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a12;
+            --bg-card: #12121e;
+            --bg-card-hover: #1a1a2e;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --gold: #f0c040;
+            --gold-light: #ffeaa7;
+            --red: #ff6b6b;
+            --red-light: #ff8787;
+            --green: #00b894;
+            --green-light: #55efc4;
+            --yellow: #fdcb6e;
+            --text: #e8e8f0;
+            --text-dim: #8888a0;
+            --text-bright: #ffffff;
+            --border: rgba(255, 255, 255, 0.06);
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            --gradient-2: linear-gradient(135deg, #0984e3, #74b9ff);
+            --gradient-tcm: linear-gradient(135deg, #2d1b69, #6c5ce7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(108, 92, 231, 0.15);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            color: var(--accent-light);
+            padding: 6px 20px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .core-line {
+            font-size: clamp(1.3rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--gold);
+            position: relative;
+            z-index: 1;
+            padding: 1rem 2rem;
+            border: 2px solid rgba(240, 192, 64, 0.3);
+            border-radius: 16px;
+            background: rgba(240, 192, 64, 0.05);
+        }
+
+        /* === NAV TABS === */
+        .tab-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            background: rgba(10, 10, 18, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1rem;
+            font-family: inherit;
+            padding: 1rem 2rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-light);
+            font-weight: 700;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--gradient-1);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* === SECTIONS === */
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-title .emoji {
+            font-size: 1.6rem;
+        }
+
+        .section-sub {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 3rem 0;
+        }
+
+        /* === CARDS === */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(108, 92, 231, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* === TABLES === */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+
+        th {
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--accent-light);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 0.7rem 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* === TAGS === */
+        .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag-red {
+            background: rgba(255, 107, 107, 0.15);
+            color: var(--red-light);
+        }
+
+        .tag-green {
+            background: rgba(0, 184, 148, 0.15);
+            color: var(--green-light);
+        }
+
+        .tag-yellow {
+            background: rgba(253, 203, 110, 0.15);
+            color: var(--yellow);
+        }
+
+        .tag-purple {
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--accent-light);
+        }
+
+        /* === STAT GRID === */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 0.3rem;
+        }
+
+        /* === TIER CHART === */
+        .tier {
+            padding: 1rem 1.2rem;
+            border-left: 3px solid var(--accent);
+            margin-bottom: 0.8rem;
+            background: var(--bg-card);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .tier-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-brands {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .tier.highlight {
+            border-left-color: var(--gold);
+            background: rgba(240, 192, 64, 0.05);
+        }
+
+        /* === CALLOUT === */
+        .callout {
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .callout-red {
+            background: rgba(255, 107, 107, 0.08);
+            border-left: 4px solid var(--red);
+        }
+
+        .callout-green {
+            background: rgba(0, 184, 148, 0.08);
+            border-left: 4px solid var(--green);
+        }
+
+        .callout-gold {
+            background: rgba(240, 192, 64, 0.08);
+            border-left: 4px solid var(--gold);
+        }
+
+        .callout-purple {
+            background: rgba(108, 92, 231, 0.08);
+            border-left: 4px solid var(--accent);
+        }
+
+        .callout strong {
+            color: var(--text-bright);
+        }
+
+        /* === TIMELINE === */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--gold));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 1.2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 2px solid var(--bg-dark);
+        }
+
+        .timeline-time {
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+
+        /* === FLOW === */
+        .flow-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--accent);
+            padding: 0.3rem 0;
+        }
+
+        /* === PERSONA === */
+        .persona {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .persona-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .persona-detail {
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        /* === VS COMPARE === */
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0.5rem;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .vs-label {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .tab-btn {
+                padding: 0.8rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            table {
+                font-size: 0.78rem;
+            }
+
+            th,
+            td {
+                padding: 0.5rem 0.6rem;
+            }
+        }
+
+        /* === SCROLL ANIMATION === */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-badge">☯️ 子默出品 · 2026-03-30 第三轮更正版</div>
+        <h1>灵犀约指</h1>
+        <p class="subtitle">竞品分析报告 & 出圈方案<br>从"没人知道"到"养生戒指第一品牌"</p>
+        <div class="core-line">💡 "让 AI 给你把脉"</div>
+    </div>
+
+    <!-- TAB NAV -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('analysis')">📊 竞品分析</button>
+        <button class="tab-btn" onclick="switchTab('strategy')">🚀 出圈方案</button>
+    </nav>
+
+    <!-- ==================== TAB 1: 竞品分析 ==================== -->
+    <div id="tab-analysis" class="tab-content active">
+
+        <!-- 产品画像 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">📱</span> 灵犀约指 产品画像</div>
+            <div class="section-sub">中医养生理念 × AI健康管理（非医疗设备）</div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-num">¥1,200</div>
+                    <div class="stat-label">参考价格</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">7-12天</div>
+                    <div class="stat-label">续航</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">4-5g</div>
+                    <div class="stat-label">重量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">5ATM</div>
+                    <div class="stat-label">防水等级</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="font-size:1.3rem; margin-top:2rem;"><span class="emoji">✅</span>
+                产品功能全景（已核实）</div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>功能</th>
+                        <th>状态</th>
+                        <th>说明</th>
+                    </tr>
+                    <tr>
+                        <td>☯️ 阴阳指数</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>数字化解读身体能量平衡</td>
+                    </tr>
+                    <tr>
+                        <td>🩺 AI 脉诊分析</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>基于脉诊原理，指尖微动脉信号</td>
+                    </tr>
+                    <tr>
+                        <td>🤖 AI 个性化建议</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>饮食、运动、作息调理方案</td>
+                    </tr>
+                    <tr>
+                        <td>📊 健康评分</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>综合状态评分</td>
+                    </tr>
+                    <tr>
+                        <td>📋 体质档案</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>长期数据构建体质画像</td>
+                    </tr>
+                    <tr>
+                        <td>👩 女性健康</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>经期/排卵/体温管理</td>
+                    </tr>
+                    <tr>
+                        <td>📈 健康看板</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>健康趋势+长期分析</td>
+                    </tr>
+                    <tr>
+                        <td>👨‍👩‍👧 家庭空间</td>
+                        <td><span class="tag tag-green">✅ 已有</span></td>
+                        <td>亲友数据共享+长辈日报</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="callout callout-purple">
+                <strong>🔥 核心发现：</strong>灵犀约指是目前市场上<strong>唯一将中医脉诊原理 + AI健康建议 + 体质档案一体化</strong>的智能戒指。
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 竞品对比 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">⚔️</span> 核心竞品对比</div>
+            <div class="section-sub">国内外主要智能戒指品牌全景</div>
+
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>品牌</th>
+                        <th>定位</th>
+                        <th>价格</th>
+                        <th>核心优势</th>
+                        <th>弱点</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Oura Ring 4</strong></td>
+                        <td>全球王者</td>
+                        <td>$299+</td>
+                        <td>App最强 · 74%份额</td>
+                        <td>要订阅$5.99/月</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RingConn Gen 2</strong></td>
+                        <td>中国第一</td>
+                        <td>¥1,500-2,500</td>
+                        <td>医疗认证 · 97%好评</td>
+                        <td>运动模式少</td>
+                    </tr>
+                    <tr>
+                        <td><strong>追觅 Glow</strong></td>
+                        <td>AI心电新锐</td>
+                        <td>¥1,499</td>
+                        <td>ECG · 震动 · 清华算法</td>
+                        <td>品牌认知待建</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--gold)"><strong>灵犀约指</strong></td>
+                        <td style="color:var(--gold)"><strong>中医AI养生</strong></td>
+                        <td style="color:var(--gold)"><strong>¥1,200</strong></td>
+                        <td style="color:var(--gold)">阴阳指数+AI脉诊+家庭</td>
+                        <td style="color:var(--red-light)">品牌声量≈0</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 竞争格局 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">🏔️</span> 竞争格局</div>
+
+            <div class="tier" style="border-left-color:#e74c3c;">
+                <div class="tier-label">高端 ¥2,000+</div>
+                <div class="tier-brands">Oura Ring 4 ← 全球王者 &nbsp;|&nbsp; Samsung Galaxy Ring ← 三星生态</div>
+            </div>
+            <div class="tier" style="border-left-color:#f39c12;">
+                <div class="tier-label">中高端 ¥1,500-2,000</div>
+                <div class="tier-brands">RingConn Gen 2 ← 中国第一 &nbsp;|&nbsp; 追觅 Glow ← 最强搅局者</div>
+            </div>
+            <div class="tier highlight">
+                <div class="tier-label">🎯 中端 ¥1,000-1,500 ← 灵犀的战场</div>
+                <div class="tier-brands" style="color:var(--gold);">灵犀约指 ← <strong>中医AI养生+家庭（功能强但声量≈0）</strong></div>
+            </div>
+            <div class="tier" style="border-left-color:#636e72;">
+                <div class="tier-label">低端 ¥500-1,000</div>
+                <div class="tier-brands" style="color:var(--text-dim);">黑鲨/魅族 ← 极客 &nbsp;|&nbsp; 白牌/山寨 ← 价格战</div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- SWOT -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">📋</span> SWOT 竞争力分析（更正版）</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+                <div class="card" style="border-left:3px solid var(--green);">
+                    <div class="card-title" style="color:var(--green-light);">✅ 优势</div>
+                    <div class="card-desc" style="margin-top:0.5rem; line-height:2;">
+                        ☯️ 中医AI养生体系（独此一家）<br>
+                        💰 ¥1,200 价格甜区<br>
+                        🏠 家庭健康日报<br>
+                        👩 女性健康管理<br>
+                        🔓 全功能免费
+                    </div>
+                </div>
+                <div class="card" style="border-left:3px solid var(--red);">
+                    <div class="card-title" style="color:var(--red-light);">❌ 劣势</div>
+                    <div class="card-desc" style="margin-top:0.5rem; line-height:2;">
+                        📛 品牌声量≈0 <span class="tag tag-red">致命</span><br>
+                        🛒 购买渠道缺失 <span class="tag tag-red">致命</span><br>
+                        📏 步数多计25-50%<br>
+                        🏥 无医疗认证<br>
+                        ❓ 功能深度未验证
+                    </div>
+                </div>
+                <div class="card" style="border-left:3px solid var(--accent);">
+                    <div class="card-title" style="color:var(--accent-light);">🎯 机会</div>
+                    <div class="card-desc" style="margin-top:0.5rem; line-height:2;">
+                        🎯 养生赛道独占<br>
+                        👨‍👩‍👧 家庭礼品情感溢价<br>
+                        👩 女性养生刚需<br>
+                        📣 声量从0→1效率最高<br>
+                        🏪 开店即增长
+                    </div>
+                </div>
+                <div class="card" style="border-left:3px solid var(--yellow);">
+                    <div class="card-title" style="color:var(--yellow);">⚠️ 威胁</div>
+                    <div class="card-desc" style="margin-top:0.5rem; line-height:2;">
+                        📉 千元以下价格战<br>
+                        🍎 Apple Ring 入局<br>
+                        🏭 追觅跟进中医功能<br>
+                        📦 RingConn 下沉<br>
+                        📜 阴阳指数监管风险
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-red" style="margin-top:1.5rem;">
+                <strong>🔴 核心问题已从"功能缺失"变为"好东西没人知道+没地方买"。</strong>这是运营问题，不是产品问题。
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 用户画像 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">👤</span> 目标用户画像</div>
+            <div class="section-sub">灵犀的战场 = 养生族 + 家庭关怀者</div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                <div class="persona">
+                    <div class="persona-name">🧘‍♀️ 养生族 <span class="tag tag-green">核心用户</span></div>
+                    <div class="persona-detail">25-45岁，关注中医/节气/体质调理<br>需求：了解身体节律<br>阴阳指数直击痛点</div>
+                </div>
+                <div class="persona">
+                    <div class="persona-name">👨‍👩‍👧 家庭关怀者 <span class="tag tag-green">核心用户</span></div>
+                    <div class="persona-detail">30-50岁，给父母/伴侣买健康设备<br>需求：远程了解家人状态<br>家庭空间直击痛点</div>
+                </div>
+                <div class="persona">
+                    <div class="persona-name">💤 睡眠困扰者 <span class="tag tag-yellow">可打</span></div>
+                    <div class="persona-detail">25-40岁，失眠/浅睡/打鼾<br>需求：改善睡眠质量</div>
+                </div>
+                <div class="persona">
+                    <div class="persona-name">👩 备孕女性 <span class="tag tag-yellow">可打</span></div>
+                    <div class="persona-detail">25-38岁，备孕/经期管理<br>需求：排卵追踪+体温记录</div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 核心结论 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">⭐</span> 核心结论</div>
+
+            <div class="callout callout-gold">
+                <strong>产品力被严重低估。</strong>灵犀约指的实际功能完成度远超行业认知 — 它是唯一把中医养生体系产品化的智能戒指。
+            </div>
+
+            <div class="section-title" style="font-size:1.2rem; margin-top:2rem;">🔴 拖后腿的是「运营三缺」</div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>缺什么</th>
+                        <th>后果</th>
+                    </tr>
+                    <tr>
+                        <td><strong>缺声量</strong></td>
+                        <td>知乎/小红书/什么值得买 = 0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>缺渠道</strong></td>
+                        <td>天猫/京东无旗舰店</td>
+                    </tr>
+                    <tr>
+                        <td><strong>缺验证</strong></td>
+                        <td>功能虽全，但无用户测评证明好用</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="section-title" style="font-size:1.2rem; margin-top:2rem;">📊 一句话总结</div>
+            <div class="table-wrap">
+                <table>
+                    <tr>
+                        <th>品牌</th>
+                        <th>一句话</th>
+                    </tr>
+                    <tr>
+                        <td>Oura</td>
+                        <td>数据最准但最贵+要订阅</td>
+                    </tr>
+                    <tr>
+                        <td>RingConn</td>
+                        <td>中国第一但无养生概念</td>
+                    </tr>
+                    <tr>
+                        <td>追觅 Glow</td>
+                        <td>技术最酷但无中医体系</td>
+                    </tr>
+                    <tr style="color:var(--gold);">
+                        <td><strong>灵犀约指</strong></td>
+                        <td><strong>功能最独特但没人知道</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 2: 出圈方案 ==================== -->
+    <div id="tab-strategy" class="tab-content">
+
+        <!-- 渠道推广 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">🚀</span> 渠道推广：三段火箭</div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background:rgba(255,63,63,0.1);">📕</div>
+                    <div>
+                        <div class="card-title">第一级：小红书 — 种信任（M1-M3）</div>
+                        <div class="card-desc">消费者的搜索引擎，搜不到=不存在</div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <tr>
+                            <th>阶段</th>
+                            <th>动作</th>
+                            <th>数量</th>
+                            <th>预算</th>
+                        </tr>
+                        <tr>
+                            <td>M1 铺底</td>
+                            <td>KOC 笔记</td>
+                            <td>30篇</td>
+                            <td>¥3万</td>
+                        </tr>
+                        <tr>
+                            <td>M2 深化</td>
+                            <td>KOL 测评</td>
+                            <td>5篇</td>
+                            <td>¥3万</td>
+                        </tr>
+                        <tr>
+                            <td>M3 爆发</td>
+                            <td>#让AI给你把脉# 挑战赛</td>
+                            <td>1个</td>
+                            <td>¥2万</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background:rgba(0,0,0,0.2);">🎵</div>
+                    <div>
+                        <div class="card-title">第二级：抖音 — 造爆款（M2-M4）</div>
+                        <div class="card-desc">兴趣触发 + 冲动消费</div>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <tr>
+                            <th>类型</th>
+                            <th>示例</th>
+                            <th>预算</th>
+                        </tr>
+                        <tr>
+                            <td>悬念视频</td>
+                            <td>"戴上戒指30秒，AI说我气虚血瘀？！"</td>
+                            <td>¥1万</td>
+                        </tr>
+                        <tr>
+                            <td>🔥 对比实验</td>
+                            <td>"AI把脉 vs 老中医，结果一样？"</td>
+                            <td>¥1.5万</td>
+                        </tr>
+                        <tr>
+                            <td>情感视频</td>
+                            <td>"60岁妈妈收到AI戒指的反应"</td>
+                            <td>¥5000</td>
+                        </tr>
+                        <tr>
+                            <td>直播</td>
+                            <td>每周2场解读阴阳指数</td>
+                            <td>¥2万/月</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="callout callout-gold">
+                    <strong>出圈核弹：</strong>"AI把脉 vs 老中医" — 有争议、有画面、有悬念 = 千万级播放潜力
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background:rgba(0,184,148,0.1);">📰</div>
+                    <div>
+                        <div class="card-title">第三级：什么值得买+知乎 — 建专业</div>
+                        <div class="card-desc">长尾搜索 + 投资人/媒体背书</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 用户成瘾 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">🔄</span> 用户使用：成瘾闭环</div>
+            <div class="section-sub">决定生死的72小时</div>
+
+            <div class="flow-box">📦 开箱：精致包装+"比想象的好"</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">⌚ 首次佩戴5min：实时心率+体温</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box" style="border-color:var(--gold); background:rgba(240,192,64,0.05);">💤 首次睡眠后：完整报告+阴阳指数
+                <strong style="color:var(--gold);">← Wow Moment</strong></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">🤖 第3天：AI推送个性化养生建议</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">📊 第7天：周报+体质画像初稿</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box" style="border-color:var(--green);">✅ 留存！D7留存目标 ≥ 70%</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 私域 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">💰</span> 私域运营：三层赚钱模型</div>
+            <div class="section-sub">戒指是钩子，养生服务是生意</div>
+
+            <div class="card" style="border-left:3px solid var(--green);">
+                <div class="card-title" style="color:var(--green-light);">🆓 第一层：免费层（让人用起来）</div>
+                <div class="card-desc" style="margin-top:0.5rem;">
+                    买戒指 = 全功能免费。目的不赚钱，让用户养成每天打开App的习惯。<br>
+                    <em>"¥1,200买了戒指，App全免费，比Oura良心多了" → 好评 → 口碑传播</em>
+                </div>
+            </div>
+
+            <div class="card" style="border-left:3px solid var(--gold);">
+                <div class="card-title" style="color:var(--gold);">💎 第二层：付费层（¥29-99/月持续收钱）</div>
+                <div class="table-wrap" style="margin-top:0.8rem;">
+                    <table>
+                        <tr>
+                            <th>免费版</th>
+                            <th>付费版</th>
+                        </tr>
+                        <tr>
+                            <td>阴阳指数（偏阳/偏阴）</td>
+                            <td><strong>AI解读</strong>："你阳虚，建议吃这3种食物"</td>
+                        </tr>
+                        <tr>
+                            <td>基础睡眠数据</td>
+                            <td><strong>深度体质报告</strong>：九种体质怎么调</td>
+                        </tr>
+                        <tr>
+                            <td>家庭空间看数据</td>
+                            <td><strong>AI中医问诊</strong>："失眠可能是肝火旺"</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="card-desc" style="margin-top:0.8rem;">
+                    📈 1万付费用户 × ¥29-99/月 = <strong style="color:var(--gold);">¥29万-99万/月持续收入</strong><br>
+                    📈 纯软件利润 → 毛利 80%+ → 流失率极低
+                </div>
+            </div>
+
+            <div class="card" style="border-left:3px solid var(--accent);">
+                <div class="card-title" style="color:var(--accent-light);">🔄 第三层：硬件复购（放大收入）</div>
+                <div class="card-desc" style="margin-top:0.5rem;">
+                    18-24个月后出新一代 → 自己换新<br>
+                    "妈妈也想要" → 家庭套装（2只装）<br>
+                    充电仓/换颜色 → 配件复购
+                </div>
+            </div>
+
+            <div class="callout callout-purple">
+                <strong>Oura 估值 $52亿</strong>的原因 — 它不是硬件公司，是<strong>健康订阅服务公司</strong>。灵犀要走的就是这条路。
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 数据呈现 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">📊</span> 数据呈现：投资人要看的数字</div>
+
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-num">5万+</div>
+                    <div class="stat-label">M12 MAU 目标</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">≥40%</div>
+                    <div class="stat-label">DAU/MAU 粘性</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">≥3:1</div>
+                    <div class="stat-label">LTV/CAC 比</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">≥20%</div>
+                    <div class="stat-label">服务收入占比</div>
+                </div>
+            </div>
+
+            <div class="section-title" style="font-size:1.2rem; margin-top:2rem;">🗺️ 上市路径里程碑</div>
+            <div class="timeline" style="margin-top:1rem;">
+                <div class="timeline-item">
+                    <div class="timeline-time">M1-M6 · 种子期</div>
+                    <div>累计5,000用户 · D7留存≥70% · NPS≥40</div>
+                    <div class="tag tag-purple" style="margin-top:0.3rem;">天使轮 ¥500万-1000万</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M7-M18 · 增长期</div>
+                    <div>MAU 5万 · DAU/MAU≥40% · 服务收入≥15%</div>
+                    <div class="tag tag-purple" style="margin-top:0.3rem;">A轮 ¥3000万-5000万</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M19-M36 · 规模期</div>
+                    <div>MAU 30万 · LTV/CAC≥3:1 · 服务收入≥25%</div>
+                    <div class="tag tag-purple" style="margin-top:0.3rem;">B轮 ¥1-2亿</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M36+ · 上市准备</div>
+                    <div>MAU 100万+ · 年营收≥¥2亿 · 毛利≥50%</div>
+                    <div class="tag tag-green" style="margin-top:0.3rem;">Pre-IPO / IPO</div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 事件营销 -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">💥</span> 出圈事件营销</div>
+
+            <div class="timeline" style="margin-top:1rem;">
+                <div class="timeline-item">
+                    <div class="timeline-time">M2</div>
+                    <div>🔥 <strong>"AI把脉 vs 老中医"</strong> 挑战视频 — ⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M3</div>
+                    <div>🎁 母亲节 "给妈妈的第一个AI中医管家"</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M4</div>
+                    <div>🏥 中医大V（百万粉）长期佩戴评测 — ⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M6</div>
+                    <div>🛒 618 天猫冲品类第一</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M9</div>
+                    <div>📖 发布<strong>《中国人阴阳体质白皮书》</strong> — ⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">M12</div>
+                    <div>🎤 新品发布会 "灵犀2代" + 融资PR</div>
+                </div>
+            </div>
+
+            <div class="callout callout-gold" style="margin-top:1.5rem;">
+                <strong>最强PR弹药：《中国人阴阳体质白皮书》</strong><br>
+                "阳虚体质最多的城市""最佳睡眠省份排名" — 数据独家、话题性强、天然传播
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 预算ROI -->
+        <div class="section fade-in">
+            <div class="section-title"><span class="emoji">💵</span> 总预算 & ROI</div>
+
+            <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+                <div class="stat-card">
+                    <div class="stat-num">¥137万</div>
+                    <div class="stat-label">全年营销预算</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num"
+                        style="background:linear-gradient(135deg,#00b894,#55efc4); -webkit-background-clip:text;">27x
+                    </div>
+                    <div class="stat-label">M12 预期 ROI</div>
+                </div>
+            </div>
+
+            <div class="table-wrap" style="margin-top:1.5rem;">
+                <table>
+                    <tr>
+                        <th>指标</th>
+                        <th>M6</th>
+                        <th>M12</th>
+                    </tr>
+                    <tr>
+                        <td>累计用户</td>
+                        <td>5,000</td>
+                        <td>30,000</td>
+                    </tr>
+                    <tr>
+                        <td>硬件收入</td>
+                        <td>¥600万</td>
+                        <td>¥3,600万</td>
+                    </tr>
+                    <tr>
+                        <td>服务收入</td>
+                        <td>¥5万</td>
+                        <td>¥108万</td>
+                    </tr>
+                    <tr>
+                        <td><strong>总收入</strong></td>
+                        <td><strong>¥605万</strong></td>
+                        <td><strong>¥3,708万</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- 总结 -->
+        <div class="section fade-in" style="text-align:center;">
+            <div class="section-title" style="justify-content:center;"><span class="emoji">🎯</span> 一句话总结</div>
+            <div style="margin-top:2rem; font-size:1.1rem; line-height:2.2; color:var(--text-dim);">
+                渠道解决<strong style="color:var(--text-bright);">"在哪知道"</strong><br>
+                用户体验解决<strong style="color:var(--text-bright);">"为什么留下"</strong><br>
+                私域解决<strong style="color:var(--text-bright);">"为什么一直买"</strong><br>
+                数据解决<strong style="color:var(--text-bright);">"为什么值得投"</strong>
+            </div>
+            <div
+                style="margin-top:2rem; padding:1.5rem; border:2px solid rgba(240,192,64,0.3); border-radius:16px; background:rgba(240,192,64,0.05);">
+                <div style="font-size:1.3rem; font-weight:700; color:var(--gold);">出圈靠一条视频："AI把脉 vs 老中医"</div>
+                <div style="font-size:1.3rem; font-weight:700; color:var(--accent-light); margin-top:0.5rem;">
+                    上市靠一份报告：《中国人阴阳体质白皮书》</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div style="margin-bottom:0.5rem;">☯️ 灵犀约指 · 竞品分析 & 出圈方案</div>
+        <div>子默出品 · 2026-03-30 | 仅供内部参考</div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop, behavior: 'smooth' });
+        }
+
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+
+</html>
