@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wu Wei Decision System — Yuanmind</title>
+    <meta name="description"
+        content="Stop overthinking. Start deciding. A 3-step system based on 2,500 years of Eastern philosophy to make better decisions in 10 minutes.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #d0d0d0;
+            background: linear-gradient(160deg, #0d0d0d 0%, #1a1a2e 40%, #16213e 100%);
+            min-height: 100vh;
+            line-height: 1.8;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        /* === NAV === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(13, 13, 13, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-brand {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-brand:hover {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-cta {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0d0d0d;
+            background: linear-gradient(135deg, #c9a96e, #e8d5a3);
+            padding: 10px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #c9a96e;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: #c9a96e;
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.7;
+            margin-bottom: 48px;
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #0d0d0d;
+            background: linear-gradient(135deg, #c9a96e, #e8d5a3);
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(201, 169, 110, 0.2);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(201, 169, 110, 0.35);
+        }
+
+        .hero-price {
+            margin-top: 16px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .hero-price span {
+            color: #fff;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        /* === PROBLEM === */
+        .section {
+            padding: 100px 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #c9a96e;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 24px;
+            line-height: 1.25;
+        }
+
+        .section p {
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        /* === 3 STEPS === */
+        .steps {
+            padding: 100px 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 60px;
+        }
+
+        .step-card {
+            padding: 40px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .step-card:hover {
+            border-color: rgba(201, 169, 110, 0.2);
+            background: rgba(201, 169, 110, 0.03);
+            transform: translateY(-4px);
+        }
+
+        .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: rgba(201, 169, 110, 0.15);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .step-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .step-card p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+        }
+
+        /* === WHAT YOU GET === */
+        .deliverables-list {
+            list-style: none;
+            margin-top: 40px;
+        }
+
+        .deliverables-list li {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .deliverables-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(201, 169, 110, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .check-icon::after {
+            content: '✓';
+            color: #c9a96e;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .deliverables-list strong {
+            color: #fff;
+        }
+
+        /* === PHILOSOPHY === */
+        .quote-block {
+            margin: 60px 0;
+            padding: 40px;
+            border-left: 3px solid rgba(201, 169, 110, 0.4);
+            background: rgba(201, 169, 110, 0.03);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .quote-block blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .quote-block cite {
+            display: block;
+            margin-top: 16px;
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        /* === CTA FINAL === */
+        .cta-section {
+            padding: 120px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            font-size: 15px;
+            font-weight: 700;
+            color: #0d0d0d;
+            background: linear-gradient(135deg, #c9a96e, #e8d5a3);
+            padding: 20px 56px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 30px rgba(201, 169, 110, 0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(201, 169, 110, 0.35);
+        }
+
+        .cta-price {
+            margin-top: 16px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .cta-price span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .cta-guarantee {
+            margin-top: 24px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 16px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .footer .contact {
+            margin-top: 10px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer .contact a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 16px 20px;
+            }
+
+            .nav-brand {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            .nav-cta {
+                font-size: 11px;
+                padding: 8px 16px;
+            }
+
+            .hero {
+                padding: 100px 24px 60px;
+            }
+
+            .section {
+                padding: 60px 24px;
+            }
+
+            .steps {
+                padding: 60px 24px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .cta-section {
+                padding: 80px 24px;
+            }
+
+            .quote-block {
+                padding: 24px;
+            }
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .step-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .step-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .step-card:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+
+        .step-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <nav class="nav">
+        <a href="./" class="nav-brand">Yuanmind · 归元</a>
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NasAovgnzokliJp3KLzs" class="nav-cta">Get It Now</a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="top">
+        <div class="hero-content">
+            <div class="hero-badge">Digital Decision Framework</div>
+            <h1>The <em>Wu Wei</em><br>Decision System</h1>
+            <p class="hero-sub">
+                Stop overthinking. Start deciding.<br>
+                A simple 3-step system to make better decisions in 10 minutes — based on 2,500 years of Eastern
+                philosophy, translated into modern action.
+            </p>
+            <a href="https://checkout.dodopayments.com/buy/pdt_0NasAovgnzokliJp3KLzs" class="hero-cta">Get Instant
+                Access</a>
+            <div class="hero-price">One-time purchase · <span>$9</span> · Instant digital delivery</div>
+        </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">The Problem</div>
+            <h2>You don't have a decision problem. You have an overthinking problem.</h2>
+            <p>You've read the productivity books. You've tried the frameworks. But when a real decision hits — career
+                moves, business pivots, life changes — you freeze. You research endlessly. You ask everyone. You wait
+                for certainty that never comes.</p>
+            <p>The ancient Chinese philosophers solved this 2,500 years ago. They called it <strong
+                    style="color:#c9a96e;">Wu Wei (无为)</strong> — the art of effortless action. Not doing nothing, but
+                doing the <em>right</em> thing at the <em>right</em> time with <em>zero</em> resistance.</p>
+            <p>We translated their wisdom into a modern, actionable system you can use in 10 minutes.</p>
+        </div>
+    </section>
+
+    <!-- 3 STEPS -->
+    <section class="steps">
+        <div class="container" style="text-align:center;">
+            <div class="section-label">The System</div>
+            <h2>3 Steps. 10 Minutes. One Clear Decision.</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-num">01</div>
+                <h3>Reduce</h3>
+                <p>Cut your options to 3. Most paralysis comes from too many choices. Constraint is clarity. We show you
+                    exactly how to filter fast.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">02</div>
+                <h3>Align</h3>
+                <p>Ask one question: "What matters right now?" Not next year. Not forever. Right now. Alignment
+                    eliminates 90% of doubt.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-num">03</div>
+                <h3>Act</h3>
+                <p>Make the smallest move forward. Not the perfect move. The smallest one. Momentum creates certainty —
+                    not the other way around.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">What You Get</div>
+            <h2>Everything you need to decide faster — and better.</h2>
+            <ul class="deliverables-list">
+                <li>
+                    <div class="check-icon"></div>
+                    <div><strong>The Wu Wei Decision Guide</strong> — A concise, beautifully designed PDF that walks you
+                        through the complete 3-step system with real-world examples.</div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div><strong>10-Minute Decision Template</strong> — A fill-in-the-blank worksheet you can print or
+                        use digitally whenever you face a tough choice.</div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div><strong>The Overthinking Diagnostic</strong> — A quick self-assessment to identify your
+                        specific decision-making bottleneck (Perfectionism? Fear? Information addiction?).</div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div><strong>5 Eastern Philosophy Principles</strong> — Timeless mental models from Lao Tzu,
+                        Zhuangzi, and the I Ching, rewritten for modern professionals.</div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="section">
+        <div class="container">
+            <div class="quote-block">
+                <blockquote>"The master acts without doing anything and teaches without saying anything. Things arise
+                    and she lets them come; things disappear and she lets them go."</blockquote>
+                <cite>— Lao Tzu, Tao Te Ching</cite>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHO IS THIS FOR -->
+    <section class="section">
+        <div class="container">
+            <div class="section-label">Who This Is For</div>
+            <h2>Built for thinkers who need to become doers.</h2>
+            <p>This system is for you if:</p>
+            <ul class="deliverables-list">
+                <li>
+                    <div class="check-icon"></div>
+                    <div>You spend more time <strong>researching</strong> decisions than <strong>making</strong> them
+                    </div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div>You've ever felt paralyzed by <strong>too many options</strong></div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div>You value <strong>ancient wisdom</strong> but want <strong>modern, practical tools</strong>
+                    </div>
+                </li>
+                <li>
+                    <div class="check-icon"></div>
+                    <div>You're a solopreneur, creator, or professional who makes <strong>dozens of decisions
+                            daily</strong></div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Stop overthinking.<br>Start deciding.</h2>
+            <p>One system. Ten minutes. The clarity you've been searching for.</p>
+            <a href="https://checkout.dodopayments.com/buy/pdt_0NasAovgnzokliJp3KLzs" class="cta-btn">Get The Wu Wei
+                Decision System</a>
+            <div class="cta-price">One-time payment · <span>$9</span></div>
+            <div class="cta-guarantee">Instant delivery · PDF + Templates · Lifetime access</div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="../../privacy.html">Privacy Policy</a>
+            <a href="../../terms.html">Terms of Service</a>
+        </div>
+        <p>© 2026 Yuanmind. All rights reserved.</p>
+        <div class="contact">Contact: <a href="mailto:yuanmind1@gmail.com">yuanmind1@gmail.com</a></div>
+    </footer>
+</body>
+
+</html>
