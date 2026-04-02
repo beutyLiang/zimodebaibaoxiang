@@ -26,3 +26,7 @@ node_modules/
 docs/content/tiktok_covers/
 视频/
 *.mp4
+*.m4a
+
+# Claude Code 泄露源码（DMCA 风险 + 构建失败）
+claude-code-source/
