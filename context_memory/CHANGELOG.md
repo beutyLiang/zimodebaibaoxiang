@@ -1,5 +1,65 @@
 # 变更日志（仅保留最近 10 条）
 
+## 2026-04-02 16:00 — 初序产品升级"体质管家" + AI团队协作协议 + GitHub修复
+
+- **GitHub Pages 修复** ✅ — 找到构建失败根因：`claude-code-source/`（1952文件）被提交到公开仓库。已移除+加入.gitignore，同时规避 DMCA 侵权风险
+- **AI 团队协作协议（Coordinator Mode）上线** ✅ — 基于 Claude Code 泄露源码中的 task-notification 协议 + 共享暂存目录：
+  - 创建 `context_memory/handoffs/` 目录 + 标准交接模板
+  - 完成两轮实战：R1 明哲出人设名/知远调研平台能力 → R2 明哲出视觉brief/知远出色彩参考
+  - **效果**：Zoey 全程只做复制粘贴，不需要翻译背景
+- **五种体质人设名定稿** ✅：
+  - 木型→静压指挥者 / 火型→高能发光体 / 土型→隐形支柱 / 金型→边界守望者 / 水型→深潜续航者
+- **健康生意深度调研** ✅ — 三大发现：
+  - 豆包健身教练Bot 230万用户 = "每天用"的产品才能活
+  - "测一次"的产品天花板极低，"每天用"的产品才是正道
+  - 国标 GB/T 46939-2025 给体质测评背书
+- **初序产品大升级决策** ✅ — 从"测评工具"→"体质管家"，6大功能：
+  - ⭐拍照问体质（每餐用）+ ⭐AI舌诊（传播引擎）
+  - 体质测评 + 节气养生 + 经期管理 + 睡前陪伴
+- **Coze 执行包已备好** ✅ — 明天3小时落地：
+  - 关键文件目录：`docs/strategy/coze_execution/`
+  - 完整系统提示词（6功能全覆盖）+ 测试清单 + 商店SEO + 发布指南
+- **关键文件**：
+  - 产品方案：`docs/strategy/初序体质管家_产品方案_v1.md`
+  - 执行清单：`docs/strategy/coze_execution/README.md`
+  - 系统提示词：`docs/strategy/coze_execution/step2_系统提示词.md`
+  - 协作协议：`context_memory/handoffs/README.md`
+- **下一步**：
+  - 明天用3小时在 Coze 上落地全部6大功能
+  - 发布后交接明哲做宣传素材
+
+## 2026-04-01 22:40 — Bot修复+豆包上架+浏览器修复+视频提示词
+
+- **PayPal 审核落地页部署** ✅ — GitHub Pages 因 Jekyll 构建限制导致 404，最终用 `raw.githack.com` CDN 链接绕过，确保审核人员可访问
+  - 审核指南：`paypal_verification_instructions.md`（含给智远的操作步骤+申诉话术）
+  - 备用链接：`https://raw.githack.com/beutyLiang/zimodebaibaoxiang/main/yuan_ip/store/index.html`
+- **初序五行Bot 重大修复** ✅ — 3 个问题全部解决：
+  - ❌→✅ Bot 暴露内部思考过程 → 重写系统提示词，加"绝对禁令"最高优先级规则
+  - ❌→✅ 只发布到扣子商店,没发到豆包 → 模型从 doubao-seed-1.6 换成豆包 2.0 pro（原生模型），发布渠道勾选豆包
+  - ❌→✅ "Configuration error of deep thinking" 报错 → 深度思考开关=关闭 + 深度思考程度=关闭（不能设为"中"）
+  - 发布状态：扣子商店 ✅ 豆包 ✅（但平台报了临时系统错误，需明天重试验证）
+  - 修好的提示词文件：`docs/strategy/bot_coze/系统提示词_直接粘贴版.txt`
+- **浏览器工具修复** ✅ — 找到根因并修复：
+  - 原因：Chrome 没有以调试模式启动，端口 9222 无监听
+  - 关键：必须用独立 `--user-data-dir` 才能启动调试端口（旧用户数据目录有锁）
+  - 修复命令：`Stop-Process -Name chrome -Force; Start-Sleep 2; Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "--remote-debugging-port=9222","--user-data-dir=C:\temp\chrome-debug"`
+  - 验证：成功打开 coze.cn 并截图 ✅
+- **初序"对抗焦虑"视频提示词** ✅ — 4 组即梦高级镜头（融合初序IP调性：肠脑轴/五行情志/侘寂美学）：
+  - 镜头1：失序与低电量（思伤脾 / 电量耗尽的现代女性特写）
+  - 镜头2：身体在说话（迷走神经 / 发光神经元网络微距）
+  - 镜头3：木克土·爆发生命力（高速摄影·嫩芽破土）
+  - 镜头4：回归初序（侘寂美学·留白·深呼吸）
+- **关键文件**：
+  - Bot提示词：`docs/strategy/bot_coze/系统提示词_直接粘贴版.txt`
+  - PayPal指南：`paypal_verification_instructions.md`
+  - 落地页：`yuan_ip/store/index.html`
+- **下一步**：
+  - 明早重新发布 Bot（等扣子平台恢复）→ 去豆包验证搜索+对话
+  - 把 PayPal 材料发给智远提交审核
+  - 用即梦跑"对抗焦虑"4 组镜头
+  - 把 Bot 链接嵌入小红书/抖音内容
+  - **Bot 导流入口待定** — 用户问"怎么进社群"时，Bot 需要给出具体路径（企微/公众号/落地页），Zoey 需确认用哪个入口后更新提示词
+
 ## 2026-04-01 13:50 — 初序五行Bot正式发布到扣子商店 🎉
 
 - **扣子编程Bot搭建完成** ✅ — 在扣子编程中创建「初序五行体质智能体」，配置系统提示词+开场白+预置问题
