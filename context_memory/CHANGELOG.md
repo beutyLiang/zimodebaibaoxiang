@@ -1,5 +1,20 @@
 # 变更日志（仅保留最近 10 条）
 
+## 2026-04-02 19:30 — 市场深度调研 + Dodo重提交 + X Day17 + Git Push
+
+- **市场深度调研报告** ✅ — 三大方向深挖 + 优化建议：
+  - 豆包/Coze：日均120万亿Tokens，技能商店新红利 → 体质判读技能包策略
+  - 小红书算法：CES评分公式（评论×4 > 点赞×1）→ 标题公式+评论引导升级
+  - 数字疗法入医保：AI健康用户接受度拉满 → 国标背书+可信来源策略
+  - 报告文件：`docs/strategy/market_deep_dive_20260402.md`
+- **Dodo 审核重提交** ✅ — 更新链接为 raw.githack.com → 提交时报"Not Authorized" → 已发邮件给 Compliance
+- **X Day17 发布** ✅ — "Chaos Is Just a System Rebooting"
+- **Git Push** ✅ — 18个文件，1538行
+- **明天作战计划**：
+  - 第1h：Coze Bot 升级 + 商店优化 + 国标引用
+  - 第2h：测试 + 发布
+  - 第3h：技能包封装
+
 ## 2026-04-02 16:00 — 初序产品升级"体质管家" + AI团队协作协议 + GitHub修复
 
 - **GitHub Pages 修复** ✅ — 找到构建失败根因：`claude-code-source/`（1952文件）被提交到公开仓库。已移除+加入.gitignore，同时规避 DMCA 侵权风险
